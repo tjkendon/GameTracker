@@ -49,7 +49,8 @@ public class PlaySession {
         int hash = 5;
         hash = 29 * hash + Objects.hashCode(this.game);
         hash = 29 * hash + Objects.hashCode(this.sessionDate);
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.playTime) ^ (Double.doubleToLongBits(this.playTime) >>> 32));
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.playTime) 
+                ^ (Double.doubleToLongBits(this.playTime) >>> 32));
         return hash;
     }
 
@@ -65,7 +66,8 @@ public class PlaySession {
             return false;
         }
         final PlaySession other = (PlaySession) obj;
-        if (Double.doubleToLongBits(this.playTime) != Double.doubleToLongBits(other.playTime)) {
+        if (Double.doubleToLongBits(this.playTime) 
+                != Double.doubleToLongBits(other.playTime)) {
             return false;
         }
         if (!Objects.equals(this.game, other.game)) {
