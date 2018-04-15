@@ -23,7 +23,7 @@ public class Game {
         Playstation_3,
         Playstation_2,
         Playstation,
-        
+        Unknown
         
     }
     
@@ -36,10 +36,21 @@ public class Game {
         this.platform = platform;
         this.year = year;
     }
+    
 
     public String getName() {
         return name;
     }
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public int getYear() {
+        return year;
+    }
+    
+    
     
     
     
