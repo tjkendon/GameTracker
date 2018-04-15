@@ -1,5 +1,5 @@
 
-package gametracker;
+package gametracker.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PlaySet {
     
-    private List<PlaySession> sessions;
+    private final List<PlaySession> sessions;
 
     public PlaySet() {
         this.sessions = new ArrayList<>();
