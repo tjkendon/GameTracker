@@ -1,8 +1,6 @@
 
 package gametracker.data;
 
-import org.joda.time.DateTime;
-
 /**
  *
  * Basic data about a game
