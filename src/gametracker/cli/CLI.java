@@ -21,6 +21,10 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class CLI {
 
+    //TODO - Comment Everything
+    //TODO - Add File Loading for play session & games
+    //TODO - Add menu for adding games
+    
     /**
      *
      */
@@ -36,8 +40,8 @@ public class CLI {
 
     private final List<MenuElement> mainMenu;
 
-    private PlaySet mainPlaySet;
-    private GameSet mainGameSet;
+    private final PlaySet mainPlaySet;
+    private final GameSet mainGameSet;
 
     public CLI() {
 

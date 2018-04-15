@@ -10,6 +10,9 @@ import java.util.List;
  */
 public class PlaySet {
     
+    //TODO - Add flitering system
+    //TODO - Add aggregation system
+    
     private final List<PlaySession> sessions;
 
     public PlaySet() {
