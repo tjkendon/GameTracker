@@ -1,5 +1,9 @@
+package gametracker.cli;
 
-package gametracker;
+import gametracker.data.Game;
+import gametracker.data.PlaySession;
+import gametracker.data.PlaySet;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -11,7 +15,31 @@ public class GameTracker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+
+        Game breach = new Game("In To The Breach", Game.Platform.PC_Steam, 2018);
+        Game stardew = new Game("Stardew Valley", Game.Platform.PC_Steam, 2018);
+
+        PlaySession s1 = new PlaySession(
+                breach,
+                new DateTime(2018, 4, 9, 0, 0),
+                1.0);
+        
+        
+        PlaySession s2 = new PlaySession(
+                stardew,
+                new DateTime(2018, 4, 9, 0, 0),
+                0.3);
+        
+        PlaySet set = new PlaySet();
+        
+        set.addPlaySession(s1);
+        set.addPlaySession(s2);
+        
+        for (PlaySession s : set.getPlaySessions()) {
+            System.out.println(s);
+        }
+        
+
     }
-    
+
 }

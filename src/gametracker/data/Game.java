@@ -1,5 +1,7 @@
 
-package gametracker;
+package gametracker.data;
+
+import org.joda.time.DateTime;
 
 /**
  *
@@ -24,12 +26,17 @@ public class Game {
         Playstation_2,
         Playstation,
         
+        
     }
     
     private final String name;
+    private final Platform platform;
+    private final int year;
 
-    public Game(String name) {
+    public Game(String name, Platform platform, int year) {
         this.name = name;
+        this.platform = platform;
+        this.year = year;
     }
 
     public String getName() {

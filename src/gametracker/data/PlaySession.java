@@ -1,4 +1,4 @@
-package gametracker;
+package gametracker.data;
 
 import java.util.Objects;
 import org.joda.time.DateTime;
