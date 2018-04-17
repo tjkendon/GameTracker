@@ -85,67 +85,44 @@ public class CLI {
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("A", "Add new Play Session", () -> {
-            String dateStr = UIHelper.promptForString(
-                    "Enter Date (YYYY/mm/dd) (Blank for today)");
-
-            DateTime date;
-            if (dateStr.isEmpty()) {
-                date = new DateTime();
-            } else {
-                try {
-                    date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
-                } catch (IllegalArgumentException e) {
-                    System.err.println("Not able to parse date " + dateStr);
-                    return;
-                }
-            }
-
-            String gameStr = UIHelper.promptForString("Enter Game");
-            Game game = mainGameSet.getGame(gameStr);
-
-            String timeStr = UIHelper.promptForString(
-                    "Enter Time Played (in hours)");
-
-            Double time = 0.0;
             try {
-                time = Double.parseDouble(timeStr);
-            } catch (NumberFormatException e) {
-                System.err.println("Not able to parse play time from " + timeStr);
-                return;
-            }
+                String dateStr = UIHelper.promptForString(
+                        "Enter Date (YYYY/mm/dd) (Blank for today)");
 
-            mainPlaySet.addPlaySession(new PlaySession(game, date, time));
+                DateTime date = UIHelper.parseDateTime(dateStr);
+
+                String gameStr = UIHelper.promptForString("Enter Game");
+                Game game = mainGameSet.getGame(gameStr);
+
+                String timeStr = UIHelper.promptForString(
+                        "Enter Time Played (in hours)");
+
+                Double time = UIHelper.parsePlayTime(timeStr);
+
+                mainPlaySet.addPlaySession(new PlaySession(game, date, time));
+            } catch (Exception e) {
+                System.err.println("Session not added - " + e.getMessage());
+            }
 
         }));
 
         menu.add(new MenuElement("S", "Add new Game", () -> {
-            String gameStr = UIHelper.promptForString("Game Name");
-            
-            String platformStr = UIHelper.promptForString("Game Platform");
-            
-
-            Game game = mainGameSet.getGame(gameStr);
-
-            Game.Platform platform = null;
-
             try {
-                platform = Game.Platform.valueOf(platformStr);
-            } catch (IllegalArgumentException e) {
-                System.err.println("Not able to parse platform " + platformStr);
-                return;
-            }
+                String gameStr = UIHelper.promptForString("Game Name");
 
-            String yearStr = UIHelper.promptForString(
-                    "Game Year");
-            int year = 0;
-            try {
-                year = Integer.parseInt(yearStr);
-            } catch (NumberFormatException e) {
-                System.err.println("Not able to parse year from " + yearStr);
-                return;
-            }
+                String platformStr = UIHelper.promptForString("Game Platform");
 
-            mainGameSet.addGame(new Game(gameStr, Game.Platform.PC_Steam, year));
+                Game.Platform platform = UIHelper.parsePlatform(platformStr);
+
+                String yearStr = UIHelper.promptForString(
+                        "Game Year");
+                int year = UIHelper.parseYear(yearStr);
+                
+
+                mainGameSet.addGame(new Game(gameStr, Game.Platform.PC_Steam, year));
+            } catch (Exception e) {
+                System.err.println("Game not added - " + e.getMessage());
+            }
 
         }));
 
@@ -158,6 +135,9 @@ public class CLI {
     }
 
     public void run() {
+
+        System.err.flush();
+        System.out.flush();
 
         boolean keepRunning = true;
         do {

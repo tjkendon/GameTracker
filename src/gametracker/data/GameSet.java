@@ -38,7 +38,7 @@ public class GameSet {
                 return g;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Not able to find game " + gameName);
     }
     
     public boolean removeGame(Game g) {
