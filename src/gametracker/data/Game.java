@@ -50,6 +50,10 @@ public class Game {
         return year;
     }
     
+    public String toString() {
+        return this.getName() + " (" + this.getPlatform() + ") - " + year;
+    }
+    
     
     
     
