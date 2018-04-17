@@ -87,11 +87,6 @@ public class CLI {
         menu.add(new MenuElement("A", "Add new Play Session", () -> {
             String dateStr = UIHelper.promptForString(
                     "Enter Date (YYYY/mm/dd) (Blank for today)");
-            String gameStr = UIHelper.promptForString("Enter Game");
-            String timeStr = UIHelper.promptForString(
-                    "Enter Time Played (in hours)");
-
-            Game game = mainGameSet.getGame(gameStr);
 
             DateTime date;
             if (dateStr.isEmpty()) {
@@ -105,9 +100,40 @@ public class CLI {
                 }
             }
 
+            String gameStr = UIHelper.promptForString("Enter Game");
+            Game game = mainGameSet.getGame(gameStr);
+
+            String timeStr = UIHelper.promptForString(
+                    "Enter Time Played (in hours)");
+
             Double time = Double.parseDouble(timeStr);
 
             mainPlaySet.addPlaySession(new PlaySession(game, date, time));
+
+        }));
+
+        menu.add(new MenuElement("S", "Add new Game", () -> {
+            String gameStr = UIHelper.promptForString("Game Name");
+            
+            String platformStr = UIHelper.promptForString("Game Platform");
+            
+
+            Game game = mainGameSet.getGame(gameStr);
+
+            Game.Platform platform = null;
+
+            try {
+                platform = Game.Platform.valueOf(platformStr);
+            } catch (IllegalArgumentException e) {
+                System.err.println("Not able to parse platform " + platformStr);
+                return;
+            }
+
+            String yearStr = UIHelper.promptForString(
+                    "Game Year");
+            int year = Integer.parseInt(yearStr);
+
+            mainGameSet.addGame(new Game(gameStr, Game.Platform.PC_Steam, year));
 
         }));
 
