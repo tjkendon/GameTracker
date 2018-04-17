@@ -106,7 +106,13 @@ public class CLI {
             String timeStr = UIHelper.promptForString(
                     "Enter Time Played (in hours)");
 
-            Double time = Double.parseDouble(timeStr);
+            Double time = 0.0;
+            try {
+                time = Double.parseDouble(timeStr);
+            } catch (NumberFormatException e) {
+                System.err.println("Not able to parse play time from " + timeStr);
+                return;
+            }
 
             mainPlaySet.addPlaySession(new PlaySession(game, date, time));
 
@@ -131,7 +137,13 @@ public class CLI {
 
             String yearStr = UIHelper.promptForString(
                     "Game Year");
-            int year = Integer.parseInt(yearStr);
+            int year = 0;
+            try {
+                year = Integer.parseInt(yearStr);
+            } catch (NumberFormatException e) {
+                System.err.println("Not able to parse year from " + yearStr);
+                return;
+            }
 
             mainGameSet.addGame(new Game(gameStr, Game.Platform.PC_Steam, year));
 
