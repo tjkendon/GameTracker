@@ -21,9 +21,7 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class CLI {
 
-    //TODO - Comment Everything
-    //TODO - Add File Loading for play session & games
-    //TODO - Add menu for adding games
+    //TODO - Comment Everything    
     
     /**
      *
@@ -71,7 +69,7 @@ public class CLI {
 
         menu.add(new MenuElement("A", "Add new Menu Session", () -> {
             String dateStr = UIHelper.promptForString(
-                    "Enter Date (Blank for today)");
+                    "Enter Date (YYYY/mm/dd) (Blank for today)");
             String gameStr = UIHelper.promptForString("Enter Game");
             String timeStr = UIHelper.promptForString(
                     "Enter Time Played (in hours)");
@@ -82,7 +80,12 @@ public class CLI {
             if (dateStr.isEmpty()) {
                 date = new DateTime();
             } else {
-                date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
+                try {
+                    date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Not able to parse date " + dateStr);
+                    return;
+                }
             }
 
             Double time = Double.parseDouble(timeStr);
