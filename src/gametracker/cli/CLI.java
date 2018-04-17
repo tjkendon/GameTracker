@@ -22,7 +22,6 @@ import org.joda.time.format.DateTimeFormatter;
 public class CLI {
 
     //TODO - Comment Everything    
-    
     /**
      *
      */
@@ -67,7 +66,25 @@ public class CLI {
 
         List<MenuElement> menu = new ArrayList<>();
 
-        menu.add(new MenuElement("A", "Add new Menu Session", () -> {
+        menu.add(new MenuElement("1", "List All Games", () -> {
+
+            for (Game g : mainGameSet.getGames()) {
+                System.out.println(g);
+            }
+
+        }));
+
+        menu.add(new MenuElement("2", "List All Play Sessions", () -> {
+
+            for (PlaySession s : mainPlaySet.getPlaySessions()) {
+                System.out.println(s);
+            }
+
+        }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("A", "Add new Play Session", () -> {
             String dateStr = UIHelper.promptForString(
                     "Enter Date (YYYY/mm/dd) (Blank for today)");
             String gameStr = UIHelper.promptForString("Enter Game");
@@ -91,14 +108,6 @@ public class CLI {
             Double time = Double.parseDouble(timeStr);
 
             mainPlaySet.addPlaySession(new PlaySession(game, date, time));
-
-        }));
-
-        menu.add(new MenuElement("1", "List All Play Sessions", () -> {
-
-            for (PlaySession s : mainPlaySet.getPlaySessions()) {
-                System.out.println(s);
-            }
 
         }));
 
