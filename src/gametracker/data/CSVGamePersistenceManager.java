@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class CSVGamePersistenceManager implements GamePersistenceManager {
 
-    private File datafile;
+    private final File datafile;
 
     public CSVGamePersistenceManager(File datafile) {
         this.datafile = datafile;
