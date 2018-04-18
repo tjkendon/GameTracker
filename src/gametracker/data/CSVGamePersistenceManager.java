@@ -17,13 +17,6 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
         this.datafile = datafile;
     }
 
-    public File getDatafile() {
-        return datafile;
-    }
-
-    public void setDatafile(File datafile) {
-        this.datafile = datafile;
-    }
     
     @Override
     public GameSet load() {
