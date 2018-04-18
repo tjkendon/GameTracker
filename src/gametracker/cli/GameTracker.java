@@ -1,6 +1,6 @@
 package gametracker.cli;
 
-import gametracker.data.CSVGamePersistanceManager;
+import gametracker.data.CSVGamePersistenceManager;
 import gametracker.data.Game;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
@@ -46,8 +46,8 @@ public class GameTracker {
             System.out.println(s);
         }
         
-        CSVGamePersistanceManager manager = 
-                new CSVGamePersistanceManager(new File("test.games"));
+        CSVGamePersistenceManager manager = 
+                new CSVGamePersistenceManager(new File("test.games"));
         manager.saveGameSet(gameSet);
                 
         GameSet newSet = manager.load();

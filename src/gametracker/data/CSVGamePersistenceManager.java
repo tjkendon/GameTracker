@@ -9,11 +9,11 @@ import java.util.Scanner;
  *
  * @author tjkendon
  */
-public class CSVGamePersistanceManager implements GamePersistenceManager {
+public class CSVGamePersistenceManager implements GamePersistenceManager {
 
     private File datafile;
 
-    public CSVGamePersistanceManager(File datafile) {
+    public CSVGamePersistenceManager(File datafile) {
         this.datafile = datafile;
     }
 
