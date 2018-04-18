@@ -2,7 +2,7 @@ package gametracker.cli;
 
 import gametracker.data.Game;
 import gametracker.data.PlaySession;
-import gametracker.data.PlaySet;
+import gametracker.data.PlayData;
 import org.joda.time.DateTime;
 
 /**
@@ -30,7 +30,7 @@ public class GameTracker {
                 new DateTime(2018, 4, 9, 0, 0),
                 0.3);
         
-        PlaySet set = new PlaySet();
+        PlayData set = new PlayData();
         
         set.addPlaySession(s1);
         set.addPlaySession(s2);

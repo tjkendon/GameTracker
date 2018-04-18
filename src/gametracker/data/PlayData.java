@@ -6,23 +6,38 @@ import java.util.List;
 
 /**
  *
+ * Holds a list of PlaySessions.
+ * 
  * @author tjkendon
  */
-public class PlaySet {
-    
-    //TODO - Add flitering system
-    //TODO - Add aggregation system
+public class PlayData {
     
     private final List<PlaySession> sessions;
 
-    public PlaySet() {
+    /**
+     * Creates a new PlayData with an empty list of sessions.
+     */
+    public PlayData() {
         this.sessions = new ArrayList<>();
     }
     
+    /**
+     * 
+     * Adds a new session to the list.
+     * 
+     * @param session 
+     */
     public void addPlaySession(PlaySession session) {
         this.sessions.add(session);
     }
     
+    
+    /**
+     * 
+     * Returns a copy of the list of sessions in this data.
+     * 
+     * @return 
+     */
     public List<PlaySession> getPlaySessions() {
         List<PlaySession> returnList = new ArrayList<>();
         
