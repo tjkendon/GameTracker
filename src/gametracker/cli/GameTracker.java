@@ -1,8 +1,11 @@
 package gametracker.cli;
 
+import gametracker.data.CSVGamePersistanceManager;
 import gametracker.data.Game;
+import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
+import java.io.File;
 import org.joda.time.DateTime;
 
 /**
@@ -19,6 +22,10 @@ public class GameTracker {
         Game breach = new Game("In To The Breach", Game.Platform.PC_Steam, 2018);
         Game stardew = new Game("Stardew Valley", Game.Platform.PC_Steam, 2018);
 
+        GameSet gameSet = new GameSet();
+        gameSet.addGame(breach);
+        gameSet.addGame(stardew);
+        
         PlaySession s1 = new PlaySession(
                 breach,
                 new DateTime(2018, 4, 9, 0, 0),
@@ -37,6 +44,15 @@ public class GameTracker {
         
         for (PlaySession s : set.getPlaySessions()) {
             System.out.println(s);
+        }
+        
+        CSVGamePersistanceManager manager = 
+                new CSVGamePersistanceManager(new File("test.games"));
+        manager.saveGameSet(gameSet);
+                
+        GameSet newSet = manager.load();
+        for (Game g : newSet.getGames()) {
+            System.out.println(g);
         }
         
 
