@@ -112,7 +112,7 @@ public class CLI {
                 int year = Game.parseYear(yearStr);
                 
 
-                mainGameSet.addGame(new Game(gameStr, Game.Platform.PC_Steam, year));
+                mainGameSet.addGame(new Game(gameStr, platform, year));
             } catch (Exception e) {
                 System.err.println("Game not added - " + e.getMessage());
             }
