@@ -12,8 +12,6 @@ import gametracker.data.PlayData;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -21,11 +19,6 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class CLI {
 
-    //TODO - Comment Everything    
-    /**
-     *
-     */
-    public static DateTimeFormatter SESSION_DATE_FORMAT = DateTimeFormat.forPattern("yyyy/MM/dd");
 
     public static void main(String[] args) {
 
@@ -89,7 +82,7 @@ public class CLI {
                 String dateStr = UIHelper.promptForString(
                         "Enter Date (YYYY/mm/dd) (Blank for today)");
 
-                DateTime date = UIHelper.parseDateTime(dateStr);
+                DateTime date = PlaySession.parseDateTime(dateStr);
 
                 String gameStr = UIHelper.promptForString("Enter Game");
                 Game game = mainGameSet.getGame(gameStr);
@@ -97,7 +90,7 @@ public class CLI {
                 String timeStr = UIHelper.promptForString(
                         "Enter Time Played (in hours)");
 
-                Double time = UIHelper.parsePlayTime(timeStr);
+                Double time = PlaySession.parsePlayTime(timeStr);
 
                 mainPlaySet.addPlaySession(new PlaySession(game, date, time));
             } catch (Exception e) {
@@ -112,11 +105,11 @@ public class CLI {
 
                 String platformStr = UIHelper.promptForString("Game Platform");
 
-                Game.Platform platform = UIHelper.parsePlatform(platformStr);
+                Game.Platform platform = Game.parsePlatform(platformStr);
 
                 String yearStr = UIHelper.promptForString(
                         "Game Year");
-                int year = UIHelper.parseYear(yearStr);
+                int year = Game.parseYear(yearStr);
                 
 
                 mainGameSet.addGame(new Game(gameStr, Game.Platform.PC_Steam, year));

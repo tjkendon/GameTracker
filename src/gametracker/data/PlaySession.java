@@ -1,7 +1,10 @@
 package gametracker.data;
 
+import gametracker.cli.CLI;
 import java.util.Objects;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -11,6 +14,14 @@ import org.joda.time.DateTime;
  * @author tjkendon
  */
 public class PlaySession {
+
+    
+    /**
+     *
+     */
+    public static DateTimeFormatter SESSION_DATE_FORMAT = DateTimeFormat.forPattern("yyyy/MM/dd");
+
+ 
 
     private final Game game;
     private final DateTime sessionDate; // date the session was played on
@@ -89,6 +100,49 @@ public class PlaySession {
         return sessionDate.toString("dd/MM/YYYY")
                 + ", " + game.getName()
                 + ", " + playTime;
+    }
+    
+       /**
+     *
+     * Helper method to parse a double from an input string, which is intended
+     * to represent the play time. If it can't be parsed throws a
+     * IllegalArgumentException with an explanation.
+     *
+     * @param timeStr the string to be parsed as a double
+     * @return the time played if possible
+     */
+    public static double parsePlayTime(String timeStr) {
+        double time = -1.0;
+        try {
+            time = Double.parseDouble(timeStr);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Not able to parse play time from " + timeStr, e);
+        }
+        return time;
+    }
+
+    /**
+     *
+     * Helper method to parse a JodaTime DateTime from an input string. If the
+     * string is blank then returns the DateTime for now. Otherwise attempts to
+     * parse from the format in SESSION_DATE_FORMAT. If it fails it throws
+     * an IllegalArgumentException with information.
+     *
+     * @param dateStr the string that will be parsed
+     * @return a correct date time if the string is empty or can be parsed
+     */
+    public static DateTime parseDateTime(String dateStr) {
+        DateTime date;
+        if (dateStr.isEmpty()) {
+            date = new DateTime();
+        } else {
+            try {
+                date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Not able to parse date from " + dateStr, e);
+            }
+        }
+        return date;
     }
 
 }
