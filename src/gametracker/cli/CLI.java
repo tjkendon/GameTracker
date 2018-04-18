@@ -8,7 +8,7 @@ package gametracker.cli;
 import gametracker.data.Game;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
-import gametracker.data.PlaySet;
+import gametracker.data.PlayData;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -37,7 +37,7 @@ public class CLI {
 
     private final List<MenuElement> mainMenu;
 
-    private final PlaySet mainPlaySet;
+    private final PlayData mainPlaySet;
     private final GameSet mainGameSet;
 
     public CLI() {
@@ -58,8 +58,8 @@ public class CLI {
         return gs;
     }
 
-    public final PlaySet loadPlaySet() {
-        return new PlaySet();
+    public final PlayData loadPlaySet() {
+        return new PlayData();
     }
 
     public final List<MenuElement> setupMainMenu() {
@@ -141,7 +141,7 @@ public class CLI {
 
         boolean keepRunning = true;
         do {
-            UIHelper.showMenu("Main Menu", mainMenu);
+            MenuElement.showMenu("Main Menu", mainMenu);
             System.out.println();
             String choice = UIHelper.promptForString("Enter Menu Option");
             for (MenuElement m : mainMenu) {

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ 
 package gametracker.cli;
 
 import static gametracker.cli.CLI.SESSION_DATE_FORMAT;
@@ -14,6 +10,9 @@ import org.joda.time.DateTime;
 
 /**
  *
+ * Utility class to handle prompting and parsing as part of the command line 
+ * interface
+ * 
  * @author tjkendon
  */
 public class UIHelper {
@@ -54,26 +53,6 @@ public class UIHelper {
                 || response.equalsIgnoreCase("Y"));
     }
 
-    /**
-     *
-     * Shows a menu with a given menu title. Handles special cases of Menu blank
-     * or divider.
-     *
-     * @param menuName the name to print for the menu
-     * @param menu the list of menu elements
-     */
-    public static void showMenu(String menuName, List<MenuElement> menu) {
-        System.out.println(menuName);
-        for (MenuElement element : menu) {
-            if (element.equals(MenuElement.BLANK)) {
-                System.out.println();
-            } else if (element.equals(MenuElement.DIVIDER)) {
-                System.out.println("----");
-            } else {
-                System.out.println(element);
-            }
-        }
-    }
 
     /**
      *
@@ -120,6 +99,15 @@ public class UIHelper {
         return time;
     }
 
+    /**
+     * 
+     * Parses the platform from a given string. Will return the platform which
+     * matches the valueOf for the string, if possible or throws an 
+     * IllegalArgumentException otherwise.
+     * 
+     * @param platformStr
+     * @return 
+     */
     public static Platform parsePlatform(String platformStr) {
 
         try {
@@ -131,6 +119,16 @@ public class UIHelper {
 
     }
 
+    
+    /**
+     * 
+     * Parses the year from a given string. Will return the year provided the
+     * string describes a year (is a 4 digit int) and throws an 
+     * IllegalArgumentException. 
+     * 
+     * @param yearStr
+     * @return 
+     */
     public static int parseYear(String yearStr) {
         int year = 0;
         if (yearStr.length() == 4) {
