@@ -7,6 +7,7 @@ package gametracker.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import org.joda.time.DateTime;
 
@@ -23,10 +24,10 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
         this.datafile = datafile;
         this.gameSet = gameSet;
     }
-    
+
     @Override
     public PlayData load() {
-              PlayData returnData = new PlayData();
+        PlayData returnData = new PlayData();
 
         try {
             Scanner scanner = new Scanner(datafile);
@@ -38,17 +39,17 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
                 try {
                     String dateString = playStrings[0].trim();
                     DateTime date = PlaySession.parseDateTime(dateString);
-                    
-                    String gameString = playStrings[1].trim(); 
+
+                    String gameString = playStrings[1].trim();
                     Game game = gameSet.getGame(gameString);
-                    
+
                     String timeString = playStrings[2].trim();
                     Double time = PlaySession.parsePlayTime(timeString);
-                    
+
                     returnData.addPlaySession(
                             new PlaySession(game, date, time));
                 } catch (Exception e) {
-                    System.err.println("Line " + lineNumber 
+                    System.err.println("Line " + lineNumber
                             + ": not added - " + e.getMessage());
                 } finally {
                     lineNumber++;
@@ -65,7 +66,17 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
     @Override
     public void savePlayData(PlayData sessions) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (PrintWriter writer = new PrintWriter(datafile)) {
+            for (PlaySession s : sessions.getPlaySessions()) {
+                writer.printf("%s, %s, %s%n",
+                        PlaySession.SESSION_DATE_FORMAT.print(s.getSessionDate()),
+                        s.getGame().getName(),
+                        s.getPlayTime());
+            }
+        } catch (FileNotFoundException ex) {
+            System.err.println("Not able to find file " + datafile.getName());
+        }
+
     }
-    
+
 }
