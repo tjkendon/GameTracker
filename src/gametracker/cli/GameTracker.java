@@ -1,6 +1,7 @@
 package gametracker.cli;
 
 import gametracker.data.CSVGamePersistenceManager;
+import gametracker.data.CSVSessionPersistenceManager;
 import gametracker.data.Game;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
@@ -54,6 +55,17 @@ public class GameTracker {
         for (Game g : newSet.getGames()) {
             System.out.println(g);
         }
+        
+        CSVSessionPersistenceManager sessionManager = 
+                new CSVSessionPersistenceManager(new File("test.play"), gameSet);
+        
+        sessionManager.savePlayData(set);
+        
+        PlayData load = sessionManager.load();
+        for (PlaySession p : load.getPlaySessions()) {
+            System.out.println(p);
+        }
+            
         
 
     }
