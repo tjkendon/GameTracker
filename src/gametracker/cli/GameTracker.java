@@ -48,7 +48,7 @@ public class GameTracker {
         }
         
         CSVGamePersistenceManager manager = 
-                new CSVGamePersistenceManager(new File("test.games"));
+                new CSVGamePersistenceManager(new File("data/test.games"));
         manager.saveGameSet(gameSet);
                 
         GameSet newSet = manager.load();
@@ -57,7 +57,7 @@ public class GameTracker {
         }
         
         CSVSessionPersistenceManager sessionManager = 
-                new CSVSessionPersistenceManager(new File("test.play"), gameSet);
+                new CSVSessionPersistenceManager(new File("data/test.play"), gameSet);
         
         sessionManager.savePlayData(set);
         
