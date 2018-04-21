@@ -47,6 +47,10 @@ public class PlayData {
         
         return returnList;
     }
+
+    boolean contains(PlaySession session) {
+        return sessions.contains(session);
+    }
     
     
     
