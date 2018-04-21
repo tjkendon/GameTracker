@@ -30,7 +30,17 @@
          * **Contains More than One - throws IllegalArgumentExcpetion**
       * **Get Game By Exact Match**
          * **Matches Exactly - Test1, PC_Steam, 2000**
-
+   * **Get Games By**  - Set up list of 4 games (TG1, Other, 2000), (TG1, Steam, 2001), (TG2, Steam, 2000), (TG2, Other, 2001)
+      * **Name**
+      * **Platform** 
+      * **Year** 
+   * **Size**
+      * **New Set** - size = 0
+      * **Add 2 Games** - size = 2
+   * **isEmpty**
+      * **New** - true
+      * **Add 1** - false
+      * **Remove** - true
 
 
 ## Game
