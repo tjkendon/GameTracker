@@ -27,3 +27,6 @@
    * List of play sessions
    * Get total data by game
    * Console Interface
+* Iteration 2
+   * Filter
+   * Agregate
