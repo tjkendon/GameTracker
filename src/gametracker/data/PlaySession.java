@@ -19,7 +19,8 @@ public class PlaySession {
     /**
      *
      */
-    public static DateTimeFormatter SESSION_DATE_FORMAT = DateTimeFormat.forPattern("yyyy/MM/dd");
+    public static DateTimeFormatter SESSION_DATE_FORMAT = 
+            DateTimeFormat.forPattern("yyyy/MM/dd");
 
  
 
@@ -116,7 +117,8 @@ public class PlaySession {
         try {
             time = Double.parseDouble(timeStr);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Not able to parse play time from " + timeStr, e);
+            throw new IllegalArgumentException(
+                    "Not able to parse play time from " + timeStr, e);
         }
         return time;
     }
@@ -139,7 +141,8 @@ public class PlaySession {
             try {
                 date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Not able to parse date from " + dateStr, e);
+                throw new IllegalArgumentException(
+                        "Not able to parse date from " + dateStr, e);
             }
         }
         return date;

@@ -134,10 +134,12 @@ public class Game {
             try {
                 return Integer.parseInt(yearStr);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Not able to parse year from " + yearStr, e);
+                throw new IllegalArgumentException(
+                        "Not able to parse year from " + yearStr, e);
             }
         } else {
-            throw new IllegalArgumentException("Not able to parse year from " + yearStr);
+            throw new IllegalArgumentException(
+                    "Not able to parse year from " + yearStr);
         }
     }
 
