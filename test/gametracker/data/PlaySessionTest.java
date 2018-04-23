@@ -45,35 +45,6 @@ public class PlaySessionTest {
     }
 
     /**
-     * Test of hashCode method, of class PlaySession.
-     */
-    @Test
-    public void testHashCode() {
-        System.out.println("hashCode");
-        PlaySession instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of equals method, of class PlaySession.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        PlaySession instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of parsePlayTime method, of class PlaySession.
      */
     @Test
