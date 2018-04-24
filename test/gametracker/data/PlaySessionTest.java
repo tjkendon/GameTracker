@@ -5,11 +5,9 @@
  */
 package gametracker.data;
 
-import java.time.format.DateTimeFormatter;
 import static org.hamcrest.CoreMatchers.startsWith;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
-import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
