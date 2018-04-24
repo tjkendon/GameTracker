@@ -249,13 +249,22 @@ public class GameSetTest {
     @Test
     public void testRemoveGame() {
         System.out.println("Testing");
-        Game g = null;
+        Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
+        Game g2 = new Game("TG1", Game.Platform.PC_Steam, 2001);
+        Game g3 = new Game("TG2", Game.Platform.PC_Steam, 2000);
+        Game g4 = new Game("TG2", Game.Platform.PC_Steam, 2001);
+
         GameSet instance = new GameSet();
-        boolean expResult = false;
-        boolean result = instance.removeGame(g);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.addGame(g1);
+        instance.addGame(g2);
+        instance.addGame(g3);
+        instance.addGame(g4);
+        
+        
+        assertTrue(instance.removeGame(g1));
+        
+        
+        assertFalse(instance.contains(g1));
     }
     
 }
