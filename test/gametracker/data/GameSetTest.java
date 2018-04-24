@@ -243,12 +243,29 @@ public class GameSetTest {
         
     }
 
+    @Test
+    public void testContains() {
+        System.out.println("Testing if a GameSet contains a game");
+        
+        Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
+        
+        GameSet instance = new GameSet();
+        assertFalse(instance.contains(g1));
+        
+        instance.addGame(g1);
+        assertTrue(instance.contains(g1));
+        
+        instance.removeGame(g1);
+        assertFalse(instance.contains(g1));
+    }
+    
+    
     /**
      * Test of removeGame method, of class GameSet.
      */
     @Test
     public void testRemoveGame() {
-        System.out.println("Testing");
+        System.out.println("Testing removing game from game set");
         Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
         Game g2 = new Game("TG1", Game.Platform.PC_Steam, 2001);
         Game g3 = new Game("TG2", Game.Platform.PC_Steam, 2000);
