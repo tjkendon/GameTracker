@@ -161,11 +161,11 @@ public class GameSet {
         return games.remove(g);
     }
 
-    private int size() {
+    public int size() {
         return games.size();
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return games.isEmpty();
     }
 
