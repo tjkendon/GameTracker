@@ -22,7 +22,7 @@
 
 * Basics
    * Add Game
-   * **Get All Games**
+   * Get All Games
    * Get Game
       * Get Game By Name
          * Contains None - throws IllegalArgumentException
@@ -31,8 +31,8 @@
       * Get Game By Exact Match
          * Matches Exactly - Test1, PC_Steam, 2000
    * **Get Games By**  - Set up list of 4 games (TG1, Other, 2000), (TG1, Steam, 2001), (TG2, Steam, 2000), (TG2, Other, 2001)
-      * **Name**
-      * **Platform** 
+      * Name
+      * Platform 
       * **Year** 
    * **Size**
       * **New Set** - size = 0
@@ -66,3 +66,11 @@
    * **2000** - return int 2000
    * **10000** - throws new IllegalArgumentException
    * **Two Thousand** - throws new IllegalArgumentException
+
+## CSVGamePersistenceManager
+
+* **Save / Load**
+
+## CSVSessionPersistenceManager
+
+* **Save / Load**
