@@ -270,6 +270,20 @@ public class GameSetTest {
         assertTrue(instance.isEmpty());
     }
 
+    @Test
+    public void testSize() {
+        System.out.println("Testing if a GameSet isEmpty");
+
+        Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
+
+        GameSet instance = new GameSet();
+        assertEquals(instance.size(), 0);
+
+        instance.addGame(g1);
+        assertEquals(instance.size(), 1);
+
+    }
+
     /**
      * Test of removeGame method, of class GameSet.
      */
