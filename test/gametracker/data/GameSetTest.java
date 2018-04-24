@@ -163,15 +163,28 @@ public class GameSetTest {
      * Test of getGames method, of class GameSet.
      */
     @Test
-    public void testGetGames_String() {
-        System.out.println("getGames");
-        String gameName = "";
+    public void testGetGames_ByName() {
+        System.out.println("Testing getting all games that match a given name");
+        String gameName = "TG1";
+        Game g1 = new Game(gameName, Game.Platform.PC_Steam, 2000);
+        Game g2 = new Game(gameName, Game.Platform.PC_Steam, 2001);
+        Game g3 = new Game("TG2", Game.Platform.PC_Steam, 2000);
+        Game g4 = new Game("TG2", Game.Platform.PC_Steam, 2001);
         GameSet instance = new GameSet();
-        Set<Game> expResult = null;
+        
+        
+        instance.addGame(g1);
+        instance.addGame(g2);
+        instance.addGame(g3);
+        instance.addGame(g4);
+        
+        Set<Game> expResult = new HashSet<>();
+        expResult.add(g1);
+        expResult.add(g2);
+        
         Set<Game> result = instance.getGames(gameName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -179,14 +192,27 @@ public class GameSetTest {
      */
     @Test
     public void testGetGames_GamePlatform() {
-        System.out.println("getGames");
-        Game.Platform platform = null;
+        System.out.println("Testing getting all games that match a given " +
+                "Platform");
+        Game.Platform platform = Game.Platform.DS;
+        Game g1 = new Game("TG1", platform, 2000);
+        Game g2 = new Game("TG1", Game.Platform.PC_Steam, 2001);
+        Game g3 = new Game("TG2", Game.Platform.PC_Steam, 2000);
+        Game g4 = new Game("TG2", platform, 2001);
+        
         GameSet instance = new GameSet();
-        Set<Game> expResult = null;
+        instance.addGame(g1);
+        instance.addGame(g2);
+        instance.addGame(g3);
+        instance.addGame(g4);
+        
+        
+        Set<Game> expResult = new HashSet<>();
+        expResult.add(g1);
+        expResult.add(g4);
         Set<Game> result = instance.getGames(platform);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
