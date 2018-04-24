@@ -219,6 +219,110 @@ public class GameSetTest {
      * Test of getGames method, of class GameSet.
      */
     @Test
+    public void testGetGames_year() {
+        System.out.println("Testing getting all games that match a given year");
+        int year = 2000;
+        
+                Game g1 = new Game("TG1", Game.Platform.PC_Steam, year);
+        Game g2 = new Game("TG1", Game.Platform.PC_Steam, 2001);
+        Game g3 = new Game("TG2", Game.Platform.PC_Steam, year);
+        Game g4 = new Game("TG2", Game.Platform.PC_Steam, 2001);
+        
+        GameSet instance = new GameSet();
+        instance.addGame(g1);
+        instance.addGame(g2);
+        instance.addGame(g3);
+        instance.addGame(g4);
+        
+        Set<Game> expResult = new HashSet<>();
+        expResult.add(g1);
+        expResult.add(g3);
+       
+        Set<Game> result = instance.getGames(year);
+        assertEquals(expResult, result);
+        
+    }
+
+    /**
+     * Test of removeGame method, of class GameSet.
+     */
+    @Test
+    public void testRemoveGame() {
+        System.out.println("Testing");
+        Game g = null;
+        GameSet instance = new GameSet();
+        boolean expResult = false;
+        boolean result = instance.removeGame(g);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGames method, of class GameSet.
+     */
+    @Test
+    public void testGetGames_0args() {
+        System.out.println("getGames");
+        GameSet instance = new GameSet();
+        Set<Game> expResult = null;
+        Set<Game> result = instance.getGames();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGame method, of class GameSet.
+     */
+    @Test
+    public void testGetGame_String() {
+        System.out.println("getGame");
+        String gameName = "";
+        GameSet instance = new GameSet();
+        Game expResult = null;
+        Game result = instance.getGame(gameName);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGame method, of class GameSet.
+     */
+    @Test
+    public void testGetGame_3args() {
+        System.out.println("getGame");
+        String gameName = "";
+        Game.Platform p = null;
+        int year = 0;
+        GameSet instance = new GameSet();
+        Game expResult = null;
+        Game result = instance.getGame(gameName, p, year);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGames method, of class GameSet.
+     */
+    @Test
+    public void testGetGames_String() {
+        System.out.println("getGames");
+        String gameName = "";
+        GameSet instance = new GameSet();
+        Set<Game> expResult = null;
+        Set<Game> result = instance.getGames(gameName);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGames method, of class GameSet.
+     */
+    @Test
     public void testGetGames_int() {
         System.out.println("getGames");
         int year = 0;
@@ -231,15 +335,28 @@ public class GameSetTest {
     }
 
     /**
-     * Test of removeGame method, of class GameSet.
+     * Test of size method, of class GameSet.
      */
     @Test
-    public void testRemoveGame() {
-        System.out.println("removeGame");
-        Game g = null;
+    public void testSize() {
+        System.out.println("size");
+        GameSet instance = new GameSet();
+        int expResult = 0;
+        int result = instance.size();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isEmpty method, of class GameSet.
+     */
+    @Test
+    public void testIsEmpty() {
+        System.out.println("isEmpty");
         GameSet instance = new GameSet();
         boolean expResult = false;
-        boolean result = instance.removeGame(g);
+        boolean result = instance.isEmpty();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
