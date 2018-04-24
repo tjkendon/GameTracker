@@ -160,6 +160,10 @@ public class GameSet {
     public boolean removeGame(Game g) {
         return games.remove(g);
     }
+    
+    public boolean contains(Game g) {
+        return games.contains(g);
+    }
 
     public int size() {
         return games.size();
