@@ -9,7 +9,7 @@
 
 ## Play Session
 
-* **Basics**
+* Basics
 * Parse Play Time
    * Correct "1.1" - return double
    * Incorrect "One Point One" - throws IllegalArgumentException
@@ -20,16 +20,16 @@
    
 ## GameSet
 
-* **Basics**
-   * **Add Game**
+* Basics
+   * Add Game
    * **Get All Games**
-   * **Get Game**
-      * **Get Game By Name**
-         * **Contains None - throws IllegalArgumentException**
-         * **Contains Exactly One - returns game**
-         * **Contains More than One - throws IllegalArgumentExcpetion**
-      * **Get Game By Exact Match**
-         * **Matches Exactly - Test1, PC_Steam, 2000**
+   * Get Game
+      * Get Game By Name
+         * Contains None - throws IllegalArgumentException
+         * Contains Exactly One - returns game
+         * Contains More than One - throws IllegalArgumentExcpetion
+      * Get Game By Exact Match
+         * Matches Exactly - Test1, PC_Steam, 2000
    * **Get Games By**  - Set up list of 4 games (TG1, Other, 2000), (TG1, Steam, 2001), (TG2, Steam, 2000), (TG2, Other, 2001)
       * **Name**
       * **Platform** 
