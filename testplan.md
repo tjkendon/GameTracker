@@ -30,21 +30,21 @@
          * Contains More than One - throws IllegalArgumentExcpetion
       * Get Game By Exact Match
          * Matches Exactly - Test1, PC_Steam, 2000
-   * **Get Games By**  - Set up list of 4 games (TG1, Other, 2000), (TG1, Steam, 2001), (TG2, Steam, 2000), (TG2, Other, 2001)
+   * Get Games By  - Set up list of 4 games (TG1, Other, 2000), (TG1, Steam, 2001), (TG2, Steam, 2000), (TG2, Other, 2001)
       * Name
       * Platform 
-      * **Year** 
-   * **Size**
-      * **New Set** - size = 0
-      * **Add 2 Games** - size = 2
-   * **isEmpty**
-      * **New** - true
-      * **Add 1** - false
-      * **Remove** - true
+      * Year 
+   * Size
+      * New Set - size = 0
+      * Add 2 Games - size = 2
+   * isEmpty
+      * New - true
+      * Add 1 - false
+      * Remove - true
       
 ## Game
 
-* **Basics**
+* Basics
 * **Parse Platform**
    * **PC_Steam** - return 
    * **PC_Other** - return 
@@ -61,11 +61,11 @@
    * **Playstation** - return 
    * **Unknown** - return 
    * **Game Thingy 1** - throws new IllegalArgumentException
-* **Parse Year**
-   * **999** - throws new IllegalArgumentException
-   * **2000** - return int 2000
-   * **10000** - throws new IllegalArgumentException
-   * **Two Thousand** - throws new IllegalArgumentException
+* Parse Year
+   * 999 - throws new IllegalArgumentException
+   * 2000 - return int 2000
+   * 10000 - throws new IllegalArgumentException
+   * Two Thousand - throws new IllegalArgumentException
 
 ## CSVGamePersistenceManager
 
