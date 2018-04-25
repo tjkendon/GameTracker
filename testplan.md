@@ -45,22 +45,22 @@
 ## Game
 
 * Basics
-* **Parse Platform**
-   * **PC_Steam** - return 
-   * **PC_Other** - return 
-   * **Wii_U** - return 
-   * **Wii** - return 
-   * **GameCube** - return 
-   * **Nintendo_64** - return 
-   * **Super_Nintendo** - return 
-   * **DS_3DS** - return 
-   * **DS** - return 
-   * **GameBoy_Advance** - return 
-   * **Playstation_3** - return 
-   * **Playstation_2** - return 
-   * **Playstation** - return 
-   * **Unknown** - return 
-   * **Game Thingy 1** - throws new IllegalArgumentException
+* Parse Platform
+   * PC_Steam - return 
+   * PC_Other - return 
+   * Wii_U - return 
+   * Wii - return 
+   * GameCube - return 
+   * Nintendo_64 - return 
+   * Super_Nintendo - return 
+   * DS_3DS - return 
+   * DS - return 
+   * GameBoy_Advance - return 
+   * Playstation_3 - return 
+   * Playstation_2 - return 
+   * Playstation - return 
+   * Unknown - return 
+   * Game Thingy 1 - throws new IllegalArgumentException
 * Parse Year
    * 999 - throws new IllegalArgumentException
    * 2000 - return int 2000
