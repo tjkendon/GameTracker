@@ -15,14 +15,11 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class PlaySession {
 
-    
     /**
      *
      */
-    public static DateTimeFormatter SESSION_DATE_FORMAT = 
-            DateTimeFormat.forPattern("yyyy/MM/dd");
-
- 
+    public static DateTimeFormatter SESSION_DATE_FORMAT
+            = DateTimeFormat.forPattern("yyyy/MM/dd");
 
     private final Game game;
     private final DateTime sessionDate; // date the session was played on
@@ -90,7 +87,11 @@ public class PlaySession {
         if (!Objects.equals(this.game, other.game)) {
             return false;
         }
-        if (!Objects.equals(this.sessionDate, other.sessionDate)) {
+        if (!(this.sessionDate.getYear() == other.sessionDate.getYear())
+                && (this.sessionDate.getMonthOfYear()
+                == other.sessionDate.getMonthOfYear())
+                && (this.sessionDate.getDayOfMonth()
+                == other.sessionDate.getDayOfMonth()) ) {
             return false;
         }
         return true;
@@ -102,8 +103,8 @@ public class PlaySession {
                 + ", " + game.getName()
                 + ", " + playTime;
     }
-    
-       /**
+
+    /**
      *
      * Helper method to parse a double from an input string, which is intended
      * to represent the play time. If it can't be parsed throws a
@@ -127,8 +128,8 @@ public class PlaySession {
      *
      * Helper method to parse a JodaTime DateTime from an input string. If the
      * string is blank then returns the DateTime for now. Otherwise attempts to
-     * parse from the format in SESSION_DATE_FORMAT. If it fails it throws
-     * an IllegalArgumentException with information.
+     * parse from the format in SESSION_DATE_FORMAT. If it fails it throws an
+     * IllegalArgumentException with information.
      *
      * @param dateStr the string that will be parsed
      * @return a correct date time if the string is empty or can be parsed
