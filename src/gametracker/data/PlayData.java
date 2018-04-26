@@ -3,6 +3,7 @@ package gametracker.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -50,6 +51,28 @@ public class PlayData {
 
     boolean contains(PlaySession session) {
         return sessions.contains(session);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.sessions);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PlayData other = (PlayData) obj;
+        return this.sessions.equals(other.sessions);
     }
     
     
