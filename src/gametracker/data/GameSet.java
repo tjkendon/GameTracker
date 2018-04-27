@@ -3,6 +3,7 @@ package gametracker.data;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -172,5 +173,32 @@ public class GameSet {
     public boolean isEmpty() {
         return games.isEmpty();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.games);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GameSet other = (GameSet) obj;
+        if (!Objects.equals(this.games, other.games)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }
