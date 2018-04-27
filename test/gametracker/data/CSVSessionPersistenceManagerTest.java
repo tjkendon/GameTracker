@@ -50,7 +50,7 @@ public class CSVSessionPersistenceManagerTest {
         
         // set up games
         Game testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
-        Game testgame2 = new Game("Test2", Game.Platform.PC_Steam, 2000);
+        Game testgame2 = new Game("Test1", Game.Platform.PC_Steam, 2001);
         GameSet games = new GameSet();
         games.addGame(testgame1);
         games.addGame(testgame2);
