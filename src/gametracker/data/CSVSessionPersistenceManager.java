@@ -41,9 +41,13 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
                     DateTime date = PlaySession.parseDateTime(dateString);
 
                     String gameString = playStrings[1].trim();
-                    Game game = gameSet.getGame(gameString);
+                    Game.Platform platform = Game.parsePlatform(playStrings[2].trim());
+                    int year = Game.parseYear(playStrings[3].trim());
+                    
+                    
+                    Game game = gameSet.getGame(gameString, platform, year);
 
-                    String timeString = playStrings[2].trim();
+                    String timeString = playStrings[4].trim();
                     Double time = PlaySession.parsePlayTime(timeString);
 
                     returnData.addPlaySession(
@@ -68,9 +72,11 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
     public void savePlayData(PlayData sessions) {
         try (PrintWriter writer = new PrintWriter(datafile)) {
             for (PlaySession s : sessions.getPlaySessions()) {
-                writer.printf("%s, %s, %s%n",
+                writer.printf("%s, %s, %s, %s, %s%n",
                         PlaySession.SESSION_DATE_FORMAT.print(s.getSessionDate()),
                         s.getGame().getName(),
+                        s.getGame().getPlatform(),
+                        s.getGame().getYear(),
                         s.getPlayTime());
             }
         } catch (FileNotFoundException ex) {
