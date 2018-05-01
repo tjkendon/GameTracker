@@ -69,8 +69,13 @@
 
 ## CSVGamePersistenceManager
 
-* **Save / Load**
+* Save / Load
+* **Save with no data file**
+* **Load with no data file**
 
 ## CSVSessionPersistenceManager
 
-* **Save / Load**
+* Save / Load
+* **Save with no data file**
+* Load with no data file
+* **Load with no game set**
