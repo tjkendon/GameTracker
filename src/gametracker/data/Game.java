@@ -99,8 +99,7 @@ public class Game {
         return true;
     }
 
-    /**
-     *
+ /**
      * Parses the platform from a given string. Will return the platform which
      * matches the valueOf for the string, if possible or throws an
      * IllegalArgumentException otherwise.
@@ -108,7 +107,7 @@ public class Game {
      * @param platformStr
      * @return
      */
-    public static Platform parsePlatform(String platformStr) {
+    public static Game.Platform parsePlatform(String platformStr) {
 
         try {
             return Game.Platform.valueOf(platformStr);
@@ -142,5 +141,6 @@ public class Game {
                     "Not able to parse year from " + yearStr);
         }
     }
+    
 
 }
