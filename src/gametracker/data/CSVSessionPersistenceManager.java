@@ -17,17 +17,53 @@ import org.joda.time.DateTime;
  */
 public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
-    private final File datafile;
-    private final GameSet gameSet;
+    private File datafile;
+    private GameSet gameSet;
 
+    public CSVSessionPersistenceManager() {
+        
+    }
+    
     public CSVSessionPersistenceManager(File datafile, GameSet gameSet) {
         this.datafile = datafile;
         this.gameSet = gameSet;
     }
 
+    public File getDatafile() {
+        return datafile;
+    }
+
+    public GameSet getGameSet() {
+        return gameSet;
+    }
+
+    public void setDatafile(File datafile) {
+        this.datafile = datafile;
+    }
+
+    public void setGameSet(GameSet gameSet) {
+        this.gameSet = gameSet;
+    }
+    
+    
+    
+
     @Override
     public PlayData load() {
+        
         PlayData returnData = new PlayData();
+        
+        if (datafile == null) {
+            throw new IllegalStateException(
+                    "Datafile not set to load session data");
+        }
+        
+        if (gameSet == null) {
+            throw new IllegalStateException(
+                    "GameSet not set to load session data");
+        }
+        
+        
 
         try {
             Scanner scanner = new Scanner(datafile);
@@ -41,7 +77,8 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
                     DateTime date = PlaySession.parseDateTime(dateString);
 
                     String gameString = playStrings[1].trim();
-                    Game.Platform platform = Game.parsePlatform(playStrings[2].trim());
+                    Game.Platform platform = 
+                            Game.parsePlatform(playStrings[2].trim());
                     int year = Game.parseYear(playStrings[3].trim());
                     
                     
@@ -62,7 +99,8 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
             }
 
         } catch (FileNotFoundException ex) {
-            System.err.println("Not able to find file " + datafile.getName());
+            throw new IllegalStateException(
+                    "Not able to find file " + datafile.getName(), ex);
         }
 
         return returnData;
@@ -70,6 +108,14 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
     @Override
     public void savePlayData(PlayData sessions) {
+        
+        
+        if (datafile == null) {
+            throw new IllegalStateException(
+                    "Datafile not set to save session data");
+        }
+        
+        
         try (PrintWriter writer = new PrintWriter(datafile)) {
             for (PlaySession s : sessions.getPlaySessions()) {
                 writer.printf("%s, %s, %s, %s, %s%n",
@@ -80,9 +126,11 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
                         s.getPlayTime());
             }
         } catch (FileNotFoundException ex) {
-            System.err.println("Not able to find file " + datafile.getName());
+            throw new IllegalStateException(
+                    "Not able to find file " + datafile.getName(), ex);
         }
 
     }
+    
 
 }
