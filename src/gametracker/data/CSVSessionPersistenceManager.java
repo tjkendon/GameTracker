@@ -63,8 +63,6 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
                     "GameSet not set to load session data");
         }
         
-        
-
         try {
             Scanner scanner = new Scanner(datafile);
 
@@ -114,7 +112,6 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
             throw new IllegalStateException(
                     "Datafile not set to save session data");
         }
-        
         
         try (PrintWriter writer = new PrintWriter(datafile)) {
             for (PlaySession s : sessions.getPlaySessions()) {
