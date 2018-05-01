@@ -28,6 +28,7 @@ public class Game {
         Playstation_3,
         Playstation_2,
         Playstation,
+        Mobile,
         Unknown
 
     }
