@@ -82,10 +82,6 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
                         g.getName(), 
                         g.getPlatform(), 
                         g.getYear());
-//                System.out.printf("%s, %s, %s%n", 
-//                        g.getName(), 
-//                        g.getPlatform(), 
-//                        g.getYear());
             }
 
         } catch (FileNotFoundException ex) {
