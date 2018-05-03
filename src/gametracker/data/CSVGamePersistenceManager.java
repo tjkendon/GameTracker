@@ -72,7 +72,7 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
     public void saveGameSet(GameSet gameSet) {
         
         if (datafile == null) {
-            throw  new IllegalStateException("No File Set to  Save To");
+            throw  new IllegalStateException("No File Set to Save To");
         }
 
         try (PrintWriter writer = new PrintWriter(datafile)) {
