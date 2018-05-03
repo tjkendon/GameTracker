@@ -14,12 +14,14 @@ import java.util.Objects;
 public class PlayData {
     
     private final List<PlaySession> sessions;
+    private boolean changed;
 
     /**
      * Creates a new PlayData with an empty list of sessions.
      */
     public PlayData() {
         this.sessions = new ArrayList<>();
+        changed = false;
     }
     
     /**
@@ -30,6 +32,7 @@ public class PlayData {
      */
     public void addPlaySession(PlaySession session) {
         this.sessions.add(session);
+        changed = true;
     }
     
     
@@ -74,6 +77,15 @@ public class PlayData {
         final PlayData other = (PlayData) obj;
         return this.sessions.equals(other.sessions);
     }
+
+    public boolean hasChanged() {
+        return changed;
+    }
+    
+    public void resetChanged() {
+        changed = false;
+    }
+    
     
     
     
