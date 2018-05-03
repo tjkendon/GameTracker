@@ -162,8 +162,11 @@ public class GameSet {
      * @return
      */
     public boolean removeGame(Game g) {
-        changed = true;
-        return games.remove(g);   
+        boolean result = games.remove(g);
+        if (result) {
+            changed = true;
+        }
+        return result;   
     }
     
     public boolean contains(Game g) {
