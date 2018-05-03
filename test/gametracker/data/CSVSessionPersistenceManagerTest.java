@@ -150,7 +150,7 @@ public class CSVSessionPersistenceManagerTest {
     @Test
     public void testSavePlayDataNoFile() {
         System.out.println(
-                "Testing loading play data with no file");
+                "Testing saving play data with no file");
 
         noPlayDataFileRuleSave.expect(IllegalStateException.class);
         noPlayDataFileRuleSave.expectMessage(
