@@ -72,6 +72,24 @@ public class UIHelper {
         return (response.equalsIgnoreCase("Yes")
                 || response.equalsIgnoreCase("Y"));
     }
+    
+    /**
+     * 
+     * Tests if the argument string matches (ignoring case) any of the
+     * example files.
+     * 
+     * @param arg the string being tested
+     * @param matches an arbitrary set of strings to test against arg
+     * @return true if arg matches (ignoring case) one of the example strings
+     */
+    public static boolean test(String arg, String... matches) {
+        for (String m : matches) {
+            if (arg.equalsIgnoreCase(m)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
