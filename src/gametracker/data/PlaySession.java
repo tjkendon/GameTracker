@@ -20,6 +20,9 @@ public class PlaySession {
      */
     public static DateTimeFormatter SESSION_DATE_FORMAT
             = DateTimeFormat.forPattern("yyyy/MM/dd");
+    
+    public static DateTimeFormatter ALTERNATE_SESSION_DATE_FORMAT
+            = DateTimeFormat.forPattern("dd/MM/yyyy");
 
     private final Game game;
     private final DateTime sessionDate; // date the session was played on
@@ -142,8 +145,13 @@ public class PlaySession {
             try {
                 date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException(
+                try {
+                    date = DateTime.parse(dateStr, ALTERNATE_SESSION_DATE_FORMAT);
+                } catch (IllegalArgumentException e2) {
+                    throw new IllegalArgumentException(
                         "Not able to parse date from " + dateStr, e);
+                }
+                
             }
         }
         return date;
