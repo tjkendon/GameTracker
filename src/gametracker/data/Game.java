@@ -29,6 +29,7 @@ public class Game {
         Playstation_2,
         Playstation,
         Mobile,
+        Web,
         Unknown
 
     }
