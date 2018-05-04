@@ -5,10 +5,13 @@
  */
 package gametracker.cli;
 
+import gametracker.data.CSVGamePersistenceManager;
+import gametracker.data.CSVSessionPersistenceManager;
 import gametracker.data.Game;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -19,6 +22,7 @@ import org.joda.time.DateTime;
  */
 public class CLI {
 
+    public static final String VERSION = "0.1.0";
 
     public static void main(String[] args) {
 
@@ -30,29 +34,88 @@ public class CLI {
 
     private final List<MenuElement> mainMenu;
 
-    private final PlayData mainPlaySet;
+    private final PlayData mainPlayData;
     private final GameSet mainGameSet;
+
+    private CSVSessionPersistenceManager sessionManager;
+    private CSVGamePersistenceManager gameManager;
 
     public CLI() {
 
+        printPreamble();
+
         mainGameSet = loadGames();
 
-        mainPlaySet = loadPlaySet();
+        mainPlayData = loadPlaySet();
 
         mainMenu = setupMainMenu();
 
     }
 
     public final GameSet loadGames() {
-        GameSet gs = new GameSet();
+        System.out.println();
 
-        gs.addGame(new Game("Stardew Valley", Game.Platform.PC_Steam, 2016));
+        do {
+            try {
+                String fileName = UIHelper.promptForString(
+                        "Enter Game File (S to skip)");
 
-        return gs;
+                if (UIHelper.test(fileName, "S", "Skip")) {
+                    System.out.println("Starting with no game data");
+                    return new GameSet();
+                }
+
+                gameManager = new CSVGamePersistenceManager(new File(fileName));
+
+                GameSet gs = gameManager.load();
+                return gs;
+            } catch (IllegalStateException e) {
+                System.out.println(
+                        "Not able to load game file: " + e.getMessage());
+                System.out.println();
+            }
+        } while (true);
+
     }
 
     public final PlayData loadPlaySet() {
-        return new PlayData();
+        System.out.println();
+
+        if (mainGameSet.isEmpty()) {
+            System.out.println(
+                    "Cowardly Skipping loading play set without game data"
+                    + " available");
+            sessionManager = new CSVSessionPersistenceManager();
+            sessionManager.setGameSet(mainGameSet);
+            return new PlayData();
+        }
+
+        do {
+            try {
+
+                String fileName = UIHelper.promptForString(
+                        "Enter Session File (S to skip)");
+                
+                if (UIHelper.test(fileName, "S", "Skip")) {
+                    System.out.println("Starting with no session data");
+                    return new PlayData();
+                }
+                
+                sessionManager = new CSVSessionPersistenceManager(
+                        new File(fileName),
+                        mainGameSet);
+
+                PlayData data = sessionManager.load();
+
+                return data;
+            } catch (IllegalStateException e) {
+                System.out.println(
+                        "Not able to load session file: " + e.getMessage());
+                System.out.println();
+            }
+
+        } while (true);
+
     }
 
     public final List<MenuElement> setupMainMenu() {
@@ -69,7 +132,7 @@ public class CLI {
 
         menu.add(new MenuElement("2", "List All Play Sessions", () -> {
 
-            for (PlaySession s : mainPlaySet.getPlaySessions()) {
+            for (PlaySession s : mainPlayData.getPlaySessions()) {
                 System.out.println(s);
             }
 
@@ -92,7 +155,7 @@ public class CLI {
 
                 Double time = PlaySession.parsePlayTime(timeStr);
 
-                mainPlaySet.addPlaySession(new PlaySession(game, date, time));
+                mainPlayData.addPlaySession(new PlaySession(game, date, time));
             } catch (Exception e) {
                 System.err.println("Session not added - " + e.getMessage());
             }
@@ -110,7 +173,6 @@ public class CLI {
                 String yearStr = UIHelper.promptForString(
                         "Game Year");
                 int year = Game.parseYear(yearStr);
-                
 
                 mainGameSet.addGame(new Game(gameStr, platform, year));
             } catch (Exception e) {
@@ -118,6 +180,27 @@ public class CLI {
             }
 
         }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("W", "Load Game and Session Data",
+                () -> {
+                    try {
+
+                        String gameStr;
+
+//                if (gameManager != null) {
+//                    gameStr = UIHelper.promptForString("Game Data File", 
+//                            gameManager.getFile().getName());
+//                }
+                        String platformStr = UIHelper.promptForString(
+                                "Session Data File");
+
+                    } catch (Exception e) {
+                        System.err.println("Game not added - " + e.getMessage());
+                    }
+
+                }));
 
         menu.add(MenuElement.BLANK);
 
@@ -146,6 +229,13 @@ public class CLI {
 
         } while (keepRunning);
 
+    }
+
+    private void printPreamble() {
+        System.out.println("****************************************");
+        System.out.println();
+        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
+        System.out.println();
     }
 
 }
