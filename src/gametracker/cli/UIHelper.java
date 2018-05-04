@@ -31,6 +31,30 @@ public class UIHelper {
         return response;
     }
 
+    
+     /**
+     *
+     * Prompts the user with the specified text, appended with a ": " and
+     * returns the next keyboard input as a String or the defaultValue if 
+     * the input is empty.
+     *
+     * @param promptText the query to ask the user
+     * @param defaultValue the default value that will be returned if the
+     * user enters an empty string on the keyboard
+     * @return the text entered by the user
+     */
+    public static String promptForString(String promptText, String defaultValue) {
+
+        System.out.print(promptText + " (default is " + defaultValue +") : ");
+        String response = kb.nextLine();
+        
+        if (response.isEmpty()) {
+            return defaultValue;
+        }
+
+        return response;
+    }
+    
     /**
      *
      * Prompts the user with the specified text, appended with a " (Yes/No): ".
