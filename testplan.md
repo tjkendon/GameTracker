@@ -83,6 +83,6 @@
 ## UI Helper
 
 * checkFor
-   * **Match**
-   * **No Match**
-   * **Empty var args**
+   * Match
+   * No Match
+   * Empty var args
