@@ -79,10 +79,10 @@ public class UIHelper {
      * example files.
      * 
      * @param arg the string being tested
-     * @param matches an arbitrary set of strings to test against arg
+     * @param matches an arbitrary set of strings to checkFor against arg
      * @return true if arg matches (ignoring case) one of the example strings
      */
-    public static boolean test(String arg, String... matches) {
+    public static boolean checkFor(String arg, String... matches) {
         for (String m : matches) {
             if (arg.equalsIgnoreCase(m)) {
                 return true;
