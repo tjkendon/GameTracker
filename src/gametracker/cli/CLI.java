@@ -60,7 +60,7 @@ public class CLI {
                 String fileName = UIHelper.promptForString(
                         "Enter Game File (S to skip)");
 
-                if (UIHelper.test(fileName, "S", "Skip")) {
+                if (UIHelper.checkFor(fileName, "S", "Skip")) {
                     System.out.println("Starting with no game data");
                     return new GameSet();
                 }
@@ -83,7 +83,7 @@ public class CLI {
 
         if (mainGameSet.isEmpty()) {
             System.out.println(
-                    "Cowardly Skipping loading play set without game data"
+                    "Cowardly skipping loading play set without game data"
                     + " available");
             sessionManager = new CSVSessionPersistenceManager();
             sessionManager.setGameSet(mainGameSet);
@@ -96,7 +96,7 @@ public class CLI {
                 String fileName = UIHelper.promptForString(
                         "Enter Session File (S to skip)");
                 
-                if (UIHelper.test(fileName, "S", "Skip")) {
+                if (UIHelper.checkFor(fileName, "S", "Skip")) {
                     System.out.println("Starting with no session data");
                     return new PlayData();
                 }
@@ -183,7 +183,7 @@ public class CLI {
 
         menu.add(MenuElement.BLANK);
 
-        menu.add(new MenuElement("W", "Load Game and Session Data",
+        menu.add(new MenuElement("M", "Manage Data",
                 () -> {
                     try {
 
