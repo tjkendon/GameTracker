@@ -79,3 +79,10 @@
 * **Save with no data file**
 * Load with no data file
 * **Load with no game set**
+
+## UI Helper
+
+* checkFor
+   * **Match**
+   * **No Match**
+   * **Empty var args**
