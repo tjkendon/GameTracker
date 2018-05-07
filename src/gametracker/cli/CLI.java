@@ -28,21 +28,29 @@ public class CLI {
 
         CLI cli = new CLI();
 
+        cli.printPreamble();
+        
         cli.run();
+        
+        if (!cli.save()) {
+           UIHelper.promptForBoolean("Data Not Saved, quit anyway?");
+        }
+        
+        cli.printFarewell();
 
     }
 
     private final List<MenuElement> mainMenu;
 
-    private final PlayData mainPlayData;
-    private final GameSet mainGameSet;
+    private PlayData mainPlayData;
+    private GameSet mainGameSet;
 
     private CSVSessionPersistenceManager sessionManager;
     private CSVGamePersistenceManager gameManager;
 
     public CLI() {
 
-        printPreamble();
+        
 
         mainGameSet = loadGames();
 
@@ -50,6 +58,7 @@ public class CLI {
 
         mainMenu = setupMainMenu();
 
+        
     }
 
     public final GameSet loadGames() {
@@ -95,12 +104,12 @@ public class CLI {
 
                 String fileName = UIHelper.promptForString(
                         "Enter Session File (S to skip)");
-                
+
                 if (UIHelper.checkFor(fileName, "S", "Skip")) {
                     System.out.println("Starting with no session data");
                     return new PlayData();
                 }
-                
+
                 sessionManager = new CSVSessionPersistenceManager(
                         new File(fileName),
                         mainGameSet);
@@ -185,26 +194,67 @@ public class CLI {
 
         menu.add(new MenuElement("M", "Manage Data",
                 () -> {
-                    try {
-
-                        String gameStr;
-
-//                if (gameManager != null) {
-//                    gameStr = UIHelper.promptForString("Game Data File", 
-//                            gameManager.getFile().getName());
-//                }
-                        String platformStr = UIHelper.promptForString(
-                                "Session Data File");
-
-                    } catch (Exception e) {
-                        System.err.println("Game not added - " + e.getMessage());
-                    }
+                    // show data menu
 
                 }));
 
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("Q", "Quit Tracker", true));
+
+        return menu;
+
+    }
+
+    public final List<MenuElement> setUpDataMenu() {
+
+        List<MenuElement> menu = new ArrayList<>();
+
+        menu.add(new MenuElement("S", "Save all Data", () -> {
+
+            saveGameData();
+
+            saveSessionData();
+
+        }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("D", "Change Game Data File", () -> {
+
+            String newName = UIHelper.promptForString(
+                    "Enter new Game Data File Name (Blank to leave unchanged)");
+            if (!newName.isEmpty()) {
+                gameManager.setDatafile(new File(newName));
+            }
+
+        }));
+
+        menu.add(new MenuElement("F", "Change Session Data File", () -> {
+
+            String newName = UIHelper.promptForString(
+                    "Enter new Session Data File Name "
+                    + "(Blank to leave unchanged)");
+            if (!newName.isEmpty()) {
+                sessionManager.setDatafile(new File(newName));
+            }
+
+        }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("X", "Clear game and session data", () -> {
+
+            boolean sure = UIHelper.promptForBoolean(
+                    "Are you seure you want to clear all data");
+            if (sure) {
+                mainGameSet = new GameSet();
+                mainPlayData = new PlayData();
+                sessionManager.clearDataFile();
+                sessionManager.setGameSet(mainGameSet);
+            }
+
+        }));
 
         return menu;
 
@@ -236,6 +286,55 @@ public class CLI {
         System.out.println();
         System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
         System.out.println();
+    }
+    
+    private void printFarewell() {
+        
+        System.out.println();
+        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
+        System.out.println("TJ Kendon - @tjkendon - 2018");
+        System.out.println("****************************************");
+        
+        
+    }
+    
+    private boolean save() {
+        return saveGameData() && saveSessionData();
+    }
+
+    private boolean saveGameData() {
+        try {
+            if (mainGameSet.hasChanged()) {
+                gameManager.saveGameSet(mainGameSet);
+                System.out.println("Game data saved");
+            } else {
+                System.out.println("Game data has not changed");
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("Not able to save data - "
+                    + e.getLocalizedMessage());
+            return false;
+        }
+        return true;
+    }
+
+    private boolean saveSessionData() {
+
+        try {
+
+            if (mainPlayData.hasChanged()) {
+                sessionManager.savePlayData(mainPlayData);
+                System.out.println("Session data saved");
+            } else {
+                System.out.println("Session data has not changed");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Not able to save data - "
+                    + e.getLocalizedMessage());
+            return false;
+        }
+        return true;
     }
 
 }
