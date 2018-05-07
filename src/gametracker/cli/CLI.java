@@ -29,18 +29,19 @@ public class CLI {
         CLI cli = new CLI();
 
         cli.printPreamble();
-        
+
         cli.run();
-        
+
         if (!cli.save()) {
-           UIHelper.promptForBoolean("Data Not Saved, quit anyway?");
+            UIHelper.promptForBoolean("Data Not Saved, quit anyway?");
         }
-        
+
         cli.printFarewell();
 
     }
 
     private final List<MenuElement> mainMenu;
+    private final List<MenuElement> dataMenu;
 
     private PlayData mainPlayData;
     private GameSet mainGameSet;
@@ -50,15 +51,13 @@ public class CLI {
 
     public CLI() {
 
-        
-
         mainGameSet = loadGames();
 
         mainPlayData = loadPlaySet();
 
         mainMenu = setupMainMenu();
+        dataMenu = setUpDataMenu();
 
-        
     }
 
     public final GameSet loadGames() {
@@ -194,7 +193,7 @@ public class CLI {
 
         menu.add(new MenuElement("M", "Manage Data",
                 () -> {
-                    // show data menu
+                    runMenu("Data Menu", dataMenu);
 
                 }));
 
@@ -215,18 +214,16 @@ public class CLI {
             try {
                 saveGameData();
             } catch (IllegalStateException e) {
-                System.out.println("Not able to save game data - " 
-                        + e.getLocalizedMessage());
-            }
-            
-            try {
-                saveSessionData();
-            } catch (IllegalStateException e) {
-                System.out.println("Not able to save game data - " 
+                System.out.println("Not able to save game data - "
                         + e.getLocalizedMessage());
             }
 
-            
+            try {
+                saveSessionData();
+            } catch (IllegalStateException e) {
+                System.out.println("Not able to save play data - "
+                        + e.getLocalizedMessage());
+            }
 
         }));
 
@@ -252,7 +249,7 @@ public class CLI {
             }
 
         }));
-       
+
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("X", "Clear game and session data", () -> {
@@ -267,26 +264,27 @@ public class CLI {
             }
 
         }));
-        
+
         menu.add(MenuElement.BLANK);
-        
+
         menu.add(new MenuElement("Q", "Quit Data Menu", true));
-        
+
         return menu;
 
     }
-    
+
     public void run() {
         runMenu("Main Menu", mainMenu);
     }
 
     public void runMenu(String menuName, List<MenuElement> menu) {
 
-        System.err.flush();
-        System.out.flush();
-
         boolean keepRunning = true;
         do {
+
+            System.err.flush();
+            System.out.flush();
+
             MenuElement.showMenu(menuName, menu);
             System.out.println();
             String choice = UIHelper.promptForString("Enter Menu Option");
@@ -307,17 +305,16 @@ public class CLI {
         System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
         System.out.println();
     }
-    
+
     private void printFarewell() {
-        
+
         System.out.println();
         System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
         System.out.println("TJ Kendon - @tjkendon - 2018");
         System.out.println("****************************************");
-        
-        
+
     }
-    
+
     private boolean save() {
         return saveGameData() && saveSessionData();
     }
