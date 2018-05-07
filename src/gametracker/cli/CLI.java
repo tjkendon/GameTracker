@@ -240,7 +240,7 @@ public class CLI {
             }
 
         }));
-
+       
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("X", "Clear game and session data", () -> {
@@ -255,22 +255,30 @@ public class CLI {
             }
 
         }));
-
+        
+        menu.add(MenuElement.BLANK);
+        
+        menu.add(new MenuElement("Q", "Quit Data Menu", true));
+        
         return menu;
 
     }
-
+    
     public void run() {
+        runMenu("Main Menu", mainMenu);
+    }
+
+    public void runMenu(String menuName, List<MenuElement> menu) {
 
         System.err.flush();
         System.out.flush();
 
         boolean keepRunning = true;
         do {
-            MenuElement.showMenu("Main Menu", mainMenu);
+            MenuElement.showMenu(menuName, menu);
             System.out.println();
             String choice = UIHelper.promptForString("Enter Menu Option");
-            for (MenuElement m : mainMenu) {
+            for (MenuElement m : menu) {
                 if (m.act(choice)) {
                     keepRunning = !m.isQuitAfter();
                 }
