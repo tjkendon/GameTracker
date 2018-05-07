@@ -212,9 +212,21 @@ public class CLI {
 
         menu.add(new MenuElement("S", "Save all Data", () -> {
 
-            saveGameData();
+            try {
+                saveGameData();
+            } catch (IllegalStateException e) {
+                System.out.println("Not able to save game data - " 
+                        + e.getLocalizedMessage());
+            }
+            
+            try {
+                saveSessionData();
+            } catch (IllegalStateException e) {
+                System.out.println("Not able to save game data - " 
+                        + e.getLocalizedMessage());
+            }
 
-            saveSessionData();
+            
 
         }));
 
