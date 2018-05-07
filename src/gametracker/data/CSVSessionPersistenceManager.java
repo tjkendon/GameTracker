@@ -40,6 +40,14 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
     public void setDatafile(File datafile) {
         this.datafile = datafile;
     }
+    
+    public void clearDataFile() {
+        this.datafile = null;
+    }
+    
+    public boolean hasDataFile() {
+        return this.datafile != null;
+    }
 
     public void setGameSet(GameSet gameSet) {
         this.gameSet = gameSet;

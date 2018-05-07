@@ -28,6 +28,14 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
     public void setDatafile(File datafile) {
         this.datafile = datafile;
     }
+    
+    public void clearDataFile() {
+        this.datafile = null;
+    }
+    
+    public boolean hasDataFile() {
+        return this.datafile != null;
+    }
 
     @Override
     public GameSet load() {
