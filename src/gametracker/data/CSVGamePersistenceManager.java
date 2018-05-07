@@ -11,17 +11,43 @@ import java.util.Scanner;
  */
 public class CSVGamePersistenceManager implements GamePersistenceManager {
 
-    private final File datafile;
+    private File datafile;
+
+    public CSVGamePersistenceManager() {
+
+    }
+
 
     public CSVGamePersistenceManager(File datafile) {
         this.datafile = datafile;
     }
 
+    public File getDatafile() {
+        return datafile;
+    }
+
+    public void setDatafile(File datafile) {
+        this.datafile = datafile;
+    }
     
+    public void clearDataFile() {
+        this.datafile = null;
+    }
+    
+    public boolean hasDataFile() {
+        return this.datafile != null;
+    }
+
+
     @Override
     public GameSet load() {
 
         GameSet returnSet = new GameSet();
+
+        if (datafile == null) {
+            throw new IllegalStateException("No File Set to Load From");
+        }
+
 
         try {
             Scanner scanner = new Scanner(datafile);
@@ -36,7 +62,7 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
                     int year = Game.parseYear(gameStrings[2].trim());
                     returnSet.addGame(new Game(gameName, platform, year));
                 } catch (Exception e) {
-                    System.err.println("Line " + lineNumber 
+                    System.err.println("Line " + lineNumber
                             + ": not added - " + e.getMessage());
                 } finally {
                     lineNumber++;
@@ -45,7 +71,9 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
             }
 
         } catch (FileNotFoundException ex) {
-            System.err.println("Not able to find file " + datafile.getName());
+            throw new IllegalStateException(
+                    "Not able to find file " + datafile.getName(), ex);
+
         }
 
         return returnSet;
@@ -54,18 +82,26 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
 
     @Override
     public void saveGameSet(GameSet gameSet) {
-        try (PrintWriter writer = new PrintWriter(datafile)) {
-            
-            for (Game g : gameSet.getGames()) {
-                writer.printf("%s, %s, %s%n", g.getName(), g.getPlatform(), g.getYear());
-                System.out.printf("%s, %s, %s%n", g.getName(), g.getPlatform(), g.getYear());
-            }
-            
-        } catch (FileNotFoundException ex) {
-            System.err.println("Not able to open/create file " 
-                    + datafile.getName() + " for writing");
-        }
         
+        if (datafile == null) {
+            throw  new IllegalStateException("No File Set to Save To");
+        }
+
+        try (PrintWriter writer = new PrintWriter(datafile)) {
+
+            for (Game g : gameSet.getGames()) {
+                writer.printf("%s, %s, %s%n", 
+                        g.getName(), 
+                        g.getPlatform(), 
+                        g.getYear());
+            }
+
+        } catch (FileNotFoundException ex) {
+            throw new IllegalStateException("Not able to open/create file "
+                    + datafile.getName() + " for writing", ex);
+        }
+
+
     }
 
 }

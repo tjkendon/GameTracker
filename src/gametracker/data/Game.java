@@ -28,6 +28,8 @@ public class Game {
         Playstation_3,
         Playstation_2,
         Playstation,
+        Mobile,
+        Web,
         Unknown
 
     }
@@ -100,7 +102,6 @@ public class Game {
     }
 
     /**
-     *
      * Parses the platform from a given string. Will return the platform which
      * matches the valueOf for the string, if possible or throws an
      * IllegalArgumentException otherwise.
@@ -108,7 +109,7 @@ public class Game {
      * @param platformStr
      * @return
      */
-    public static Platform parsePlatform(String platformStr) {
+    public static Game.Platform parsePlatform(String platformStr) {
 
         try {
             return Game.Platform.valueOf(platformStr);
@@ -134,10 +135,12 @@ public class Game {
             try {
                 return Integer.parseInt(yearStr);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Not able to parse year from " + yearStr, e);
+                throw new IllegalArgumentException(
+                        "Not able to parse year from " + yearStr, e);
             }
         } else {
-            throw new IllegalArgumentException("Not able to parse year from " + yearStr);
+            throw new IllegalArgumentException(
+                    "Not able to parse year from " + yearStr);
         }
     }
 

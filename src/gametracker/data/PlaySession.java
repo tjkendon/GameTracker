@@ -15,13 +15,14 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class PlaySession {
 
-    
     /**
      *
      */
-    public static DateTimeFormatter SESSION_DATE_FORMAT = DateTimeFormat.forPattern("yyyy/MM/dd");
-
- 
+    public static DateTimeFormatter SESSION_DATE_FORMAT
+            = DateTimeFormat.forPattern("yyyy/MM/dd");
+    
+    public static DateTimeFormatter ALTERNATE_SESSION_DATE_FORMAT
+            = DateTimeFormat.forPattern("dd/MM/yyyy");
 
     private final Game game;
     private final DateTime sessionDate; // date the session was played on
@@ -89,7 +90,11 @@ public class PlaySession {
         if (!Objects.equals(this.game, other.game)) {
             return false;
         }
-        if (!Objects.equals(this.sessionDate, other.sessionDate)) {
+        if (!(this.sessionDate.getYear() == other.sessionDate.getYear())
+                && (this.sessionDate.getMonthOfYear()
+                == other.sessionDate.getMonthOfYear())
+                && (this.sessionDate.getDayOfMonth()
+                == other.sessionDate.getDayOfMonth()) ) {
             return false;
         }
         return true;
@@ -102,7 +107,8 @@ public class PlaySession {
                 + ", " + playTime;
     }
     
-       /**
+
+    /**
      *
      * Helper method to parse a double from an input string, which is intended
      * to represent the play time. If it can't be parsed throws a
@@ -116,7 +122,8 @@ public class PlaySession {
         try {
             time = Double.parseDouble(timeStr);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Not able to parse play time from " + timeStr, e);
+            throw new IllegalArgumentException(
+                    "Not able to parse play time from " + timeStr, e);
         }
         return time;
     }
@@ -125,8 +132,13 @@ public class PlaySession {
      *
      * Helper method to parse a JodaTime DateTime from an input string. If the
      * string is blank then returns the DateTime for now. Otherwise attempts to
+<<<<<<< HEAD
      * parse from the format in SESSION_DATE_FORMAT. If it fails it throws
      * an IllegalArgumentException with information.
+=======
+     * parse from the format in SESSION_DATE_FORMAT. If it fails it throws an
+     * IllegalArgumentException with information.
+>>>>>>> master
      *
      * @param dateStr the string that will be parsed
      * @return a correct date time if the string is empty or can be parsed
@@ -139,7 +151,13 @@ public class PlaySession {
             try {
                 date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Not able to parse date from " + dateStr, e);
+                try {
+                    date = DateTime.parse(dateStr, ALTERNATE_SESSION_DATE_FORMAT);
+                } catch (IllegalArgumentException e2) {
+                    throw new IllegalArgumentException(
+                        "Not able to parse date from " + dateStr, e);
+                }
+                
             }
         }
         return date;

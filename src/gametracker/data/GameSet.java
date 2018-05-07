@@ -3,6 +3,7 @@ package gametracker.data;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Set;
 public class GameSet {
 
     private Set<Game> games;
+    private boolean changed;
+
 
     /**
      *
@@ -22,6 +25,8 @@ public class GameSet {
      */
     public GameSet() {
         games = new HashSet<>();
+        changed = false;
+
     }
 
     /**
@@ -48,6 +53,8 @@ public class GameSet {
      */
     public void addGame(Game g) {
         games.add(g);
+        changed = true;
+
     }
 
     /**
@@ -158,15 +165,60 @@ public class GameSet {
      * @return
      */
     public boolean removeGame(Game g) {
-        return games.remove(g);
+        boolean result = games.remove(g);
+        if (result) {
+            changed = true;
+        }
+        return result;   
+    }
+    
+    public boolean contains(Game g) {
+        return games.contains(g);
     }
 
-    private int size() {
+    public int size() {
         return games.size();
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return games.isEmpty();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.games);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GameSet other = (GameSet) obj;
+        if (!Objects.equals(this.games, other.games)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasChanged() {
+        return changed;
+    }
+    
+    public void resetChanged() {
+        changed = false;
+    }
+    
+    
+    
+    
 
 }

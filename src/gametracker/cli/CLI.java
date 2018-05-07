@@ -5,10 +5,19 @@
  */
 package gametracker.cli;
 
+<<<<<<< HEAD
+=======
+import gametracker.data.CSVGamePersistenceManager;
+import gametracker.data.CSVSessionPersistenceManager;
+>>>>>>> master
 import gametracker.data.Game;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
+<<<<<<< HEAD
+=======
+import java.io.File;
+>>>>>>> master
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -19,11 +28,16 @@ import org.joda.time.DateTime;
  */
 public class CLI {
 
+<<<<<<< HEAD
+=======
+    public static final String VERSION = "0.1.0";
+>>>>>>> master
 
     public static void main(String[] args) {
 
         CLI cli = new CLI();
 
+<<<<<<< HEAD
         cli.run();
 
     }
@@ -32,18 +46,48 @@ public class CLI {
 
     private final PlayData mainPlaySet;
     private final GameSet mainGameSet;
+=======
+        cli.printPreamble();
+
+        cli.run();
+
+        if (!cli.save()) {
+            UIHelper.promptForBoolean("Data Not Saved, quit anyway?");
+        }
+
+        cli.printFarewell();
+
+    }
+
+    private final List<MenuElement> mainMenu;
+    private final List<MenuElement> dataMenu;
+
+    private PlayData mainPlayData;
+    private GameSet mainGameSet;
+
+    private CSVSessionPersistenceManager sessionManager;
+    private CSVGamePersistenceManager gameManager;
+>>>>>>> master
 
     public CLI() {
 
         mainGameSet = loadGames();
 
+<<<<<<< HEAD
         mainPlaySet = loadPlaySet();
 
         mainMenu = setupMainMenu();
+=======
+        mainPlayData = loadPlaySet();
+
+        mainMenu = setupMainMenu();
+        dataMenu = setUpDataMenu();
+>>>>>>> master
 
     }
 
     public final GameSet loadGames() {
+<<<<<<< HEAD
         GameSet gs = new GameSet();
 
         gs.addGame(new Game("Stardew Valley", Game.Platform.PC_Steam, 2016));
@@ -53,6 +97,71 @@ public class CLI {
 
     public final PlayData loadPlaySet() {
         return new PlayData();
+=======
+        System.out.println();
+
+        do {
+            try {
+                String fileName = UIHelper.promptForString(
+                        "Enter Game File (S to skip)");
+
+                if (UIHelper.checkFor(fileName, "S", "Skip")) {
+                    System.out.println("Starting with no game data");
+                    return new GameSet();
+                }
+
+                gameManager = new CSVGamePersistenceManager(new File(fileName));
+
+                GameSet gs = gameManager.load();
+                return gs;
+            } catch (IllegalStateException e) {
+                System.out.println(
+                        "Not able to load game file: " + e.getMessage());
+                System.out.println();
+            }
+        } while (true);
+
+    }
+
+    public final PlayData loadPlaySet() {
+        System.out.println();
+
+        if (mainGameSet.isEmpty()) {
+            System.out.println(
+                    "Cowardly skipping loading play set without game data"
+                    + " available");
+            sessionManager = new CSVSessionPersistenceManager();
+            sessionManager.setGameSet(mainGameSet);
+            return new PlayData();
+        }
+
+        do {
+            try {
+
+                String fileName = UIHelper.promptForString(
+                        "Enter Session File (S to skip)");
+
+                if (UIHelper.checkFor(fileName, "S", "Skip")) {
+                    System.out.println("Starting with no session data");
+                    return new PlayData();
+                }
+
+                sessionManager = new CSVSessionPersistenceManager(
+                        new File(fileName),
+                        mainGameSet);
+
+                PlayData data = sessionManager.load();
+
+                return data;
+            } catch (IllegalStateException e) {
+                System.out.println(
+                        "Not able to load session file: " + e.getMessage());
+                System.out.println();
+            }
+
+        } while (true);
+
+>>>>>>> master
     }
 
     public final List<MenuElement> setupMainMenu() {
@@ -69,7 +178,11 @@ public class CLI {
 
         menu.add(new MenuElement("2", "List All Play Sessions", () -> {
 
+<<<<<<< HEAD
             for (PlaySession s : mainPlaySet.getPlaySessions()) {
+=======
+            for (PlaySession s : mainPlayData.getPlaySessions()) {
+>>>>>>> master
                 System.out.println(s);
             }
 
@@ -92,7 +205,11 @@ public class CLI {
 
                 Double time = PlaySession.parsePlayTime(timeStr);
 
+<<<<<<< HEAD
                 mainPlaySet.addPlaySession(new PlaySession(game, date, time));
+=======
+                mainPlayData.addPlaySession(new PlaySession(game, date, time));
+>>>>>>> master
             } catch (Exception e) {
                 System.err.println("Session not added - " + e.getMessage());
             }
@@ -110,7 +227,10 @@ public class CLI {
                 String yearStr = UIHelper.promptForString(
                         "Game Year");
                 int year = Game.parseYear(yearStr);
+<<<<<<< HEAD
                 
+=======
+>>>>>>> master
 
                 mainGameSet.addGame(new Game(gameStr, platform, year));
             } catch (Exception e) {
@@ -121,12 +241,24 @@ public class CLI {
 
         menu.add(MenuElement.BLANK);
 
+<<<<<<< HEAD
+=======
+        menu.add(new MenuElement("M", "Manage Data",
+                () -> {
+                    runMenu("Data Menu", dataMenu);
+
+                }));
+
+        menu.add(MenuElement.BLANK);
+
+>>>>>>> master
         menu.add(new MenuElement("Q", "Quit Tracker", true));
 
         return menu;
 
     }
 
+<<<<<<< HEAD
     public void run() {
 
         System.err.flush();
@@ -138,6 +270,92 @@ public class CLI {
             System.out.println();
             String choice = UIHelper.promptForString("Enter Menu Option");
             for (MenuElement m : mainMenu) {
+=======
+    public final List<MenuElement> setUpDataMenu() {
+
+        List<MenuElement> menu = new ArrayList<>();
+
+        menu.add(new MenuElement("S", "Save all Data", () -> {
+
+            try {
+                saveGameData();
+            } catch (IllegalStateException e) {
+                System.out.println("Not able to save game data - "
+                        + e.getLocalizedMessage());
+            }
+
+            try {
+                saveSessionData();
+            } catch (IllegalStateException e) {
+                System.out.println("Not able to save play data - "
+                        + e.getLocalizedMessage());
+            }
+
+        }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("D", "Change Game Data File", () -> {
+
+            String newName = UIHelper.promptForString(
+                    "Enter new Game Data File Name (Blank to leave unchanged)");
+            if (!newName.isEmpty()) {
+                gameManager.setDatafile(new File(newName));
+            }
+
+        }));
+
+        menu.add(new MenuElement("F", "Change Session Data File", () -> {
+
+            String newName = UIHelper.promptForString(
+                    "Enter new Session Data File Name "
+                    + "(Blank to leave unchanged)");
+            if (!newName.isEmpty()) {
+                sessionManager.setDatafile(new File(newName));
+            }
+
+        }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("X", "Clear game and session data", () -> {
+
+            boolean sure = UIHelper.promptForBoolean(
+                    "Are you seure you want to clear all data");
+            if (sure) {
+                mainGameSet = new GameSet();
+                mainPlayData = new PlayData();
+                sessionManager.clearDataFile();
+                sessionManager.setGameSet(mainGameSet);
+            }
+
+        }));
+
+        menu.add(MenuElement.BLANK);
+
+        menu.add(new MenuElement("Q", "Quit Data Menu", true));
+
+        return menu;
+
+    }
+
+    public void run() {
+        runMenu("Main Menu", mainMenu);
+    }
+
+    public void runMenu(String menuName, List<MenuElement> menu) {
+
+        boolean keepRunning = true;
+        do {
+
+            System.err.flush();
+            System.out.flush();
+
+            MenuElement.showMenu(menuName, menu);
+            System.out.println();
+            String choice = UIHelper.promptForString("Enter Menu Option");
+            for (MenuElement m : menu) {
+>>>>>>> master
                 if (m.act(choice)) {
                     keepRunning = !m.isQuitAfter();
                 }
@@ -148,4 +366,62 @@ public class CLI {
 
     }
 
+<<<<<<< HEAD
+=======
+    private void printPreamble() {
+        System.out.println("****************************************");
+        System.out.println();
+        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
+        System.out.println();
+    }
+
+    private void printFarewell() {
+
+        System.out.println();
+        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
+        System.out.println("TJ Kendon - @tjkendon - 2018");
+        System.out.println("****************************************");
+
+    }
+
+    private boolean save() {
+        return saveGameData() && saveSessionData();
+    }
+
+    private boolean saveGameData() {
+        try {
+            if (mainGameSet.hasChanged()) {
+                gameManager.saveGameSet(mainGameSet);
+                System.out.println("Game data saved");
+            } else {
+                System.out.println("Game data has not changed");
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("Not able to save data - "
+                    + e.getLocalizedMessage());
+            return false;
+        }
+        return true;
+    }
+
+    private boolean saveSessionData() {
+
+        try {
+
+            if (mainPlayData.hasChanged()) {
+                sessionManager.savePlayData(mainPlayData);
+                System.out.println("Session data saved");
+            } else {
+                System.out.println("Session data has not changed");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Not able to save data - "
+                    + e.getLocalizedMessage());
+            return false;
+        }
+        return true;
+    }
+
+>>>>>>> master
 }
