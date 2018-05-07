@@ -31,8 +31,6 @@ public class UIHelper {
         return response;
     }
 
-<<<<<<< HEAD
-=======
     
      /**
      *
@@ -57,7 +55,6 @@ public class UIHelper {
         return response;
     }
     
->>>>>>> master
     /**
      *
      * Prompts the user with the specified text, appended with a " (Yes/No): ".
@@ -75,8 +72,6 @@ public class UIHelper {
         return (response.equalsIgnoreCase("Yes")
                 || response.equalsIgnoreCase("Y"));
     }
-<<<<<<< HEAD
-=======
     
     /**
      * 
@@ -95,7 +90,6 @@ public class UIHelper {
         }
         return false;
     }
->>>>>>> master
 
 
 
