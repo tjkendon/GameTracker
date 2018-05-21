@@ -45,6 +45,7 @@
 ## Game
 
 * Basics
+   * **Adding session with unknown game**
 * Parse Platform
    * PC_Steam - return 
    * PC_Other - return 
@@ -70,15 +71,15 @@
 ## CSVGamePersistenceManager
 
 * Save / Load
-* **Save with no data file**
-* **Load with no data file**
+* Save with no data file
+* Load with no data file
 
 ## CSVSessionPersistenceManager
 
 * Save / Load
-* **Save with no data file**
+* Save with no data file
 * Load with no data file
-* **Load with no game set**
+* Load with no game set
 
 ## UI Helper
 
@@ -86,3 +87,17 @@
    * Match
    * No Match
    * Empty var args
+
+## Filter
+
+* **Filter**
+   * **No Match**
+   * **One Match**
+   * **Multi Match**
+
+### Game Filter
+
+* ** Filter **
+   * ** No Match **
+   * ** One Match **
+   * ** Multi Match **
