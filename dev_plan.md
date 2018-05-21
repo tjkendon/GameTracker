@@ -23,9 +23,9 @@
    * Visualization Tools
 
 ## Dev Planning
-* Iteration 1
-   * List of play sessions
-   * Get total data by game
+* *Iteration 1*
+   * *List of play sessions*
+   * *Get total data by game*
    * Console Interface
 * Iteration 2
    * Filter
