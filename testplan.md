@@ -98,7 +98,9 @@
 * **Multi-Game Filter**
    * **No Match for Any**
    * **One Match for Any**
-   * **One Match for Each**
+   * One Match for Each
+      * List Constructor
+      * Multi-Arg Constructor
    * **Multi Match for Multi**
 
 ## Aggregation

@@ -26,6 +26,10 @@ public class PlayData {
         changed = false;
 
     }
+
+    PlayData(PlayData sourceData) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     /**
      * 
