@@ -97,7 +97,7 @@
 
 ### Game Filter
 
-* ** Filter **
-   * ** No Match **
-   * ** One Match **
-   * ** Multi Match **
+* **Filter**
+   * **No Match**
+   * **One Match**
+   * **Multi Match**
