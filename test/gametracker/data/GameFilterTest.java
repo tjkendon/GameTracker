@@ -146,6 +146,26 @@ public class GameFilterTest {
         expResult.addPlaySession(sessions[0]);
         PlayData result = instance.filter(sourceData);
         assertEquals(expResult, result);
+        //assertTrue()
+
+    }
+    
+    @Test
+    public void testFilterGameMultiInData() {
+        System.out.println("Testing Filter With Game repeatedlyin Data");
+
+        GameFilter instance = new GameFilter(f);
+        // a is used only once in session[0]
+        PlayData expResult = new PlayData();
+        // six fs 5, 11, 17, 23, 29, 35
+        expResult.addPlaySession(sessions[5]);
+        expResult.addPlaySession(sessions[11]);
+        expResult.addPlaySession(sessions[17]);
+        expResult.addPlaySession(sessions[23]);
+        expResult.addPlaySession(sessions[29]);
+        expResult.addPlaySession(sessions[35]);
+        PlayData result = instance.filter(sourceData);
+        assertEquals(expResult, result);
 
     }
 
