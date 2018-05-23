@@ -5,6 +5,8 @@
  */
 package gametracker.data;
 
+import java.util.List;
+
 /**
  *
  * @author tjkendon
@@ -13,9 +15,25 @@ public class GameFilter implements Filter {
 
     public Game filterGame;
 
+    
+    
     public GameFilter(Game filterGame) {
         this.filterGame = filterGame;
     }
+
+    GameFilter() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    GameFilter(Game... games) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    GameFilter(List<Game> games) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
     @Override
     public PlayData filter(PlayData source) {
