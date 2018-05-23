@@ -88,16 +88,38 @@
    * No Match
    * Empty var args
 
-## Filter
+## Filtering
 
-* **Filter**
-   * **No Match**
-   * **One Match**
-   * **Multi Match**
+* Game Filter
+   * No Match
+   * One Match
+   * Multi Match
 
-### Game Filter
+* **Multi-Game Filter**
+   * **No Match for Any**
+   * **One Match for Any**
+   * **One Match for Each**
+   * **Multi Match for Multi**
 
-* **Filter**
-   * **No Match**
-   * **One Match**
-   * **Multi Match**
+## Aggregation
+
+* **Total Play Time**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+
+* **Count Sessions**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+
+* **Average Session Length**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+
+* **Median Session Length**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+
