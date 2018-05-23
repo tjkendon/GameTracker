@@ -26,7 +26,17 @@
 * *Iteration 1*
    * *List of play sessions*
    * *Get total data by game*
-   * Console Interface
+   * *Console Interface*
 * Iteration 2
    * Filter
-   * Agregate
+      * Game
+         * Single
+         * Multiple
+      * Date
+         * Single
+         * Multiple
+   * Aggregate
+      * Total Time
+      * Instance Count
+      * Average
+      * Median
