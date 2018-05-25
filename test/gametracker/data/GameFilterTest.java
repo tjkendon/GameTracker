@@ -213,6 +213,8 @@ public class GameFilterTest {
                 + "the list constructor");
 
         List<Game> filterGames = new ArrayList<>();
+        filterGames.add(a);
+        filterGames.add(f);
         GameFilter instance = new GameFilter(filterGames);
         
         PlayData expResult = new PlayData();
@@ -227,6 +229,66 @@ public class GameFilterTest {
         expResult.addPlaySession(sessions[35]);
         
         PlayData result = instance.filter(sourceData);
+        assertEquals(expResult, result);
+
+    }
+    
+
+    
+        @Test
+    public void testEmptyFilterNoGamesInSource() {
+        System.out.println("Testing Empty Filter Empty Data Source");
+
+        List<Game> filterGames = new ArrayList<>();
+        GameFilter instance = new GameFilter(filterGames);
+        
+        PlayData specialSource = new PlayData();
+                
+        PlayData expResult = new PlayData();
+        
+        PlayData result = instance.filter(specialSource);
+        assertEquals(expResult, result);
+
+    }
+    
+    
+    
+        @Test
+    public void testFilterTwoGamesOnlyOneInSet() {
+        System.out.println("Testing Filter With Two Games added through "
+                + "the list constructor");
+
+        List<Game> filterGames = new ArrayList<>();
+        filterGames.add(a);
+        filterGames.add(f);
+        GameFilter instance = new GameFilter(filterGames);
+        
+        PlayData specialSource = new PlayData();
+        specialSource.addPlaySession(sessions[4]);
+        specialSource.addPlaySession(sessions[5]);
+        specialSource.addPlaySession(sessions[10]);
+        specialSource.addPlaySession(sessions[11]);
+        specialSource.addPlaySession(sessions[16]);
+        specialSource.addPlaySession(sessions[17]);
+        specialSource.addPlaySession(sessions[22]);
+        specialSource.addPlaySession(sessions[23]);
+        specialSource.addPlaySession(sessions[28]);
+        specialSource.addPlaySession(sessions[28]);
+        specialSource.addPlaySession(sessions[34]);
+        specialSource.addPlaySession(sessions[35]);
+        
+        
+        PlayData expResult = new PlayData();
+        // a is used only once in session[0]
+        // six fs 5, 11, 17, 23, 29, 35
+        expResult.addPlaySession(sessions[5]);
+        expResult.addPlaySession(sessions[11]);
+        expResult.addPlaySession(sessions[17]);
+        expResult.addPlaySession(sessions[23]);
+        expResult.addPlaySession(sessions[29]);
+        expResult.addPlaySession(sessions[35]);
+        
+        PlayData result = instance.filter(specialSource);
         assertEquals(expResult, result);
 
     }
