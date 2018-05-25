@@ -178,7 +178,7 @@ public class GameFilterTest {
         System.out.println("Testing Filter With No Games in Filter");
 
         GameFilter instance = new GameFilter();
-        PlayData expResult = new PlayData(sourceData);
+        PlayData expResult = new PlayData();
         PlayData result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
@@ -255,8 +255,8 @@ public class GameFilterTest {
     
         @Test
     public void testFilterTwoGamesOnlyOneInSet() {
-        System.out.println("Testing Filter With Two Games added through "
-                + "the list constructor");
+        System.out.println("Testing Filter With Two Games in filter, but"
+                + "only one game present in the set");
 
         List<Game> filterGames = new ArrayList<>();
         filterGames.add(a);
@@ -273,13 +273,12 @@ public class GameFilterTest {
         specialSource.addPlaySession(sessions[22]);
         specialSource.addPlaySession(sessions[23]);
         specialSource.addPlaySession(sessions[28]);
-        specialSource.addPlaySession(sessions[28]);
+        specialSource.addPlaySession(sessions[29]);
         specialSource.addPlaySession(sessions[34]);
         specialSource.addPlaySession(sessions[35]);
         
         
         PlayData expResult = new PlayData();
-        // a is used only once in session[0]
         // six fs 5, 11, 17, 23, 29, 35
         expResult.addPlaySession(sessions[5]);
         expResult.addPlaySession(sessions[11]);
