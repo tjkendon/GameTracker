@@ -27,8 +27,19 @@ public class PlayData {
 
     }
 
+    /**
+     * Creates a new PlayData with a list of sessions copied from the original.
+     * 
+     * Records that the data has been changed in the changed flag.
+     * 
+     * @param sourceData 
+     */
     PlayData(PlayData sourceData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.sessions = new ArrayList<>();
+        sourceData.getPlaySessions().forEach((s) -> {
+            this.sessions.add(new PlaySession(s));
+        });
+        changed = true;
     }
     
     /**
