@@ -39,7 +39,7 @@ public class GameFilter implements Filter {
      * @param games the game (or games) to add
      */
     GameFilter(Game... games) {
-        addAllGames(Arrays.asList(games));
+        addAllGames(games);
     }
 
     /**
@@ -57,13 +57,14 @@ public class GameFilter implements Filter {
     
     /**
      * 
-     * Adds the game to the filter. Sessions with the game will be included
-     * when the filter is called.
+     * Adds all games to the filter. Sessions with any of the games
+     * will be included when the filter is called.
      * 
-     * @param game the game to add to this filter
+     * @param games the list of games this filter
      */
-    public final void addGame(Game game) {
-        filterGames.add(game);
+    public final void addAllGames(Game... games) {
+        addAllGames(Arrays.asList(games));
+        
     }
     
     /**
@@ -73,7 +74,7 @@ public class GameFilter implements Filter {
      * 
      * @param games the list of games this filter
      */
-    protected final void addAllGames(List<Game> games) {
+    public final void addAllGames(List<Game> games) {
         for (Game g : games) {
             filterGames.add(g);
         }
