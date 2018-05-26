@@ -75,9 +75,22 @@ public class GameFilter implements Filter {
      * @param games the list of games this filter
      */
     public final void addAllGames(List<Game> games) {
-        for (Game g : games) {
-            filterGames.add(g);
-        }
+        filterGames.addAll(games);
+    }
+    
+    /**
+     * 
+     * Removes 
+     * 
+     * @param games
+     * @return 
+     */
+    public final boolean removeAllGames(Game... games) {
+        return removeAllGames(Arrays.asList(games));
+    }
+    
+    public final boolean removeAllGames(List<Game> games) {
+       return filterGames.removeAll(games);
     }
     
     /**
