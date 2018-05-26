@@ -91,17 +91,21 @@
 ## Filtering
 
 * Game Filter
-   * No Match
-   * One Match
-   * Multi Match
-
-* **Multi-Game Filter**
-   * **No Match for Any**
-   * **One Match for Any**
+   * No Match for one
+   * One Match for one
+   * Multi Match for one
+   * No Match for Any
+   * One Match for Any
    * One Match for Each
       * List Constructor
       * Multi-Arg Constructor
-   * **Multi Match for Multi**
+   * Multi Match for Multi
+
+* Date Filter 
+   * All Before
+   * All After
+   * Inter
+   * More than one Inter
 
 ## Aggregation
 
