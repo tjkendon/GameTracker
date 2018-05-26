@@ -55,13 +55,23 @@ public class GameFilter implements Filter {
         addAllGames(games);
     }
     
+    /**
+     * 
+     * Adds the game to the filter. Sessions with the game will be included
+     * when the filter is called.
+     * 
+     * @param game the game to add to this filter
+     */
+    public final void addGame(Game game) {
+        filterGames.add(game);
+    }
     
     /**
      * 
-     * Adds all games in the list to the filter. All games in this list will
-     * be included when the filter is used.
+     * Adds all games in the list to the filter. Sessions with any of the games
+     * will be included when the filter is called.
      * 
-     * @param games the list of games this 
+     * @param games the list of games this filter
      */
     protected final void addAllGames(List<Game> games) {
         for (Game g : games) {
