@@ -60,7 +60,7 @@ public class GameFilter implements Filter {
      * Adds all games to the filter. Sessions with any of the games
      * will be included when the filter is called.
      * 
-     * @param games the list of games this filter
+     * @param games the games  to add to this filter
      */
     public final void addAllGames(Game... games) {
         addAllGames(Arrays.asList(games));
@@ -72,7 +72,7 @@ public class GameFilter implements Filter {
      * Adds all games in the list to the filter. Sessions with any of the games
      * will be included when the filter is called.
      * 
-     * @param games the list of games this filter
+     * @param games the list of games add to this filter
      */
     public final void addAllGames(List<Game> games) {
         filterGames.addAll(games);
@@ -80,17 +80,39 @@ public class GameFilter implements Filter {
     
     /**
      * 
-     * Removes 
+     * Removes games from the filter. Session with any of the games
+     * will not be included when the filter is called.
      * 
-     * @param games
-     * @return 
+     * @param games the games to remove from the filter
+     * 
+     * @return true if the games could be removed
      */
     public final boolean removeAllGames(Game... games) {
         return removeAllGames(Arrays.asList(games));
     }
     
+    /**
+     * 
+     * Removes games in the list from the filter. Session with any of the games
+     * will not be included when the filter is called.
+     * 
+     * @param games the games to remove from the filter
+     * 
+     * @return true if the games could be removed
+     */
     public final boolean removeAllGames(List<Game> games) {
        return filterGames.removeAll(games);
+    }
+    
+    /**
+     * 
+     * Resets the filter by removing all games from it. After calling
+     * the filter will be empty and if filter is called it will return
+     * an empty PlayData.
+     * 
+     */
+    public final void clear() {
+        filterGames.clear();
     }
     
     /**
