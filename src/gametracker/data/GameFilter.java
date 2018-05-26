@@ -55,13 +55,30 @@ public class GameFilter implements Filter {
         addAllGames(games);
     }
     
+    
+    /**
+     * 
+     * Adds all games in the list to the filter. All games in this list will
+     * be included when the filter is used.
+     * 
+     * @param games the list of games this 
+     */
     protected final void addAllGames(List<Game> games) {
         for (Game g : games) {
             filterGames.add(g);
         }
     }
     
-    
+    /**
+     * 
+     * Returns a data set which is a copy subset of the source, including only
+     * play sessions with games that have been added to the filter. A filter
+     * with no games will return an empty data set.
+     * 
+     * @param source the original play data
+     * 
+     * @return a new play data object with deep copies of the play sessions
+     */
     @Override
     public PlayData filter(PlayData source) {
         
@@ -71,7 +88,7 @@ public class GameFilter implements Filter {
                 -> (filterGames.contains(
                         session.getGame()))).forEachOrdered((session) 
                         -> {
-            returnData.addPlaySession(session);
+            returnData.addPlaySession(new PlaySession(session));
         });
         
         return returnData;
