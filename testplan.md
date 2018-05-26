@@ -102,7 +102,7 @@
    * Multi Match for Multi
 
 * **Date Filter**
-   * **All Before*t *
+   * **All Before**
    * **All After**
    * **Inter**
    * **More than one Inter**
