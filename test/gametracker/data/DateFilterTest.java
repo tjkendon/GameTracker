@@ -146,6 +146,20 @@ public class DateFilterTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testFilterGamesAfterDate() {
+        System.out.println("Testing Filter Take Games After Date");
+        PlayData source = null;
+        DateFilter instance = new DateFilter();
+        instance.addWindow(null, new DateTime(2000, 1, 4, 0, 0));
+        PlayData expResult = new PlayData();
+        for (int i = 18; i < 37; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        PlayData result = instance.filter(source);
+        assertEquals(expResult, result);
+    }
+    
     // All After
     // Inter
     // More than one Inter
