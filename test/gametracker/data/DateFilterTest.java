@@ -139,7 +139,7 @@ public class DateFilterTest {
         DateFilter instance = new DateFilter();
         instance.addWindow(null, new DateTime(2000, 1, 4, 0, 0));
         PlayData expResult = new PlayData();
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i <= 17; i++) {
             sourceData.addPlaySession(sessions[i]);
         }
         PlayData result = instance.filter(source);
@@ -151,7 +151,7 @@ public class DateFilterTest {
         System.out.println("Testing Filter Take Games After Date");
         PlayData source = null;
         DateFilter instance = new DateFilter();
-        instance.addWindow(null, new DateTime(2000, 1, 4, 0, 0));
+        instance.addWindow(new DateTime(2000, 1, 4, 0, 0), null);
         PlayData expResult = new PlayData();
         for (int i = 18; i < 37; i++) {
             sourceData.addPlaySession(sessions[i]);
@@ -160,8 +160,43 @@ public class DateFilterTest {
         assertEquals(expResult, result);
     }
     
-    // All After
-    // Inter
+    @Test
+    public void testFilterGamesBetweenDates() {
+        System.out.println("Testing Filter Take Games Between Two Dates");
+        PlayData source = null;
+        DateFilter instance = new DateFilter();
+        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        PlayData expResult = new PlayData();
+        for (int i = 12; i <= 23; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        PlayData result = instance.filter(source);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testFilterGamesBetweenDatesMulti() {
+        System.out.println("Testing Filter Take Games Between Two Dates");
+        PlayData source = null;
+        DateFilter instance = new DateFilter();
+        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 4, 0, 0));
+        instance.addWindow(new DateTime(2000, 1, 5, 0, 0), new DateTime(2000, 1, 7, 0, 0));
+        PlayData expResult = new PlayData();
+        for (int i = 6; i <= 17; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        for (int i = 24; i <= 35; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        PlayData result = instance.filter(source);
+        assertEquals(expResult, result);
+    }
+    
+    
+    
+    
+    
+    // Inter - test from the 2nd to the 5 (so will include 12-23)
     // More than one Inter
 
     
