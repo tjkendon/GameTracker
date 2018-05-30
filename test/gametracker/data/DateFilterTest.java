@@ -192,12 +192,58 @@ public class DateFilterTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testFilterGamesBetweenDatesMultiEncapsulatingAinB() {
+        System.out.println("Testing Filter Take Games Between Two Dates, "
+                + "Encapsulating (First in Second)");
+        PlayData source = null;
+        DateFilter instance = new DateFilter();
+        instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 6, 0, 0));
+        PlayData expResult = new PlayData();
+        for (int i = 6; i <= 35; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        PlayData result = instance.filter(source);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testFilterGamesBetweenDatesMultiEncapsulatingBinA() {
+        System.out.println("Testing Filter Take Games Between Two Dates, "
+                + "Encapsulating (Second in First)");
+        PlayData source = null;
+        DateFilter instance = new DateFilter();
+        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 6, 0, 0));
+        instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        PlayData expResult = new PlayData();
+        for (int i = 6; i <= 35; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        PlayData result = instance.filter(source);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testFilterGamesBetweenDatesMultiOverlap() {
+        System.out.println("Testing Filter Take Games Between Two Dates "
+                + "Overlapping");
+        PlayData source = null;
+        DateFilter instance = new DateFilter();
+        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 4, 0, 0));
+        instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        PlayData expResult = new PlayData();
+        for (int i = 6; i <= 23; i++) {
+            sourceData.addPlaySession(sessions[i]);
+        }
+        PlayData result = instance.filter(source);
+        assertEquals(expResult, result);
+    }
+    
+    // test for overlapping multis
     
     
-    
-    
-    // Inter - test from the 2nd to the 5 (so will include 12-23)
-    // More than one Inter
+   
 
     
 }
