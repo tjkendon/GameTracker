@@ -144,9 +144,9 @@ public class DateFilter implements Filter {
             } else if ((start == null) && (end != null)) {
                 return date.isBefore(end);
             } else if ((start != null) && (end == null)) {
-                return date.isAfter(start);
+                return date.isAfter(start) || date.isEqual(start);
             }
-            return date.isAfter(start) && date.isBefore(end);
+            return (date.isAfter(start) || date.isEqual(start)) && date.isBefore(end);
         }
 
     }
