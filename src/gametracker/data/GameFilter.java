@@ -134,7 +134,7 @@ public class GameFilter implements Filter {
                 -> (filterGames.contains(
                         session.getGame()))).forEachOrdered((session) 
                         -> {
-            returnData.addPlaySession(new PlaySession(session));
+            returnData.addPlaySession(session);
         });
         
         return returnData;
