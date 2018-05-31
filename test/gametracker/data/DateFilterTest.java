@@ -167,7 +167,7 @@ public class DateFilterTest {
         DateFilter instance = new DateFilter();
         instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 5, 0, 0));
         PlayData expResult = new PlayData();
-        for (int i = 12; i <= 23; i++) {
+        for (int i = 6; i <= 23; i++) {
             expResult.addPlaySession(sessions[i]);
         }
         PlayData result = instance.filter(sourceData);
