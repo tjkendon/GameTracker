@@ -201,7 +201,7 @@ public class DateFilterTest {
         instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
         instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 6, 0, 0));
         PlayData expResult = new PlayData();
-        for (int i = 6; i <= 35; i++) {
+        for (int i = 6; i <= 29; i++) {
             expResult.addPlaySession(sessions[i]);
         }
         PlayData result = instance.filter(sourceData);
@@ -217,7 +217,7 @@ public class DateFilterTest {
         instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 6, 0, 0));
         instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
         PlayData expResult = new PlayData();
-        for (int i = 6; i <= 35; i++) {
+        for (int i = 6; i <= 29; i++) {
             expResult.addPlaySession(sessions[i]);
         }
         PlayData result = instance.filter(sourceData);
