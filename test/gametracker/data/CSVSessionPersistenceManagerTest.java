@@ -74,7 +74,7 @@ public class CSVSessionPersistenceManagerTest {
 
         PlayData result = instance.load();
 
-        assertEquals(original, result);
+        assertTrue(PlayData.containsMatchingContent(original, result));
     }
 
     @Rule

@@ -1,7 +1,5 @@
 package gametracker.data;
 
-import gametracker.cli.CLI;
-import java.util.Objects;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -42,13 +40,6 @@ public class PlaySession {
         this.playTime = playTime;
     }
 
-    PlaySession(PlaySession original) {
-        this.game = original.game;
-        this.sessionDate = original.sessionDate;
-        this.playTime = original.playTime;
-
-    }
-
     public Game getGame() {
         return game;
     }
@@ -59,45 +50,6 @@ public class PlaySession {
 
     public double getPlayTime() {
         return playTime;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.game);
-        hash = 29 * hash + Objects.hashCode(this.sessionDate);
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.playTime)
-                ^ (Double.doubleToLongBits(this.playTime) >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PlaySession other = (PlaySession) obj;
-        if (Double.doubleToLongBits(this.playTime)
-                != Double.doubleToLongBits(other.playTime)) {
-            return false;
-        }
-        if (!Objects.equals(this.game, other.game)) {
-            return false;
-        }
-        if (!(this.sessionDate.getYear() == other.sessionDate.getYear())
-                && (this.sessionDate.getMonthOfYear()
-                == other.sessionDate.getMonthOfYear())
-                && (this.sessionDate.getDayOfMonth()
-                == other.sessionDate.getDayOfMonth()) ) {
-            return false;
-        }
-        return true;
     }
 
     @Override
@@ -132,13 +84,8 @@ public class PlaySession {
      *
      * Helper method to parse a JodaTime DateTime from an input string. If the
      * string is blank then returns the DateTime for now. Otherwise attempts to
-<<<<<<< HEAD
-     * parse from the format in SESSION_DATE_FORMAT. If it fails it throws
-     * an IllegalArgumentException with information.
-=======
      * parse from the format in SESSION_DATE_FORMAT. If it fails it throws an
      * IllegalArgumentException with information.
->>>>>>> master
      *
      * @param dateStr the string that will be parsed
      * @return a correct date time if the string is empty or can be parsed

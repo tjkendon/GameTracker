@@ -4,6 +4,7 @@ package gametracker.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.joda.time.DateTimeComparator;
 
 
 /**
@@ -37,7 +38,7 @@ public class PlayData {
     PlayData(PlayData sourceData) {
         this.sessions = new ArrayList<>();
         sourceData.getPlaySessions().forEach((s) -> {
-            this.sessions.add(new PlaySession(s));
+            this.sessions.add(s);
         });
         changed = true;
     }
@@ -65,7 +66,7 @@ public class PlayData {
         List<PlaySession> returnList = new ArrayList<>();
         
         for (PlaySession s : sessions) {
-            returnList.add(new PlaySession(s));
+            returnList.add(s);
         }
         
         return returnList;
@@ -77,8 +78,9 @@ public class PlayData {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.sessions);
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.sessions);
+        hash = 79 * hash + (this.changed ? 1 : 0);
         return hash;
     }
 
@@ -94,8 +96,14 @@ public class PlayData {
             return false;
         }
         final PlayData other = (PlayData) obj;
-        return this.sessions.equals(other.sessions);
+        if (this.changed != other.changed) {
+            return false;
+        }
+        return Objects.equals(this.sessions, other.sessions);
     }
+
+    
+    
 
     public boolean hasChanged() {
         return changed;
@@ -105,6 +113,34 @@ public class PlayData {
         changed = false;
     }
     
+    public static boolean containsMatchingContent(PlayData a, PlayData b) {
+        DateTimeComparator dateComp = DateTimeComparator.getDateOnlyInstance();
+        if (a.getPlaySessions().size() == b.getPlaySessions().size()) {
+            for (int i = 0; i < a.getPlaySessions().size(); i++) {
+                System.out.println(a.getPlaySessions().get(i).getGame() + "|"
+                + b.getPlaySessions().get(i).getGame());
+                System.out.println(a.getPlaySessions().get(i).getSessionDate()+ "|"
+                + b.getPlaySessions().get(i).getSessionDate());
+                System.out.println(a.getPlaySessions().get(i).getPlayTime()+ "|"
+                + b.getPlaySessions().get(i).getPlayTime());
+                if ((a.getPlaySessions().get(i).getGame().equals(
+                        (b.getPlaySessions().get(i).getGame()))) &&
+                        (dateComp.compare(
+                                a.getPlaySessions().get(i).getSessionDate(),
+                                b.getPlaySessions().get(i).getSessionDate()) == 0) &&
+                        (a.getPlaySessions().get(i).getPlayTime() == 
+                            b.getPlaySessions().get(i).getPlayTime())
+                        ){
+                    
+                } else {
+                    return false;
+                }
+                                
+            }
+            return true;
+        }
+        return false;
+    } 
     
     
     
