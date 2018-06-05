@@ -109,10 +109,10 @@
 
 ## Aggregation
 
-* **Total Play Time**
-   * **Empty Set**
-   * **Single Game**
-   * **Multi Game**
+* Total Play Time
+   * Empty Set
+   * Single Game
+   * Multi Game
 
 * **Count Sessions**
    * **Empty Set**
