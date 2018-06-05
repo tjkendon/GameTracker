@@ -101,11 +101,11 @@
       * Multi-Arg Constructor
    * Multi Match for Multi
 
-* **Date Filter**
-   * **All Before**
-   * **All After**
-   * **Inter**
-   * **More than one Inter**
+* Date Filter
+   * All Before
+   * All After
+   * Inter
+   * More than one Inter
 
 ## Aggregation
 
