@@ -2,6 +2,7 @@ package gametracker.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 
@@ -11,7 +12,7 @@ import java.util.Map;
  *
  * @author tjkendon
  */
-class PlayAggregate {
+public class PlayAggregate {
 
     private final Map<Game, Map<AggregateType, Double>> aggregate;
 
@@ -104,5 +105,32 @@ class PlayAggregate {
             aggregate.get(game).clear();
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.aggregate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PlayAggregate other = (PlayAggregate) obj;
+        if (!Objects.equals(this.aggregate, other.aggregate)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }
