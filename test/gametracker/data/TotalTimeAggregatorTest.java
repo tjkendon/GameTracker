@@ -39,7 +39,7 @@ public class TotalTimeAggregatorTest {
     static Game d = new Game("Game D", Game.Platform.PC_Steam, 2000);
     // never used
     static Game e = new Game("Game E", Game.Platform.PC_Steam, 2000);
-    // 9.75 - total time
+    // 10.75 - total time
     static Game f = new Game("Game F", Game.Platform.PC_Steam, 2000);
     // once per day (6 total - 0.6 Total time)
     static Game g = new Game("Game G", Game.Platform.PC_Steam, 2002);
@@ -180,7 +180,7 @@ public class TotalTimeAggregatorTest {
         
         expResult.putAggregate(a, PlayAggregate.AggregateType.TOTAL_TIME, 1.0);
         expResult.putAggregate(
-                b1, PlayAggregate.AggregateType.TOTAL_TIME, 1.25);
+                b1, PlayAggregate.AggregateType.TOTAL_TIME, 2.0);
         expResult.putAggregate(
                 b2, PlayAggregate.AggregateType.TOTAL_TIME, 1.0);
         expResult.putAggregate(
@@ -191,10 +191,10 @@ public class TotalTimeAggregatorTest {
                 c2, PlayAggregate.AggregateType.TOTAL_TIME, 4.25);
         expResult.putAggregate(
                 c3, PlayAggregate.AggregateType.TOTAL_TIME, 0.5);
+        //expResult.putAggregate(
+        //        d, PlayAggregate.AggregateType.TOTAL_TIME, 0);
         expResult.putAggregate(
-                d, PlayAggregate.AggregateType.TOTAL_TIME, 0);
-        expResult.putAggregate(
-                e, PlayAggregate.AggregateType.TOTAL_TIME, 9.75);
+                e, PlayAggregate.AggregateType.TOTAL_TIME, 10.75);
         expResult.putAggregate(
                 f, PlayAggregate.AggregateType.TOTAL_TIME, 0.6);
         expResult.putAggregate(

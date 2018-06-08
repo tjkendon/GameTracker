@@ -5,19 +5,50 @@
  */
 package gametracker.data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author tjkendon
  */
 public class TotalTimeAggregator implements Aggregator {
     
+    PlayData sourceData;
+    
+    public final PlayAggregate.AggregateType type = 
+            PlayAggregate.AggregateType.TOTAL_TIME;
+    
     TotalTimeAggregator(PlayData source) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.sourceData = source;
     }
 
     @Override
     public PlayAggregate aggregate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Set<Game> games = new HashSet<>();
+        
+        PlayAggregate returnData = new PlayAggregate();
+        
+        for (PlaySession session : sourceData.getPlaySessions()) {
+            games.add(session.getGame());
+        }
+        
+        for (Game game : games) {
+            double totalTime = 0;
+            for (PlaySession session: sourceData.getPlaySessions()) {
+                if (session.getGame().equals(game)) {
+                    totalTime += session.getPlayTime();
+                }
+            }
+            returnData.putAggregate(game, type, totalTime);
+        }
+        
+        return returnData;
+        
+                
+        
+        
     }
     
 }
