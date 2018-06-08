@@ -24,6 +24,7 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
     }
 
+
     public CSVSessionPersistenceManager(File datafile, GameSet gameSet) {
         this.datafile = datafile;
         this.gameSet = gameSet;

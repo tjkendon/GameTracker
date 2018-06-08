@@ -1,7 +1,5 @@
 package gametracker.data;
 
-import gametracker.cli.CLI;
-import java.util.Objects;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -42,13 +40,6 @@ public class PlaySession {
         this.playTime = playTime;
     }
 
-    PlaySession(PlaySession original) {
-        this.game = original.game;
-        this.sessionDate = original.sessionDate;
-        this.playTime = original.playTime;
-
-    }
-
     public Game getGame() {
         return game;
     }
@@ -62,50 +53,12 @@ public class PlaySession {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.game);
-        hash = 29 * hash + Objects.hashCode(this.sessionDate);
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.playTime)
-                ^ (Double.doubleToLongBits(this.playTime) >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PlaySession other = (PlaySession) obj;
-        if (Double.doubleToLongBits(this.playTime)
-                != Double.doubleToLongBits(other.playTime)) {
-            return false;
-        }
-        if (!Objects.equals(this.game, other.game)) {
-            return false;
-        }
-        if (!(this.sessionDate.getYear() == other.sessionDate.getYear())
-                && (this.sessionDate.getMonthOfYear()
-                == other.sessionDate.getMonthOfYear())
-                && (this.sessionDate.getDayOfMonth()
-                == other.sessionDate.getDayOfMonth()) ) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
         return sessionDate.toString("dd/MM/YYYY")
                 + ", " + game.getName()
                 + ", " + playTime;
     }
+    
 
     /**
      *

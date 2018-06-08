@@ -204,7 +204,6 @@ public class CLI {
         return menu;
 
     }
-
     public final List<MenuElement> setUpDataMenu() {
 
         List<MenuElement> menu = new ArrayList<>();
@@ -353,5 +352,6 @@ public class CLI {
         }
         return true;
     }
+
 
 }

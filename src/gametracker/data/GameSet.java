@@ -17,6 +17,7 @@ public class GameSet {
     private Set<Game> games;
     private boolean changed;
 
+
     /**
      *
      * Creates a new empty set.
@@ -25,6 +26,7 @@ public class GameSet {
     public GameSet() {
         games = new HashSet<>();
         changed = false;
+
     }
 
     /**
@@ -52,6 +54,7 @@ public class GameSet {
     public void addGame(Game g) {
         games.add(g);
         changed = true;
+
     }
 
     /**
