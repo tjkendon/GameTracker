@@ -7,6 +7,7 @@ package gametracker.cli;
 
 import gametracker.data.CSVGamePersistenceManager;
 import gametracker.data.CSVSessionPersistenceManager;
+import gametracker.data.Filter;
 import gametracker.data.Game;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
@@ -22,7 +23,7 @@ import org.joda.time.DateTime;
  */
 public class CLI {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.2.0";
 
     public static void main(String[] args) {
 
@@ -42,9 +43,14 @@ public class CLI {
 
     private final List<MenuElement> mainMenu;
     private final List<MenuElement> dataMenu;
+    
+    private final List<MenuElement> filterMenu;
+    
 
     private PlayData mainPlayData;
     private GameSet mainGameSet;
+    
+    private List<Filter> filters;
 
     private CSVSessionPersistenceManager sessionManager;
     private CSVGamePersistenceManager gameManager;
@@ -54,9 +60,12 @@ public class CLI {
         mainGameSet = loadGames();
 
         mainPlayData = loadPlaySet();
+        
+        filters = new ArrayList<>();
 
         mainMenu = setupMainMenu();
         dataMenu = setUpDataMenu();
+        filterMenu = setUpFilterMenu();
 
     }
 
@@ -189,6 +198,12 @@ public class CLI {
 
         }));
 
+        menu.add(new MenuElement("F", "Filter Data",
+                () -> {
+                    runMenu("Filter Menu", filterMenu);
+
+                }));
+        
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("M", "Manage Data",
@@ -204,6 +219,7 @@ public class CLI {
         return menu;
 
     }
+    
     public final List<MenuElement> setUpDataMenu() {
 
         List<MenuElement> menu = new ArrayList<>();
@@ -267,6 +283,40 @@ public class CLI {
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("Q", "Quit Data Menu", true));
+
+        return menu;
+
+    }
+    
+    public final List<MenuElement> setUpFilterMenu() {
+
+        List<MenuElement> menu = new ArrayList<>();
+        
+        // list all filters
+        
+        menu.add(new MenuElement("L", "List All Filters", () -> {
+           
+            System.out.println("Active Filters:");
+            for (Filter f : filters) {
+                System.out.println("\t" + f);
+            }
+            if (filters.isEmpty()) {
+                System.out.println("\tNo Active Filters");
+            }
+            
+        }));
+        
+        // add game to filter
+        // add window to filter
+                
+        
+        // remove game from filter
+                // remove window from filter
+        
+        // clear filter
+
+
+        menu.add(new MenuElement("Q", "Quit Filter Menu", true));
 
         return menu;
 
