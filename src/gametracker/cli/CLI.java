@@ -9,6 +9,7 @@ import gametracker.data.CSVGamePersistenceManager;
 import gametracker.data.CSVSessionPersistenceManager;
 import gametracker.data.Filter;
 import gametracker.data.Game;
+import gametracker.data.GameFilter;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
@@ -43,13 +44,12 @@ public class CLI {
 
     private final List<MenuElement> mainMenu;
     private final List<MenuElement> dataMenu;
-    
+
     private final List<MenuElement> filterMenu;
-    
 
     private PlayData mainPlayData;
     private GameSet mainGameSet;
-    
+
     private List<Filter> filters;
 
     private CSVSessionPersistenceManager sessionManager;
@@ -60,7 +60,7 @@ public class CLI {
         mainGameSet = loadGames();
 
         mainPlayData = loadPlaySet();
-        
+
         filters = new ArrayList<>();
 
         mainMenu = setupMainMenu();
@@ -164,8 +164,7 @@ public class CLI {
 
                 DateTime date = PlaySession.parseDateTime(dateStr);
 
-                String gameStr = UIHelper.promptForString("Enter Game");
-                Game game = mainGameSet.getGame(gameStr);
+                Game game = promptForGame();
 
                 String timeStr = UIHelper.promptForString(
                         "Enter Time Played (in hours)");
@@ -203,7 +202,7 @@ public class CLI {
                     runMenu("Filter Menu", filterMenu);
 
                 }));
-        
+
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("M", "Manage Data",
@@ -219,7 +218,7 @@ public class CLI {
         return menu;
 
     }
-    
+
     public final List<MenuElement> setUpDataMenu() {
 
         List<MenuElement> menu = new ArrayList<>();
@@ -287,35 +286,29 @@ public class CLI {
         return menu;
 
     }
-    
+
     public final List<MenuElement> setUpFilterMenu() {
 
         List<MenuElement> menu = new ArrayList<>();
-        
+
         // list all filters
-        
         menu.add(new MenuElement("L", "List All Filters", () -> {
-           
-            System.out.println("Active Filters:");
-            for (Filter f : filters) {
-                System.out.println("\t" + f);
-            }
-            if (filters.isEmpty()) {
-                System.out.println("\tNo Active Filters");
-            }
-            
+
+            listFilters();
+
         }));
         
-        // add game to filter
+        menu.add(new MenuElement("A", "Add Game Filter", () -> {
+            Game filterGame = promptForGame();
+            filters.add(new GameFilter(filterGame));
+                    
+        }));
+
+        
         // add window to filter
-                
-        
         // remove game from filter
-                // remove window from filter
-        
+        // remove window from filter
         // clear filter
-
-
         menu.add(new MenuElement("Q", "Quit Filter Menu", true));
 
         return menu;
@@ -403,5 +396,20 @@ public class CLI {
         return true;
     }
 
+    private void listFilters() {
+        System.out.println("Active Filters:");
+        for (Filter f : filters) {
+            System.out.println("\t" + f);
+        }
+        if (filters.isEmpty()) {
+            System.out.println("\tNo Active Filters");
+        }
+    }
+    
+    private Game promptForGame(){
+        String gameStr = UIHelper.promptForString("Enter Game Name");
+        Game game = mainGameSet.getGame(gameStr);
+        return game;
+    }
 
 }

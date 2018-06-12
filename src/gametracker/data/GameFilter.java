@@ -38,7 +38,7 @@ public class GameFilter implements Filter {
      * 
      * @param games the game (or games) to add
      */
-    GameFilter(Game... games) {
+    public GameFilter(Game... games) {
         addAllGames(games);
     }
 
