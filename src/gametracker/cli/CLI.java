@@ -7,6 +7,7 @@ package gametracker.cli;
 
 import gametracker.data.CSVGamePersistenceManager;
 import gametracker.data.CSVSessionPersistenceManager;
+import gametracker.data.DateFilter;
 import gametracker.data.Filter;
 import gametracker.data.Game;
 import gametracker.data.GameFilter;
@@ -159,11 +160,12 @@ public class CLI {
 
         menu.add(new MenuElement("A", "Add new Play Session", () -> {
             try {
-                String dateStr = UIHelper.promptForString(
+                DateTime date = promptForDate(
                         "Enter Date (YYYY/mm/dd) (Blank for today)");
-
-                DateTime date = PlaySession.parseDateTime(dateStr);
-
+                if (date == null) {
+                    date = DateTime.now();
+                }
+                
                 Game game = promptForGame();
 
                 String timeStr = UIHelper.promptForString(
@@ -297,14 +299,23 @@ public class CLI {
             listFilters();
 
         }));
-        
+
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
             Game filterGame = promptForGame();
             filters.add(new GameFilter(filterGame));
-                    
+
         }));
 
-        
+        menu.add(new MenuElement("S", "Add Date Filter", () -> {
+            DateTime opening = promptForDate(
+                    "Begining Date (Blank for the begining of time)");
+            DateTime end = promptForDate(
+                    "End Date (Blank for the end of time)");
+            DateFilter df = new DateFilter();
+            df.addWindow(opening, end);
+            filters.add(df);
+        }));
+
         // add window to filter
         // remove game from filter
         // remove window from filter
@@ -405,11 +416,19 @@ public class CLI {
             System.out.println("\tNo Active Filters");
         }
     }
-    
-    private Game promptForGame(){
+
+    private Game promptForGame() {
         String gameStr = UIHelper.promptForString("Enter Game Name");
         Game game = mainGameSet.getGame(gameStr);
         return game;
+    }
+
+    private DateTime promptForDate(String prompt) {
+        String dateStr = UIHelper.promptForString(prompt);
+                
+
+        DateTime date = PlaySession.parseDateTime(dateStr);
+        return date;
     }
 
 }
