@@ -4,6 +4,7 @@ import gametracker.data.CSVGamePersistenceManager;
 import gametracker.data.CSVSessionPersistenceManager;
 import gametracker.data.DateFilter;
 import gametracker.data.Game;
+import gametracker.data.GameFilter;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
@@ -40,6 +41,9 @@ public class GameTracker {
         Game g = new Game("Game G", Game.Platform.PC_Steam, 2002);
         // used only once in 36
         PlaySession[] sessions = new PlaySession[37];
+        
+        GameFilter filter = new GameFilter(a, d, e);
+        System.out.println(filter);
 
         games = new GameSet();
         games.addGame(a);
