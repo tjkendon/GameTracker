@@ -141,4 +141,24 @@ public class GameFilter implements Filter {
         
     }
     
+    /**
+     * 
+     * Reports a list of the games in the filter.
+     * 
+     * @return 
+     * 
+     */
+    @Override
+    public String toString() {
+       StringBuilder br = new StringBuilder("Filter: [");
+       for (Game g : filterGames) {
+           br.append(g.getName());
+           br.append(", ");
+       }
+       br.subSequence(0, br.lastIndexOf(","));
+       br.append("]");
+       return br.toString();
+       
+    }
+    
 }
