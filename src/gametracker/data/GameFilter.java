@@ -8,7 +8,6 @@ package gametracker.data;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -152,13 +151,13 @@ public class GameFilter implements Filter {
      */
     @Override
     public String toString() {
-        StringBuilder br = new StringBuilder("Filter: [");
+        StringBuilder br = new StringBuilder("Game Filter: [");
         // fun with java joiner example from API
         String commaSeparatedGames = filterGames.stream()
                 .map(i -> i.toString())
                 .collect(Collectors.joining(", "));
 
-        br.append(commaSeparatedGames.toString()).append("]");
+        br.append(commaSeparatedGames).append("]");
         return br.toString();
 
     }
