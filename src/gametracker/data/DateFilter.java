@@ -2,7 +2,10 @@ package gametracker.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -99,6 +102,20 @@ public class DateFilter implements Filter {
         windows.clear();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder br = new StringBuilder("Date Filter: [");
+        // fun with java joiner example from API
+        String commaSeparatedGames = windows.stream()
+                .map(i -> i.toString())
+                .collect(Collectors.joining(", "));
+
+        br.append(commaSeparatedGames).append("]");
+        return br.toString();
+    }
+    
+    
+
     /**
      *
      * Class that holds the beginning and end times of a period.
@@ -114,6 +131,9 @@ public class DateFilter implements Filter {
      */
     public class Window {
 
+        public DateTimeFormatter DATE_FORMAT
+            = DateTimeFormat.forPattern("yyyy/MM/dd");
+        
         DateTime start;
         DateTime end;
 
@@ -146,8 +166,24 @@ public class DateFilter implements Filter {
             } else if ((start != null) && (end == null)) {
                 return date.isAfter(start) || date.isEqual(start);
             }
-            return (date.isAfter(start) || date.isEqual(start)) && date.isBefore(end);
+            return (date.isAfter(start) || date.isEqual(start)) 
+                    && date.isBefore(end);
         }
+
+        @Override
+        public String toString() {
+            if ((start == null) && (end == null)) {
+                return "All Time";
+            } else if ((start == null) && (end != null)) {
+                return "[ Begining of Time - " + DATE_FORMAT.print(end) + "]";
+            } else if ((start != null) && (end == null)) {
+                return "[" + DATE_FORMAT.print(start) + " - End of Time]";
+            }
+            return "[" + DATE_FORMAT.print(start) + " - " 
+                    + DATE_FORMAT.print(end) + "]";
+        }
+        
+        
 
     }
 
