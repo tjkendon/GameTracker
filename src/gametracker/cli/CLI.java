@@ -299,6 +299,8 @@ public class CLI {
             listFilters();
 
         }));
+        
+        menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
             Game filterGame = promptForGame();
@@ -317,10 +319,42 @@ public class CLI {
             df.addWindow(opening, end);
             filters.add(df);
         }));
-
-        // remove game from filter
-        // remove window from filter
-        // clear filter
+        
+        menu.add(MenuElement.BLANK);
+        
+        menu.add(new MenuElement("X", "Remove Filter", () -> {
+            listFilters();
+            
+            try {
+            
+            String filterString = 
+                    UIHelper.promptForString("Enter Filter Number to Remove");
+                int index = Integer.parseInt(filterString) - 1;
+                filters.remove(index);
+            } catch (NumberFormatException | 
+                    java.lang.IndexOutOfBoundsException e) {
+                System.out.println("Not able to remove filter.");
+            }
+            
+        }));
+        
+        menu.add(new MenuElement("C", "Clear Filters", () -> {
+            boolean doit = UIHelper.promptForBoolean(
+                    "Are you sure you want to remove all filters?");
+            
+            if (doit) {
+                filters.clear();
+                System.out.println("All filters removed");
+            } else {
+                System.out.println("Filters not removed");
+            }
+            
+        }));
+        
+        
+        menu.add(MenuElement.BLANK);
+        
+        
         menu.add(new MenuElement("Q", "Quit Filter Menu", true));
 
         return menu;
