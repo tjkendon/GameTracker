@@ -51,6 +51,8 @@ public class CLI {
     private PlayData mainPlayData;
     private GameSet mainGameSet;
 
+    private PlayData filteredPlayData;
+
     private List<Filter> filters;
 
     private CSVSessionPersistenceManager sessionManager;
@@ -142,17 +144,13 @@ public class CLI {
 
         menu.add(new MenuElement("1", "List All Games", () -> {
 
-            for (Game g : mainGameSet.getGames()) {
-                System.out.println(g);
-            }
+            listAllGames();
 
         }));
 
         menu.add(new MenuElement("2", "List All Play Sessions", () -> {
 
-            for (PlaySession s : mainPlayData.getPlaySessions()) {
-                System.out.println(s);
-            }
+            listAllPlaySessions();
 
         }));
 
@@ -165,7 +163,7 @@ public class CLI {
                 if (date == null) {
                     date = DateTime.now();
                 }
-                
+
                 Game game = promptForGame();
 
                 String timeStr = UIHelper.promptForString(
@@ -299,62 +297,65 @@ public class CLI {
             listFilters();
 
         }));
-        
+
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
             Game filterGame = promptForGame();
             filters.add(new GameFilter(filterGame));
+            
 
         }));
 
         menu.add(new MenuElement("S", "Add Date Filter", () -> {
             DateTime opening = promptForDate(
                     "Begining Date (Blank for no start date)");
-            
+
             DateTime end = promptForDate(
                     "End Date (Blank for no end date)");
-            
+
             DateFilter df = new DateFilter();
             df.addWindow(opening, end);
             filters.add(df);
+            
         }));
-        
+
         menu.add(MenuElement.BLANK);
-        
+
         menu.add(new MenuElement("X", "Remove Filter", () -> {
             listFilters();
-            
+
             try {
-            
-            String filterString = 
-                    UIHelper.promptForString("Enter Filter Number to Remove");
+
+                String filterString
+                        = UIHelper.promptForString("Enter Filter Number to Remove");
                 int index = Integer.parseInt(filterString) - 1;
                 filters.remove(index);
-            } catch (NumberFormatException | 
-                    java.lang.IndexOutOfBoundsException e) {
+                
+            } catch (NumberFormatException
+                    | java.lang.IndexOutOfBoundsException e) {
                 System.out.println("Not able to remove filter.");
             }
             
+
         }));
-        
+
         menu.add(new MenuElement("C", "Clear Filters", () -> {
             boolean doit = UIHelper.promptForBoolean(
                     "Are you sure you want to remove all filters?");
-            
+
             if (doit) {
                 filters.clear();
+                
                 System.out.println("All filters removed");
             } else {
                 System.out.println("Filters not removed");
             }
-            
+
         }));
-        
-        
+
         menu.add(MenuElement.BLANK);
-        
-        
+
         menu.add(new MenuElement("Q", "Quit Filter Menu", true));
 
         return menu;
@@ -462,8 +463,28 @@ public class CLI {
     private DateTime promptForDate(String prompt) {
         String dateStr = UIHelper.promptForString(prompt);
         DateTime date = PlaySession.parseDateTime(dateStr);
-        
+
         return date;
+    }
+
+    private void listAllGames() {
+        for (Game g : mainGameSet.getGames()) {
+            System.out.println(g);
+        }
+    }
+
+    private void listAllPlaySessions() {
+        filterPlayData();
+        for (PlaySession s : filteredPlayData.getPlaySessions()) {
+            System.out.println(s);
+        }
+    }
+    
+    private void filterPlayData() {
+        filteredPlayData = new PlayData(mainPlayData);
+        for (Filter f : filters) {
+            filteredPlayData = f.filter(filteredPlayData);
+        }
     }
 
 }
