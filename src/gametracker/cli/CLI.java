@@ -308,9 +308,11 @@ public class CLI {
 
         menu.add(new MenuElement("S", "Add Date Filter", () -> {
             DateTime opening = promptForDate(
-                    "Begining Date (Blank for the begining of time)");
+                    "Begining Date (Blank for no start date)");
+            
             DateTime end = promptForDate(
-                    "End Date (Blank for the end of time)");
+                    "End Date (Blank for no end date)");
+            
             DateFilter df = new DateFilter();
             df.addWindow(opening, end);
             filters.add(df);
@@ -425,9 +427,8 @@ public class CLI {
 
     private DateTime promptForDate(String prompt) {
         String dateStr = UIHelper.promptForString(prompt);
-                
-
         DateTime date = PlaySession.parseDateTime(dateStr);
+        
         return date;
     }
 

@@ -88,12 +88,12 @@ public class PlaySession {
      * IllegalArgumentException with information.
      *
      * @param dateStr the string that will be parsed
-     * @return a correct date time if the string is empty or can be parsed
+     * @return a correct date time if the can be parsed or null if its empty
      */
     public static DateTime parseDateTime(String dateStr) {
         DateTime date;
         if (dateStr.isEmpty()) {
-            date = new DateTime();
+            return null;
         } else {
             try {
                 date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
