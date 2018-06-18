@@ -316,7 +316,6 @@ public class CLI {
             filters.add(df);
         }));
 
-        // add window to filter
         // remove game from filter
         // remove window from filter
         // clear filter
@@ -409,8 +408,9 @@ public class CLI {
 
     private void listFilters() {
         System.out.println("Active Filters:");
+        int i = 0;
         for (Filter f : filters) {
-            System.out.println("\t" + f);
+            System.out.println("\t" + i++ + " : " + f);
         }
         if (filters.isEmpty()) {
             System.out.println("\tNo Active Filters");
