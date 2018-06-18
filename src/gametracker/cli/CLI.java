@@ -408,7 +408,7 @@ public class CLI {
 
     private void listFilters() {
         System.out.println("Active Filters:");
-        int i = 0;
+        int i = 1;
         for (Filter f : filters) {
             System.out.println("\t" + i++ + " : " + f);
         }
