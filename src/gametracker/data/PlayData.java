@@ -117,17 +117,12 @@ public class PlayData {
         DateTimeComparator dateComp = DateTimeComparator.getDateOnlyInstance();
         if (a.getPlaySessions().size() == b.getPlaySessions().size()) {
             for (int i = 0; i < a.getPlaySessions().size(); i++) {
-                System.out.println(a.getPlaySessions().get(i).getGame() + "|"
-                + b.getPlaySessions().get(i).getGame());
-                System.out.println(a.getPlaySessions().get(i).getSessionDate()+ "|"
-                + b.getPlaySessions().get(i).getSessionDate());
-                System.out.println(a.getPlaySessions().get(i).getPlayTime()+ "|"
-                + b.getPlaySessions().get(i).getPlayTime());
                 if ((a.getPlaySessions().get(i).getGame().equals(
                         (b.getPlaySessions().get(i).getGame()))) &&
                         (dateComp.compare(
                                 a.getPlaySessions().get(i).getSessionDate(),
-                                b.getPlaySessions().get(i).getSessionDate()) == 0) &&
+                                b.getPlaySessions().get(i).getSessionDate()) 
+                                    == 0) &&
                         (a.getPlaySessions().get(i).getPlayTime() == 
                             b.getPlaySessions().get(i).getPlayTime())
                         ){
