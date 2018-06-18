@@ -27,7 +27,7 @@ public class PlayData {
         changed = false;
 
     }
-
+    
     /**
      * Creates a new PlayData with a list of sessions copied from the original.
      * 
@@ -35,11 +35,8 @@ public class PlayData {
      * 
      * @param sourceData 
      */
-    PlayData(PlayData sourceData) {
-        this.sessions = new ArrayList<>();
-        sourceData.getPlaySessions().forEach((s) -> {
-            this.sessions.add(s);
-        });
+    public PlayData(PlayData sourceData) {
+        this.sessions = new ArrayList<>(sourceData.getPlaySessions());
         changed = true;
     }
     
