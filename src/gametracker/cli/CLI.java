@@ -197,7 +197,7 @@ public class CLI {
 
         }));
 
-        menu.add(new MenuElement("F", "Filter Data",
+        menu.add(new MenuElement("F", "Manage Filters",
                 () -> {
                     runMenu("Filter Menu", filterMenu);
 
