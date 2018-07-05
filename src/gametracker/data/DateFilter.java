@@ -98,6 +98,7 @@ public class DateFilter implements Filter {
      * filtering will return the empty PlayData.
      *
      */
+    @Override
     public void clear() {
         windows.clear();
     }
@@ -112,6 +113,11 @@ public class DateFilter implements Filter {
 
         br.append(commaSeparatedGames).append("]");
         return br.toString();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return windows.isEmpty();
     }
     
     
