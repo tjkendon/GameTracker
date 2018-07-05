@@ -18,8 +18,6 @@ public class GameFilter implements Filter {
 
     public List<Game> filterGames = new ArrayList<>();
 
-    ;
-
     /**
      * 
      * Creates a new filter with no games to filter 
@@ -112,6 +110,7 @@ public class GameFilter implements Filter {
      * will be empty and if filter is called it will return an empty PlayData.
      *
      */
+    @Override
     public final void clear() {
         filterGames.clear();
     }
@@ -160,6 +159,15 @@ public class GameFilter implements Filter {
         br.append(commaSeparatedGames).append("]");
         return br.toString();
 
+    }
+
+    public List<Game> getGames() {
+        return new ArrayList<>(filterGames);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return filterGames.isEmpty();
     }
 
 }

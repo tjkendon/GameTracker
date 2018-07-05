@@ -51,9 +51,11 @@ public class CLI {
     private PlayData mainPlayData;
     private GameSet mainGameSet;
 
-    private PlayData filteredPlayData;
+    
 
-    private List<Filter> filters;
+    private final List<Filter> filters;
+    private final GameFilter gameFilter;
+    private final DateFilter dateFilter;
 
     private CSVSessionPersistenceManager sessionManager;
     private CSVGamePersistenceManager gameManager;
@@ -65,6 +67,10 @@ public class CLI {
         mainPlayData = loadPlaySet();
 
         filters = new ArrayList<>();
+        gameFilter = new GameFilter();
+        dateFilter = new DateFilter();
+        filters.add(gameFilter);
+        filters.add(dateFilter);
 
         mainMenu = setupMainMenu();
         dataMenu = setUpDataMenu();
@@ -302,7 +308,7 @@ public class CLI {
 
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
             Game filterGame = promptForGame();
-            filters.add(new GameFilter(filterGame));
+            gameFilter.addAllGames(filterGame);
             
 
         }));
@@ -314,39 +320,63 @@ public class CLI {
             DateTime end = promptForDate(
                     "End Date (Blank for no end date)");
 
-            DateFilter df = new DateFilter();
-            df.addWindow(opening, end);
-            filters.add(df);
+            
+            dateFilter.addWindow(opening, end);
+            
             
         }));
 
         menu.add(MenuElement.BLANK);
 
-        menu.add(new MenuElement("X", "Remove Filter", () -> {
-            listFilters();
+        menu.add(new MenuElement("X", "Remove Game Filter", () -> {
+            List<Game> games = gameFilter.getGames();
+            printNumberedGameList(games);
 
             try {
 
                 String filterString
-                        = UIHelper.promptForString("Enter Filter Number to Remove");
+                        = UIHelper.promptForString("Enter Game Number to Remove");
                 int index = Integer.parseInt(filterString) - 1;
-                filters.remove(index);
+                Game removeGame = games.get(index);
+                gameFilter.removeAllGames(removeGame);
                 
             } catch (NumberFormatException
                     | java.lang.IndexOutOfBoundsException e) {
-                System.out.println("Not able to remove filter.");
+                System.out.println("Not able to remove game.");
             }
             
 
         }));
 
+        menu.add(new MenuElement("Z", "Remove Date Filter", () -> {
+            List<DateFilter.Window> windows = dateFilter.getWindows();
+            printNumberedWindowList(windows);
+
+            try {
+
+                String filterString
+                        = UIHelper.promptForString("Enter Window Number to Remove");
+                int index = Integer.parseInt(filterString) - 1;
+                DateFilter.Window window = windows.get(index);
+                dateFilter.removeWindow(window);
+                    
+                
+            } catch (NumberFormatException
+                    | java.lang.IndexOutOfBoundsException e) {
+                System.out.println("Not able to remove window.");
+            }
+            
+
+        }));
+        
         menu.add(new MenuElement("C", "Clear Filters", () -> {
             boolean doit = UIHelper.promptForBoolean(
                     "Are you sure you want to remove all filters?");
 
             if (doit) {
-                filters.clear();
-                
+                for (Filter f : filters) {
+                    f.clear();
+                }
                 System.out.println("All filters removed");
             } else {
                 System.out.println("Filters not removed");
@@ -474,16 +504,30 @@ public class CLI {
     }
 
     private void listAllPlaySessions() {
-        filterPlayData();
-        for (PlaySession s : filteredPlayData.getPlaySessions()) {
+        for (PlaySession s : filterPlayData().getPlaySessions()) {
             System.out.println(s);
         }
     }
     
-    private void filterPlayData() {
-        filteredPlayData = new PlayData(mainPlayData);
+    private PlayData filterPlayData() {
+        PlayData filteredPlayData = new PlayData(mainPlayData);
         for (Filter f : filters) {
-            filteredPlayData = f.filter(filteredPlayData);
+            if (!f.isEmpty()) {
+                filteredPlayData = f.filter(filteredPlayData);
+            }
+        }
+        return filteredPlayData;
+    }
+
+    private void printNumberedGameList(List<Game> games) {
+        for (int i = 0; i < games.size(); i++) {
+            System.out.println((i + 1) + " - " + games.get(i));
+        }
+    }
+    
+    private void printNumberedWindowList(List<DateFilter.Window> windows) {
+        for (int i = 0; i < windows.size(); i++) {
+            System.out.println((i + 1) + " - " + windows.get(i));
         }
     }
 
