@@ -74,17 +74,11 @@ public class PlaySessionTest {
         System.out.println(
                 "Testing parsing date time from string - Empty input");
         String dateStr = "";
-        DateTime expResult = DateTime.now();
+        
+        
         DateTime result = PlaySession.parseDateTime(dateStr);
-
-        assertTrue(
-                expResult.get(DateTimeFieldType.year())
-                == result.get(DateTimeFieldType.year())
-                && expResult.get(DateTimeFieldType.monthOfYear())
-                == result.get(DateTimeFieldType.monthOfYear())
-                && expResult.get(DateTimeFieldType.dayOfMonth())
-                == result.get(DateTimeFieldType.dayOfMonth())
-        );
+        
+        assertNull(result);
 
     }
 
