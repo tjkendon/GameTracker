@@ -19,7 +19,7 @@ public class SessionCountAggregator implements Aggregator {
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_COUNT;
     
-    SessionCountAggregator(PlayData source) {
+    public SessionCountAggregator(PlayData source) {
         this.sourceData = source;
     }
 

@@ -19,7 +19,7 @@ public class TotalTimeAggregator implements Aggregator {
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_TIME;
     
-    TotalTimeAggregator(PlayData source) {
+    public TotalTimeAggregator(PlayData source) {
         this.sourceData = source;
     }
 
