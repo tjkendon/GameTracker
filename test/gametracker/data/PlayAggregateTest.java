@@ -42,8 +42,8 @@ public class PlayAggregateTest {
      * Test of putAggregate method, of class PlayAggregate.
      */
     @Test
-    public void testPutAggregate() {
-        System.out.println("Put Aggregate");
+    public void testPutandGetAggregate() {
+        System.out.println("Testing Putting and Getting Aggregates");
         Game game = new Game("Test", Game.Platform.PC_Steam, 2000);
         PlayAggregate.AggregateType type = 
                 PlayAggregate.AggregateType.AVERAGE_TIME;
@@ -51,8 +51,7 @@ public class PlayAggregateTest {
         PlayAggregate instance = new PlayAggregate();
         instance.putAggregate(game, type, value);
         
-        
-        assertEquals(instance.getAggregatesForGame(game).get(type), value, 0.1);
+        assertEquals(instance.getAggregatesForGame(game).get(type), value, 0.001);
     }
 
     /**
@@ -60,67 +59,47 @@ public class PlayAggregateTest {
      */
     @Test
     public void testMergeAggregates() {
-        System.out.println("mergeAggregates");
-        PlayAggregate[] others = null;
+        System.out.println("Testing Merging Aggregates");
+        
+        Game game = new Game("Test", Game.Platform.PC_Steam, 2000);
+        PlayAggregate.AggregateType type = 
+                PlayAggregate.AggregateType.AVERAGE_TIME;
+        double value = 2.0;
         PlayAggregate instance = new PlayAggregate();
-        instance.mergeAggregates(others);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.putAggregate(game, type, value);
+        
+        PlayAggregate.AggregateType type2 = 
+                PlayAggregate.AggregateType.MEDIAN_TIME;
+        double value2 = 3.0;
+        PlayAggregate instance2 = new PlayAggregate();
+        instance2.putAggregate(game, type2, value2);
+        
+        PlayAggregate.AggregateType type3 = 
+                PlayAggregate.AggregateType.TOTAL_COUNT;
+        double value3 = 4.0;
+        PlayAggregate instance3 = new PlayAggregate();
+        instance2.putAggregate(game, type3, value3);
+        
+        PlayAggregate.AggregateType type4 = 
+                PlayAggregate.AggregateType.TOTAL_TIME;
+        double value4 = 5.0;
+        PlayAggregate instance4 = new PlayAggregate();
+        instance2.putAggregate(game, type4, value4);
+        
+        instance.mergeAggregates(instance2);
+        double result2 = instance.getAggregatesForGame(game).get(type2);
+        assertEquals(result2, value2, 0.001);
+        
+        instance.mergeAggregates(instance3, instance4);
+        double result3 = instance.getAggregatesForGame(game).get(type3);
+        assertEquals(result3, value3, 0.001);
+        double result4 = instance.getAggregatesForGame(game).get(type4);
+        assertEquals(result4, value4, 0.001);
+        
+        
     }
 
-    /**
-     * Test of getAggregates method, of class PlayAggregate.
-     */
-    @Test
-    public void testGetAggregates() {
-        System.out.println("getAggregates");
-        PlayAggregate instance = new PlayAggregate();
-        Map<Game, Map<PlayAggregate.AggregateType, Double>> expResult = null;
-        Map<Game, Map<PlayAggregate.AggregateType, Double>> result = instance.getAggregates();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of getAggregatesForGame method, of class PlayAggregate.
-     */
-    @Test
-    public void testGetAggregatesForGame() {
-        System.out.println("getAggregatesForGame");
-        Game game = null;
-        PlayAggregate instance = new PlayAggregate();
-        Map<PlayAggregate.AggregateType, Double> expResult = null;
-        Map<PlayAggregate.AggregateType, Double> result = instance.getAggregatesForGame(game);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clear method, of class PlayAggregate.
-     */
-    @Test
-    public void testClear() {
-        System.out.println("clear");
-        PlayAggregate instance = new PlayAggregate();
-        instance.clear();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearGame method, of class PlayAggregate.
-     */
-    @Test
-    public void testClearGame() {
-        System.out.println("clearGame");
-        Game game = null;
-        PlayAggregate instance = new PlayAggregate();
-        instance.clearGame(game);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     
     
