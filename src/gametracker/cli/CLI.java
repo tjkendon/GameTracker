@@ -12,8 +12,11 @@ import gametracker.data.Filter;
 import gametracker.data.Game;
 import gametracker.data.GameFilter;
 import gametracker.data.GameSet;
+import gametracker.data.PlayAggregate;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
+import gametracker.data.SessionCountAggregator;
+import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +53,6 @@ public class CLI {
 
     private PlayData mainPlayData;
     private GameSet mainGameSet;
-
-    
 
     private final List<Filter> filters;
     private final GameFilter gameFilter;
@@ -157,6 +158,15 @@ public class CLI {
         menu.add(new MenuElement("2", "List All Play Sessions", () -> {
 
             listAllPlaySessions();
+
+        }));
+
+        menu.add(new MenuElement("3", "Print Statistics", () -> {
+
+            TotalTimeAggregator total = new TotalTimeAggregator(filterPlayData());
+            PlayAggregate totalData = total.aggregate();
+
+            SessionCountAggregator session = new SessionCountAggregator(filterPlayData());
 
         }));
 
@@ -309,7 +319,6 @@ public class CLI {
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
             Game filterGame = promptForGame();
             gameFilter.addAllGames(filterGame);
-            
 
         }));
 
@@ -320,10 +329,8 @@ public class CLI {
             DateTime end = promptForDate(
                     "End Date (Blank for no end date)");
 
-            
             dateFilter.addWindow(opening, end);
-            
-            
+
         }));
 
         menu.add(MenuElement.BLANK);
@@ -339,12 +346,11 @@ public class CLI {
                 int index = Integer.parseInt(filterString) - 1;
                 Game removeGame = games.get(index);
                 gameFilter.removeAllGames(removeGame);
-                
+
             } catch (NumberFormatException
                     | java.lang.IndexOutOfBoundsException e) {
                 System.out.println("Not able to remove game.");
             }
-            
 
         }));
 
@@ -359,16 +365,14 @@ public class CLI {
                 int index = Integer.parseInt(filterString) - 1;
                 DateFilter.Window window = windows.get(index);
                 dateFilter.removeWindow(window);
-                    
-                
+
             } catch (NumberFormatException
                     | java.lang.IndexOutOfBoundsException e) {
                 System.out.println("Not able to remove window.");
             }
-            
 
         }));
-        
+
         menu.add(new MenuElement("C", "Clear Filters", () -> {
             boolean doit = UIHelper.promptForBoolean(
                     "Are you sure you want to remove all filters?");
@@ -508,7 +512,7 @@ public class CLI {
             System.out.println(s);
         }
     }
-    
+
     private PlayData filterPlayData() {
         PlayData filteredPlayData = new PlayData(mainPlayData);
         for (Filter f : filters) {
@@ -524,11 +528,51 @@ public class CLI {
             System.out.println((i + 1) + " - " + games.get(i));
         }
     }
-    
+
     private void printNumberedWindowList(List<DateFilter.Window> windows) {
         for (int i = 0; i < windows.size(); i++) {
             System.out.println((i + 1) + " - " + windows.get(i));
         }
+    }
+
+    public static void printPlayAggregate(PlayAggregate data) {
+
+        System.out.println("Game\tTotal\tSessions\tMean\tMedian");
+        for (Game g : data.getAggregates().keySet()) {
+            
+            Double totalTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_TIME);
+            String totalTimeStr = "-";
+            if (totalTime != 0.0) {
+                totalTimeStr = "" + totalTime;
+            }
+            
+            Double totalCount = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_COUNT);
+            String totalCountStr = "-";
+            if (totalCount != 0.0) {
+                totalCountStr = "" + totalCount;
+            }
+            
+            Double averageTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.AVERAGE_TIME);
+            String averageTimeStr = "-";
+            if (averageTime != 0.0) {
+                averageTimeStr = "" + averageTime;
+            }
+            
+            Double medianTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.MEDIAN_TIME);
+            String medianTimeStr = "-";
+            if (medianTime != 0.0) {
+                medianTimeStr = "" + medianTime;
+            }
+            
+            System.out.println(g.getName() + "\t"
+                    + totalTimeStr + "\t"
+                    + totalCountStr + "\t"
+                    + averageTimeStr + "\t"
+                    + medianTimeStr
+            );
+
+        }
+
     }
 
 }
