@@ -19,7 +19,7 @@ public class AverageTimeAggregator implements Aggregator {
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.AVERAGE_TIME;
     
-    AverageTimeAggregator(PlayData source) {
+    public AverageTimeAggregator(PlayData source) {
         this.sourceData = source;
     }
 
