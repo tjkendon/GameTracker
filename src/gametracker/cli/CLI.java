@@ -5,6 +5,7 @@
  */
 package gametracker.cli;
 
+import gametracker.data.AverageTimeAggregator;
 import gametracker.data.CSVGamePersistenceManager;
 import gametracker.data.CSVSessionPersistenceManager;
 import gametracker.data.DateFilter;
@@ -12,6 +13,7 @@ import gametracker.data.Filter;
 import gametracker.data.Game;
 import gametracker.data.GameFilter;
 import gametracker.data.GameSet;
+import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
 import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
@@ -163,10 +165,7 @@ public class CLI {
 
         menu.add(new MenuElement("3", "Print Statistics", () -> {
 
-            TotalTimeAggregator total = new TotalTimeAggregator(filterPlayData());
-            PlayAggregate totalData = total.aggregate();
-
-            SessionCountAggregator session = new SessionCountAggregator(filterPlayData());
+            printPlayAggregate(generateAggregates());
 
         }));
 
@@ -539,31 +538,33 @@ public class CLI {
 
         System.out.println("Game\tTotal\tSessions\tMean\tMedian");
         for (Game g : data.getAggregates().keySet()) {
-            
+
             Double totalTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_TIME);
             String totalTimeStr = "-";
-            if (totalTime != 0.0) {
+            if (totalTime != null) {
                 totalTimeStr = "" + totalTime;
             }
-            
+
             Double totalCount = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_COUNT);
             String totalCountStr = "-";
-            if (totalCount != 0.0) {
+            if (totalCount != null) {
                 totalCountStr = "" + totalCount;
             }
-            
+
             Double averageTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.AVERAGE_TIME);
             String averageTimeStr = "-";
-            if (averageTime != 0.0) {
+            if (averageTime != null) {
                 averageTimeStr = "" + averageTime;
             }
-            
+
             Double medianTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.MEDIAN_TIME);
             String medianTimeStr = "-";
-            if (medianTime != 0.0) {
+            if (medianTime != null) {
                 medianTimeStr = "" + medianTime;
             }
             
+            
+
             System.out.println(g.getName() + "\t"
                     + totalTimeStr + "\t"
                     + totalCountStr + "\t"
@@ -573,6 +574,26 @@ public class CLI {
 
         }
 
+    }
+
+    private PlayAggregate generateAggregates() {
+        PlayData filteredData = filterPlayData();
+        
+        TotalTimeAggregator total = new TotalTimeAggregator(filteredData);
+        PlayAggregate totalData = total.aggregate();
+
+        SessionCountAggregator session = new SessionCountAggregator(filteredData);
+        PlayAggregate sessionData = session.aggregate();
+        
+        AverageTimeAggregator average  = new AverageTimeAggregator(filteredData);
+        PlayAggregate averageData = average.aggregate();
+        
+        MedianTimeAggregator median = new MedianTimeAggregator(filteredData);
+        PlayAggregate medianData = median.aggregate();
+        
+        totalData.mergeAggregates(sessionData, averageData, medianData);
+
+        return totalData;
     }
 
 }
