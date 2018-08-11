@@ -19,7 +19,7 @@ public class MedianTimeAggregator implements Aggregator {
     PlayData sourceData;
     
     public final PlayAggregate.AggregateType type = 
-            PlayAggregate.AggregateType.AVERAGE_TIME;
+            PlayAggregate.AggregateType.MEDIAN_TIME;
     
     public MedianTimeAggregator(PlayData source) {
         this.sourceData = source;
