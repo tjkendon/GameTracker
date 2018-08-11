@@ -3,6 +3,7 @@ package gametracker.data;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -14,10 +15,10 @@ import java.util.Objects;
  */
 public class PlayAggregate {
 
-    private final Map<Game, Map<AggregateType, Double>> aggregate;
+    private final Map<Game, Map<AggregateType, Double>> data;
 
     /**
-     * Labels the different types of aggregate the system can contain.
+     * Labels the different types of data the system can contain.
      */
     public enum AggregateType {
         /**
@@ -40,15 +41,15 @@ public class PlayAggregate {
     }
 
     /**
-     * Creates a new aggregate with no date included.
+     * Creates a new data with no date included.
      */
     public PlayAggregate() {
-        aggregate = new HashMap<>();
+        data = new HashMap<>();
     }
 
     /**
      *
-     * Adds or updates an aggregate value for the given game.
+     * Adds or updates an data value for the given game.
      *
      * @param game the game to update
      * @param type the type of data to update
@@ -56,11 +57,11 @@ public class PlayAggregate {
      */
     public void putAggregate(Game game, AggregateType type, double value) {
 
-        if (!aggregate.containsKey(game)) {
-            aggregate.put(game, new HashMap<>());
+        if (!data.containsKey(game)) {
+            data.put(game, new HashMap<>());
         }
 
-        aggregate.get(game).put(type, value);
+        data.get(game).put(type, value);
     }
 
     /**
@@ -72,19 +73,27 @@ public class PlayAggregate {
     public void mergeAggregates(PlayAggregate... others) {
 
         for (PlayAggregate other : others) {
-            aggregate.putAll(other.getAggregates());
+            Map<Game, Map<AggregateType, Double>> aggregates = other.getAggregates();
+            Set<Game> keySet = aggregates.keySet();
+            for (Game game : keySet) {
+                Map<AggregateType, Double> get = aggregates.get(game);
+                Set<AggregateType> keySet1 = get.keySet();
+                for (AggregateType type : keySet1) {
+                    putAggregate(game, type, aggregates.get(game).get(type));
+                }
+            }
         }
 
     }
 
     /**
      *
-     * Returns a copy of the full map of aggregate data.
+     * Returns a copy of the full map of data data.
      *
      * @return a full map of game, data pairs
      */
     public Map<Game, Map<AggregateType, Double>> getAggregates() {
-        return new HashMap<>(aggregate);
+        return new HashMap<>(data);
     }
 
     /**
@@ -95,7 +104,7 @@ public class PlayAggregate {
      * @return a map of type, value pairs
      */
     public Map<AggregateType, Double> getAggregatesForGame(Game game) {
-        return new HashMap<>(aggregate.get(game));
+        return new HashMap<>(data.get(game));
     }
 
 
@@ -103,7 +112,7 @@ public class PlayAggregate {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.aggregate);
+        hash = 79 * hash + Objects.hashCode(this.data);
         return hash;
     }
 
@@ -119,7 +128,7 @@ public class PlayAggregate {
             return false;
         }
         final PlayAggregate other = (PlayAggregate) obj;
-        if (!Objects.equals(this.aggregate, other.aggregate)) {
+        if (!Objects.equals(this.data, other.data)) {
             return false;
         }
         return true;
