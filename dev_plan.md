@@ -40,3 +40,9 @@
       * Instance Count
       * Average
       * Median
+* Iteration 3
+   * Quick Interface
+      * Command Line Flags for recording data
+   * Google Integration
+      * View data in google sheet
+      * Upload data to google sheet
