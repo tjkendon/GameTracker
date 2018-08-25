@@ -21,7 +21,6 @@ import gametracker.data.SessionCountAggregator;
 import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -48,6 +47,33 @@ public class CLI {
         cli.printFarewell();
 
     }
+
+    private final MenuElement listAllGames = new MenuElement(
+            "1",
+            "List All Games",
+            () -> {
+
+                listAllGames();
+
+            });
+
+    private final MenuElement listAllSessions = new MenuElement(
+            "2",
+            "List All Play Sessions",
+            () -> {
+
+                listAllPlaySessions();
+
+            });
+    
+    private final MenuElement listAllStats = new MenuElement(
+            "3", 
+            "Print Statistics", 
+            () -> {
+
+            printPlayAggregate(generateAggregates());
+
+        });
 
     private final List<MenuElement> mainMenu;
     private final List<MenuElement> dataMenu;
@@ -152,25 +178,7 @@ public class CLI {
 
         List<MenuElement> menu = new ArrayList<>();
 
-        menu.add(new MenuElement("1", "List All Games", () -> {
-
-            listAllGames();
-
-        }));
-
-        menu.add(new MenuElement("2", "List All Play Sessions", () -> {
-
-            listAllPlaySessions();
-
-        }));
-
-        menu.add(new MenuElement("3", "Print Statistics", () -> {
-
-            printPlayAggregate(generateAggregates());
-
-        }));
-
-        menu.add(MenuElement.BLANK);
+        menu = addCommonElements(menu);
 
         menu.add(new MenuElement("A", "Add new Play Session", () -> {
             try {
@@ -238,6 +246,8 @@ public class CLI {
     public final List<MenuElement> setUpDataMenu() {
 
         List<MenuElement> menu = new ArrayList<>();
+        
+        menu = addCommonElements(menu);
 
         menu.add(new MenuElement("S", "Save all Data", () -> {
 
@@ -307,6 +317,8 @@ public class CLI {
 
         List<MenuElement> menu = new ArrayList<>();
 
+        menu = addCommonElements(menu);
+        
         // list all filters
         menu.add(new MenuElement("L", "List All Filters", () -> {
 
@@ -342,7 +354,8 @@ public class CLI {
             try {
 
                 String filterString
-                        = UIHelper.promptForString("Enter Game Number to Remove");
+                        = UIHelper.promptForString(
+                                "Enter Game Number to Remove");
                 int index = Integer.parseInt(filterString) - 1;
                 Game removeGame = games.get(index);
                 gameFilter.removeAllGames(removeGame);
@@ -361,7 +374,8 @@ public class CLI {
             try {
 
                 String filterString
-                        = UIHelper.promptForString("Enter Window Number to Remove");
+                        = UIHelper.promptForString(
+                                "Enter Window Number to Remove");
                 int index = Integer.parseInt(filterString) - 1;
                 DateFilter.Window window = windows.get(index);
                 dateFilter.removeWindow(window);
@@ -394,6 +408,17 @@ public class CLI {
 
         return menu;
 
+    }
+    
+    public List<MenuElement> addCommonElements(List<MenuElement> menu) {
+        menu.add(listAllGames);
+
+        menu.add(listAllSessions);
+
+        menu.add(listAllStats);
+
+        menu.add(MenuElement.BLANK);
+        return menu;
     }
 
     public void run() {
@@ -537,49 +562,50 @@ public class CLI {
 
     public static void printPlayAggregate(PlayAggregate data) {
 
-        
         System.out.format("%40s  %5s  %5s  %5s  %5s%n",
                 "Game",
-                        "Total",
-                        "Num.", 
-                        "Mean", 
-                        "Med.");
-        
+                "Total",
+                "Num.",
+                "Mean",
+                "Med.");
+
         for (Game g : data.getAggregates().keySet()) {
 
-            Double totalTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_TIME);
+            Double totalTime = data.getAggregatesForGame(g).get(
+                    PlayAggregate.AggregateType.TOTAL_TIME);
             String totalTimeStr = "-";
             if (totalTime != null) {
                 totalTimeStr = String.format("%.2f", totalTime);
             }
 
-            Double totalCount = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_COUNT);
+            Double totalCount = data.getAggregatesForGame(g).get(
+                    PlayAggregate.AggregateType.TOTAL_COUNT);
             String totalCountStr = "-";
             if (totalCount != null) {
                 totalCountStr = String.format("%.2f", totalCount);
             }
 
-            Double averageTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.AVERAGE_TIME);
+            Double averageTime = data.getAggregatesForGame(g).get(
+                    PlayAggregate.AggregateType.AVERAGE_TIME);
             String averageTimeStr = "-";
             if (averageTime != null) {
                 averageTimeStr = String.format("%.2f", averageTime);
             }
 
-            Double medianTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.MEDIAN_TIME);
+            Double medianTime = data.getAggregatesForGame(g).get(
+                    PlayAggregate.AggregateType.MEDIAN_TIME);
             String medianTimeStr = "-";
             if (medianTime != null) {
                 medianTimeStr = String.format("%.2f", medianTime);
             }
-            
-            System.out.format("%40s  %5s  %5s  %5s  %5s%n", 
-                    g.getName(), 
+
+            System.out.format("%40s  %5s  %5s  %5s  %5s%n",
+                    g.getName(),
                     totalTimeStr,
                     totalCountStr,
                     averageTimeStr,
                     medianTimeStr
             );
-
-            
 
         }
 
@@ -587,19 +613,19 @@ public class CLI {
 
     private PlayAggregate generateAggregates() {
         PlayData filteredData = filterPlayData();
-        
+
         TotalTimeAggregator total = new TotalTimeAggregator(filteredData);
         PlayAggregate totalData = total.aggregate();
 
         SessionCountAggregator session = new SessionCountAggregator(filteredData);
         PlayAggregate sessionData = session.aggregate();
-        
-        AverageTimeAggregator average  = new AverageTimeAggregator(filteredData);
+
+        AverageTimeAggregator average = new AverageTimeAggregator(filteredData);
         PlayAggregate averageData = average.aggregate();
-        
+
         MedianTimeAggregator median = new MedianTimeAggregator(filteredData);
         PlayAggregate medianData = median.aggregate();
-        
+
         totalData.mergeAggregates(sessionData, averageData, medianData);
 
         return totalData;
