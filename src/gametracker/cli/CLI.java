@@ -21,6 +21,7 @@ import gametracker.data.SessionCountAggregator;
 import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -536,41 +537,49 @@ public class CLI {
 
     public static void printPlayAggregate(PlayAggregate data) {
 
-        System.out.println("Game\tTotal\tSessions\tMean\tMedian");
+        
+        System.out.format("%40s  %5s  %5s  %5s  %5s%n",
+                "Game",
+                        "Total",
+                        "Num.", 
+                        "Mean", 
+                        "Med.");
+        
         for (Game g : data.getAggregates().keySet()) {
 
             Double totalTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_TIME);
             String totalTimeStr = "-";
             if (totalTime != null) {
-                totalTimeStr = "" + totalTime;
+                totalTimeStr = String.format("%.2f", totalTime);
             }
 
             Double totalCount = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.TOTAL_COUNT);
             String totalCountStr = "-";
             if (totalCount != null) {
-                totalCountStr = "" + totalCount;
+                totalCountStr = String.format("%.2f", totalCount);
             }
 
             Double averageTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.AVERAGE_TIME);
             String averageTimeStr = "-";
             if (averageTime != null) {
-                averageTimeStr = "" + averageTime;
+                averageTimeStr = String.format("%.2f", averageTime);
             }
 
             Double medianTime = data.getAggregatesForGame(g).get(PlayAggregate.AggregateType.MEDIAN_TIME);
             String medianTimeStr = "-";
             if (medianTime != null) {
-                medianTimeStr = "" + medianTime;
+                medianTimeStr = String.format("%.2f", medianTime);
             }
             
-            
-
-            System.out.println(g.getName() + "\t"
-                    + totalTimeStr + "\t"
-                    + totalCountStr + "\t"
-                    + averageTimeStr + "\t"
-                    + medianTimeStr
+            System.out.format("%40s  %5s  %5s  %5s  %5s%n", 
+                    g.getName(), 
+                    totalTimeStr,
+                    totalCountStr,
+                    averageTimeStr,
+                    medianTimeStr
             );
+
+            
 
         }
 
