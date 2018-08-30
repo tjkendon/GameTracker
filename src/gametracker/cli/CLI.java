@@ -21,6 +21,7 @@ import gametracker.data.SessionCountAggregator;
 import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -568,8 +569,12 @@ public class CLI {
                 "Num.",
                 "Mean",
                 "Med.");
+        
+        List<Game> sortedGames = new ArrayList<>(
+                data.getAggregates().keySet());
+        Collections.sort(sortedGames);
 
-        for (Game g : data.getAggregates().keySet()) {
+        for (Game g : sortedGames) {
 
             Double totalTime = data.getAggregatesForGame(g).get(
                     PlayAggregate.AggregateType.TOTAL_TIME);
