@@ -9,7 +9,9 @@ import java.util.Objects;
  *
  * @author tjkendon
  */
-public class Game {
+public class Game implements Comparable<Game>{
+
+    
 
     /**
      * Enum covering platforms for games which I own :-)
@@ -89,16 +91,30 @@ public class Game {
             return false;
         }
         final Game other = (Game) obj;
-        if (this.year != other.year) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if (this.year != other.year) {
             return false;
         }
         if (this.platform != other.platform) {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public int compareTo(Game o) {
+        int diff =this.name.compareTo(o.name);
+        if (diff != 0) {
+            return diff;
+        }
+        diff = this.year - o.year;
+        if (diff != 0) {
+            return diff;
+        }
+        diff = this.platform.compareTo(o.platform);
+        return diff;
     }
 
     /**
