@@ -126,7 +126,6 @@ public class CLI {
     }
 
     public final GameSet loadGames() {
-        System.out.println();
 
         GameSet gs;
 
@@ -146,15 +145,14 @@ public class CLI {
 
     }
 
-    public final String promptForGameFile() {
+    public final String promptForFile(String purpose) {
         String fileName = UIHelper.promptForString(
-                "Enter Game File (S to skip)");
+                "Enter " + purpose + " Filename (Blank to skip)");
 
         return fileName;
     }
 
     public final PlayData loadPlaySet() {
-        
 
         if (mainGameSet.isEmpty()) {
             System.out.println();
@@ -167,7 +165,7 @@ public class CLI {
         }
 
         PlayData data;
-        
+
         try {
 
             sessionManager = new CSVSessionPersistenceManager(
@@ -176,7 +174,6 @@ public class CLI {
 
             data = sessionManager.load();
 
-            
         } catch (IllegalStateException e) {
             System.out.println(
                     "Not able to load session file: " + e.getMessage());
@@ -261,6 +258,34 @@ public class CLI {
         List<MenuElement> menu = new ArrayList<>();
 
         menu = addCommonElements(menu);
+
+        menu.add(new MenuElement("L", "Load new Data", () -> {
+
+            String filename = promptForFile("game");
+            if (!filename.isEmpty()) {
+                gameFileName = filename;
+                mainGameSet = loadGames();
+
+                System.out.println();
+                System.out.println("Game Data Loaded");
+
+                filename = promptForFile("play");
+                if (!filename.isEmpty()) {
+                    playFileName = filename;
+                    mainPlayData = loadPlaySet();
+
+                    System.out.println();
+                    System.out.println("Play Data Loaded");
+
+                } else {
+
+                }
+
+            } else {
+                System.out.println("Skipping loading all data");
+            }
+
+        }));
 
         menu.add(new MenuElement("S", "Save all Data", () -> {
 
