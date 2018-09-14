@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.prefs.Preferences;
 import org.joda.time.DateTime;
 
 /**
@@ -32,6 +33,12 @@ import org.joda.time.DateTime;
 public class CLI {
 
     public static final String VERSION = "0.2.0";
+
+    private static final String GAME_FILE_PREF = "game_file";
+    private static final String PLAY_FILE_PREF = "play_file";
+
+    private static final String GAME_FILE_DEFAULT = "tracker.games";
+    private static final String PLAY_FILE_DEFAULT = "tracker.play";
 
     public static void main(String[] args) {
 
@@ -45,6 +52,7 @@ public class CLI {
             UIHelper.promptForBoolean("Data Not Saved, quit anyway?");
         }
 
+        cli.savePreferenceValues();
         cli.printFarewell();
 
     }
@@ -66,15 +74,20 @@ public class CLI {
                 listAllPlaySessions();
 
             });
-    
+
     private final MenuElement listAllStats = new MenuElement(
-            "3", 
-            "Print Statistics", 
+            "3",
+            "Print Statistics",
             () -> {
 
-            printPlayAggregate(generateAggregates());
+                printPlayAggregate(generateAggregates());
 
-        });
+            });
+
+    private final Preferences prefs;
+
+    private String gameFileName;
+    private String playFileName;
 
     private final List<MenuElement> mainMenu;
     private final List<MenuElement> dataMenu;
@@ -92,6 +105,9 @@ public class CLI {
     private CSVGamePersistenceManager gameManager;
 
     public CLI() {
+
+        prefs = Preferences.userNodeForPackage(CLI.class);
+        loadPreferenceValues();
 
         mainGameSet = loadGames();
 
@@ -112,33 +128,36 @@ public class CLI {
     public final GameSet loadGames() {
         System.out.println();
 
-        do {
-            try {
-                String fileName = UIHelper.promptForString(
-                        "Enter Game File (S to skip)");
+        GameSet gs;
 
-                if (UIHelper.checkFor(fileName, "S", "Skip")) {
-                    System.out.println("Starting with no game data");
-                    return new GameSet();
-                }
+        try {
 
-                gameManager = new CSVGamePersistenceManager(new File(fileName));
+            gameManager = new CSVGamePersistenceManager(
+                    new File(gameFileName));
+            gs = gameManager.load();
 
-                GameSet gs = gameManager.load();
-                return gs;
-            } catch (IllegalStateException e) {
-                System.out.println(
-                        "Not able to load game file: " + e.getMessage());
-                System.out.println();
-            }
-        } while (true);
+        } catch (IllegalStateException e) {
+            System.out.println(
+                    "Not able to load game file: " + e.getMessage());
+            System.out.println();
+            gs = new GameSet();
+        }
+        return gs;
 
     }
 
+    public final String promptForGameFile() {
+        String fileName = UIHelper.promptForString(
+                "Enter Game File (S to skip)");
+
+        return fileName;
+    }
+
     public final PlayData loadPlaySet() {
-        System.out.println();
+        
 
         if (mainGameSet.isEmpty()) {
+            System.out.println();
             System.out.println(
                     "Cowardly skipping loading play set without game data"
                     + " available");
@@ -147,31 +166,24 @@ public class CLI {
             return new PlayData();
         }
 
-        do {
-            try {
+        PlayData data;
+        
+        try {
 
-                String fileName = UIHelper.promptForString(
-                        "Enter Session File (S to skip)");
+            sessionManager = new CSVSessionPersistenceManager(
+                    new File(playFileName),
+                    mainGameSet);
 
-                if (UIHelper.checkFor(fileName, "S", "Skip")) {
-                    System.out.println("Starting with no session data");
-                    return new PlayData();
-                }
+            data = sessionManager.load();
 
-                sessionManager = new CSVSessionPersistenceManager(
-                        new File(fileName),
-                        mainGameSet);
-
-                PlayData data = sessionManager.load();
-
-                return data;
-            } catch (IllegalStateException e) {
-                System.out.println(
-                        "Not able to load session file: " + e.getMessage());
-                System.out.println();
-            }
-
-        } while (true);
+            
+        } catch (IllegalStateException e) {
+            System.out.println(
+                    "Not able to load session file: " + e.getMessage());
+            System.out.println();
+            data = new PlayData();
+        }
+        return data;
 
     }
 
@@ -247,7 +259,7 @@ public class CLI {
     public final List<MenuElement> setUpDataMenu() {
 
         List<MenuElement> menu = new ArrayList<>();
-        
+
         menu = addCommonElements(menu);
 
         menu.add(new MenuElement("S", "Save all Data", () -> {
@@ -319,7 +331,7 @@ public class CLI {
         List<MenuElement> menu = new ArrayList<>();
 
         menu = addCommonElements(menu);
-        
+
         // list all filters
         menu.add(new MenuElement("L", "List All Filters", () -> {
 
@@ -410,7 +422,7 @@ public class CLI {
         return menu;
 
     }
-    
+
     public List<MenuElement> addCommonElements(List<MenuElement> menu) {
         menu.add(listAllGames);
 
@@ -569,7 +581,7 @@ public class CLI {
                 "Num.",
                 "Mean",
                 "Med.");
-        
+
         List<Game> sortedGames = new ArrayList<>(
                 data.getAggregates().keySet());
         Collections.sort(sortedGames);
@@ -634,6 +646,20 @@ public class CLI {
         totalData.mergeAggregates(sessionData, averageData, medianData);
 
         return totalData;
+    }
+
+    private void loadPreferenceValues() {
+
+        gameFileName = prefs.get(GAME_FILE_PREF, GAME_FILE_DEFAULT);
+        playFileName = prefs.get(PLAY_FILE_PREF, PLAY_FILE_DEFAULT);
+
+    }
+
+    public void savePreferenceValues() {
+
+        prefs.put(GAME_FILE_PREF, gameFileName);
+        prefs.put(PLAY_FILE_PREF, playFileName);
+
     }
 
 }
