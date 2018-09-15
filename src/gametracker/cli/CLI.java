@@ -23,7 +23,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.joda.time.DateTime;
 
 /**
@@ -42,7 +49,34 @@ public class CLI {
 
     public static void main(String[] args) {
 
-        CLI cli = new CLI();
+        String gameFile = null;
+        String playFile = null;
+        
+        try {
+            Options options = new Options();
+            options.addOption(
+                    "g",
+                    "gamefile",
+                    true,
+                    "the file name to get the games data from");
+            options.addOption(
+                    "p",
+                    "playfile",
+                    true,
+                    "the file name to get the play data from");
+            CommandLineParser parser = new DefaultParser();
+            CommandLine cl = parser.parse(options, args);
+            if (cl.hasOption("gamefile")) {
+                gameFile = cl.getOptionValue("gamefile");
+            }
+            if (cl.hasOption("playfile")) {
+                playFile = cl.getOptionValue("playfile");
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        CLI cli = new CLI(gameFile, playFile);
 
         cli.printPreamble();
 
@@ -106,9 +140,20 @@ public class CLI {
 
     public CLI() {
 
+        this(null, null);
+
+    }
+
+    public CLI(String gameFile, String playFile) {
         prefs = Preferences.userNodeForPackage(CLI.class);
         loadPreferenceValues();
-
+        
+        if (gameFile != null) {
+            gameFileName = gameFile;
+        }
+        if (playFile != null) {
+            playFileName = playFile;
+        }
         mainGameSet = loadGames();
 
         mainPlayData = loadPlaySet();
@@ -122,7 +167,6 @@ public class CLI {
         mainMenu = setupMainMenu();
         dataMenu = setUpDataMenu();
         filterMenu = setUpFilterMenu();
-
     }
 
     public final GameSet loadGames() {
