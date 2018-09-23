@@ -3,7 +3,7 @@ package gametracker.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -60,7 +60,7 @@ public class DateFilter implements Filter {
      * @param beginingTime
      * @param endTime
      */
-    public void addWindow(DateTime beginingTime, DateTime endTime) {
+    public void addWindow(LocalDate beginingTime, LocalDate endTime) {
 
         Window w = new Window();
 
@@ -140,31 +140,31 @@ public class DateFilter implements Filter {
         public DateTimeFormatter DATE_FORMAT
             = DateTimeFormat.forPattern("yyyy/MM/dd");
         
-        DateTime start;
-        DateTime end;
+        LocalDate start;
+        LocalDate end;
 
         public Window() {
             start = null;
             end = null;
         }
 
-        public DateTime getStart() {
+        public LocalDate getStart() {
             return start;
         }
 
-        public void setStart(DateTime start) {
+        public void setStart(LocalDate start) {
             this.start = start;
         }
 
-        public DateTime getEnd() {
+        public LocalDate getEnd() {
             return end;
         }
 
-        public void setEnd(DateTime end) {
+        public void setEnd(LocalDate end) {
             this.end = end;
         }
 
-        public boolean isIn(DateTime date) {
+        public boolean isIn(LocalDate date) {
             if ((start == null) && (end == null)) {
                 return true;
             } else if ((start == null) && (end != null)) {

@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -117,7 +117,7 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
      */
     private PlaySession parseShort(String[] playStrings) {
         String dateString = playStrings[0].trim();
-        DateTime date = PlaySession.parseDateTime(dateString);
+        LocalDate date = PlaySession.parseDateTime(dateString);
 
         String gameString = playStrings[1].trim();
 
@@ -142,7 +142,7 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
      */
     private PlaySession parseFull(String[] playStrings) {
         String dateString = playStrings[0].trim();
-        DateTime date = PlaySession.parseDateTime(dateString);
+        LocalDate date = PlaySession.parseDateTime(dateString);
 
         String gameString = playStrings[1].trim();
         Game.Platform platform

@@ -1,6 +1,7 @@
 package gametracker.data;
 
-import org.joda.time.DateTime;
+
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -23,7 +24,7 @@ public class PlaySession {
             = DateTimeFormat.forPattern("dd/MM/yyyy");
 
     private final Game game;
-    private final DateTime sessionDate; // date the session was played on
+    private final LocalDate sessionDate; // date the session was played on
     private final double playTime; // the length of time (in hours)
 
     /**
@@ -34,7 +35,7 @@ public class PlaySession {
      * @param sessionDate the date the games was played
      * @param playTime how long (in hours) the game was played for
      */
-    public PlaySession(Game game, DateTime sessionDate, double playTime) {
+    public PlaySession(Game game, LocalDate sessionDate, double playTime) {
         this.game = game;
         this.sessionDate = sessionDate;
         this.playTime = playTime;
@@ -44,7 +45,7 @@ public class PlaySession {
         return game;
     }
 
-    public DateTime getSessionDate() {
+    public LocalDate getSessionDate() {
         return sessionDate;
     }
 
@@ -90,16 +91,16 @@ public class PlaySession {
      * @param dateStr the string that will be parsed
      * @return a correct date time if the can be parsed or null if its empty
      */
-    public static DateTime parseDateTime(String dateStr) {
-        DateTime date;
+    public static LocalDate parseDateTime(String dateStr) {
+        LocalDate date;
         if (dateStr.isEmpty()) {
             return null;
         } else {
             try {
-                date = DateTime.parse(dateStr, SESSION_DATE_FORMAT);
+                date = LocalDate.parse(dateStr, SESSION_DATE_FORMAT);
             } catch (IllegalArgumentException e) {
                 try {
-                    date = DateTime.parse(dateStr, ALTERNATE_SESSION_DATE_FORMAT);
+                    date = LocalDate.parse(dateStr, ALTERNATE_SESSION_DATE_FORMAT);
                 } catch (IllegalArgumentException e2) {
                     throw new IllegalArgumentException(
                         "Not able to parse date from " + dateStr, e);

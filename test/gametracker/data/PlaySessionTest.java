@@ -7,7 +7,7 @@ package gametracker.data;
 
 import static org.hamcrest.CoreMatchers.startsWith;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -76,7 +76,7 @@ public class PlaySessionTest {
         String dateStr = "";
         
         
-        DateTime result = PlaySession.parseDateTime(dateStr);
+        LocalDate result = PlaySession.parseDateTime(dateStr);
         
         assertNull(result);
 
@@ -89,7 +89,7 @@ public class PlaySessionTest {
         String dateStr = "2000/12/31";
         DateTime expResult = 
                 DateTime.parse(dateStr, PlaySession.SESSION_DATE_FORMAT);
-        DateTime result = PlaySession.parseDateTime(dateStr);
+        LocalDate result = PlaySession.parseDateTime(dateStr);
         assertEquals(expResult, result);
     }
 

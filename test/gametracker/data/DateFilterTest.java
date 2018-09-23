@@ -5,7 +5,7 @@
  */
 package gametracker.data;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -57,51 +57,51 @@ public class DateFilterTest {
         games.addGame(f);
 
 
-        sessions[0] = new PlaySession(a, new DateTime(2000, 1, 1, 0, 0), 1.0);
+        sessions[0] = new PlaySession(a, new LocalDate(2000, 1, 1), 1.0);
         // only a
-        sessions[1] = new PlaySession(e, new DateTime(2000, 1, 1, 0, 0), 1.0);
-        sessions[2] = new PlaySession(b1, new DateTime(2000, 1, 1, 0, 0), 0.25);
-        sessions[3] = new PlaySession(b2, new DateTime(2000, 1, 1, 0, 0), 0.5);
-        sessions[4] = new PlaySession(b3, new DateTime(2000, 1, 1, 0, 0), 0.75);
-        sessions[5] = new PlaySession(f, new DateTime(2000, 1, 1, 0, 0), 0.1);
+        sessions[1] = new PlaySession(e, new LocalDate(2000, 1, 1), 1.0);
+        sessions[2] = new PlaySession(b1, new LocalDate(2000, 1, 1), 0.25);
+        sessions[3] = new PlaySession(b2, new LocalDate(2000, 1, 1), 0.5);
+        sessions[4] = new PlaySession(b3, new LocalDate(2000, 1, 1), 0.75);
+        sessions[5] = new PlaySession(f, new LocalDate(2000, 1, 1), 0.1);
         // six fs 5, 11, 17, 23, 29, 35
 
-        sessions[6] = new PlaySession(e, new DateTime(2000, 1, 2, 0, 0), 1.0);
-        sessions[7] = new PlaySession(e, new DateTime(2000, 1, 2, 0, 0), 1.0);
-        sessions[8] = new PlaySession(e, new DateTime(2000, 1, 2, 0, 0), 0.5);
-        sessions[9] = new PlaySession(c1, new DateTime(2000, 1, 2, 0, 0), 0.5);
-        sessions[10] = new PlaySession(c2, new DateTime(2000, 1, 2, 0, 0), 4);
-        sessions[11] = new PlaySession(f, new DateTime(2000, 1, 2, 0, 0), 0.1);
+        sessions[6] = new PlaySession(e, new LocalDate(2000, 1, 2), 1.0);
+        sessions[7] = new PlaySession(e, new LocalDate(2000, 1, 2), 1.0);
+        sessions[8] = new PlaySession(e, new LocalDate(2000, 1, 2), 0.5);
+        sessions[9] = new PlaySession(c1, new LocalDate(2000, 1, 2), 0.5);
+        sessions[10] = new PlaySession(c2, new LocalDate(2000, 1, 2), 4);
+        sessions[11] = new PlaySession(f, new LocalDate(2000, 1, 2), 0.1);
         
-        sessions[12] = new PlaySession(e, new DateTime(2000, 1, 3, 0, 0), 1.0);
-        sessions[13] = new PlaySession(c1, new DateTime(2000, 1, 3, 0, 0), 1.0);
-        sessions[14] = new PlaySession(c2, new DateTime(2000, 1, 3, 0, 0), 0.25);
-        sessions[15] = new PlaySession(c3, new DateTime(2000, 1, 3, 0, 0), 0.5);
-        sessions[16] = new PlaySession(e, new DateTime(2000, 1, 3, 0, 0), 0.75);
-        sessions[17] = new PlaySession(f, new DateTime(2000, 1, 3, 0, 0), 0.1);
+        sessions[12] = new PlaySession(e, new LocalDate(2000, 1, 3), 1.0);
+        sessions[13] = new PlaySession(c1, new LocalDate(2000, 1, 3), 1.0);
+        sessions[14] = new PlaySession(c2, new LocalDate(2000, 1, 3), 0.25);
+        sessions[15] = new PlaySession(c3, new LocalDate(2000, 1, 3), 0.5);
+        sessions[16] = new PlaySession(e, new LocalDate(2000, 1, 3), 0.75);
+        sessions[17] = new PlaySession(f, new LocalDate(2000, 1, 3), 0.1);
 
-        sessions[18] = new PlaySession(e, new DateTime(2000, 1, 4, 0, 0), 1.0);
-        sessions[19] = new PlaySession(e, new DateTime(2000, 1, 4, 0, 0), 1.0);
-        sessions[20] = new PlaySession(b1, new DateTime(2000, 1, 4, 0, 0), 0.25);
-        sessions[21] = new PlaySession(b2, new DateTime(2000, 1, 4, 0, 0), 0.5);
-        sessions[22] = new PlaySession(b3, new DateTime(2000, 1, 4, 0, 0), 0.75);
-        sessions[23] = new PlaySession(f, new DateTime(2000, 1, 4, 0, 0), 0.1);
+        sessions[18] = new PlaySession(e, new LocalDate(2000, 1, 4), 1.0);
+        sessions[19] = new PlaySession(e, new LocalDate(2000, 1, 4), 1.0);
+        sessions[20] = new PlaySession(b1, new LocalDate(2000, 1, 4), 0.25);
+        sessions[21] = new PlaySession(b2, new LocalDate(2000, 1, 4), 0.5);
+        sessions[22] = new PlaySession(b3, new LocalDate(2000, 1, 4), 0.75);
+        sessions[23] = new PlaySession(f, new LocalDate(2000, 1, 4), 0.1);
 
-        sessions[24] = new PlaySession(c1, new DateTime(2000, 1, 5, 0, 0), 1.0);
-        sessions[25] = new PlaySession(b1, new DateTime(2000, 1, 5, 0, 0), 1.0);
-        sessions[26] = new PlaySession(c1, new DateTime(2000, 1, 5, 0, 0), 0.25);
-        sessions[27] = new PlaySession(b1, new DateTime(2000, 1, 5, 0, 0), 0.5);
-        sessions[28] = new PlaySession(c1, new DateTime(2000, 1, 5, 0, 0), 0.75);
-        sessions[29] = new PlaySession(f, new DateTime(2000, 1, 5, 0, 0), 0.1);
+        sessions[24] = new PlaySession(c1, new LocalDate(2000, 1, 5), 1.0);
+        sessions[25] = new PlaySession(b1, new LocalDate(2000, 1, 5), 1.0);
+        sessions[26] = new PlaySession(c1, new LocalDate(2000, 1, 5), 0.25);
+        sessions[27] = new PlaySession(b1, new LocalDate(2000, 1, 5), 0.5);
+        sessions[28] = new PlaySession(c1, new LocalDate(2000, 1, 5), 0.75);
+        sessions[29] = new PlaySession(f, new LocalDate(2000, 1, 5), 0.1);
 
-        sessions[30] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 1.0);
-        sessions[31] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 1.0);
-        sessions[32] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 0.25);
-        sessions[33] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 0.5);
-        sessions[34] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 0.75);
-        sessions[35] = new PlaySession(f, new DateTime(2000, 1, 6, 0, 0), 0.1);
+        sessions[30] = new PlaySession(e, new LocalDate(2000, 1, 6), 1.0);
+        sessions[31] = new PlaySession(e, new LocalDate(2000, 1, 6), 1.0);
+        sessions[32] = new PlaySession(e, new LocalDate(2000, 1, 6), 0.25);
+        sessions[33] = new PlaySession(e, new LocalDate(2000, 1, 6), 0.5);
+        sessions[34] = new PlaySession(e, new LocalDate(2000, 1, 6), 0.75);
+        sessions[35] = new PlaySession(f, new LocalDate(2000, 1, 6), 0.1);
         
-        sessions[36] = new PlaySession(g, new DateTime(2000, 1, 7, 0, 0), 1.5);
+        sessions[36] = new PlaySession(g, new LocalDate(2000, 1, 7), 1.5);
 
         sourceData = new PlayData();
 
@@ -137,7 +137,7 @@ public class DateFilterTest {
         System.out.println("Testing Filter Take Games Before Date");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(null, new DateTime(2000, 1, 4, 0, 0));
+        instance.addWindow(null, new LocalDate(2000, 1, 4));
         PlayData expResult = new PlayData();
         for (int i = 0; i <= 17; i++) {
             expResult.addPlaySession(sessions[i]);
@@ -151,7 +151,7 @@ public class DateFilterTest {
         System.out.println("Testing Filter Take Games After Date");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(new DateTime(2000, 1, 4, 0, 0), null);
+        instance.addWindow(new LocalDate(2000, 1, 4), null);
         PlayData expResult = new PlayData();
         for (int i = 18; i < 37; i++) {
             expResult.addPlaySession(sessions[i]);
@@ -165,7 +165,7 @@ public class DateFilterTest {
         System.out.println("Testing Filter Take Games Between Two Dates");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 5));
         PlayData expResult = new PlayData();
         for (int i = 6; i <= 23; i++) {
             expResult.addPlaySession(sessions[i]);
@@ -179,8 +179,8 @@ public class DateFilterTest {
         System.out.println("Testing Filter Take Games Between Two Dates");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 4, 0, 0));
-        instance.addWindow(new DateTime(2000, 1, 5, 0, 0), new DateTime(2000, 1, 7, 0, 0));
+        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 4));
+        instance.addWindow(new LocalDate(2000, 1, 5), new LocalDate(2000, 1, 7));
         PlayData expResult = new PlayData();
         for (int i = 6; i <= 17; i++) {
             expResult.addPlaySession(sessions[i]);
@@ -198,8 +198,8 @@ public class DateFilterTest {
                 + "Encapsulating (First in Second)");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
-        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 6, 0, 0));
+        instance.addWindow(new LocalDate(2000, 1, 3), new LocalDate(2000, 1, 5));
+        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 6));
         PlayData expResult = new PlayData();
         for (int i = 6; i <= 29; i++) {
             expResult.addPlaySession(sessions[i]);
@@ -214,8 +214,8 @@ public class DateFilterTest {
                 + "Encapsulating (Second in First)");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 6, 0, 0));
-        instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 6));
+        instance.addWindow(new LocalDate(2000, 1, 3), new LocalDate(2000, 1, 5));
         PlayData expResult = new PlayData();
         for (int i = 6; i <= 29; i++) {
             expResult.addPlaySession(sessions[i]);
@@ -230,8 +230,8 @@ public class DateFilterTest {
                 + "Overlapping");
         
         DateFilter instance = new DateFilter();
-        instance.addWindow(new DateTime(2000, 1, 2, 0, 0), new DateTime(2000, 1, 4, 0, 0));
-        instance.addWindow(new DateTime(2000, 1, 3, 0, 0), new DateTime(2000, 1, 5, 0, 0));
+        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 4));
+        instance.addWindow(new LocalDate(2000, 1, 3), new LocalDate(2000, 1, 5));
         PlayData expResult = new PlayData();
         for (int i = 6; i <= 23; i++) {
             expResult.addPlaySession(sessions[i]);

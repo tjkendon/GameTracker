@@ -31,7 +31,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -236,10 +236,10 @@ public class CLI {
 
         menu.add(new MenuElement("A", "Add new Play Session", () -> {
             try {
-                DateTime date = promptForDate(
+                LocalDate date = promptForDate(
                         "Enter Date (YYYY/mm/dd) (Blank for today)");
                 if (date == null) {
-                    date = DateTime.now();
+                    date = LocalDate.now();
                 }
 
                 Game game = promptForGame();
@@ -417,10 +417,10 @@ public class CLI {
         }));
 
         menu.add(new MenuElement("S", "Add Date Filter", () -> {
-            DateTime opening = promptForDate(
+            LocalDate opening = promptForDate(
                     "Begining Date (Blank for no start date)");
 
-            DateTime end = promptForDate(
+            LocalDate end = promptForDate(
                     "End Date (Blank for no end date)");
 
             dateFilter.addWindow(opening, end);
@@ -601,9 +601,9 @@ public class CLI {
         return game;
     }
 
-    private DateTime promptForDate(String prompt) {
+    private LocalDate promptForDate(String prompt) {
         String dateStr = UIHelper.promptForString(prompt);
-        DateTime date = PlaySession.parseDateTime(dateStr);
+        LocalDate date = PlaySession.parseDateTime(dateStr);
 
         return date;
     }

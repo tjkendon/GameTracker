@@ -7,7 +7,7 @@ package gametracker.data;
 
 import java.io.File;
 import static org.hamcrest.CoreMatchers.startsWith;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -57,7 +57,7 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
@@ -97,7 +97,7 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
@@ -128,7 +128,7 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
@@ -164,7 +164,7 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
