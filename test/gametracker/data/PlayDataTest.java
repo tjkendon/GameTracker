@@ -7,7 +7,7 @@ package gametracker.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,14 +24,14 @@ public class PlayDataTest {
     private Game testgame1;
     private Game testgame2;
     
-    private DateTime testDate1;
+    private LocalDate testDate1;
     
     public PlayDataTest() {
         
         testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
         testgame2 = new Game("Test2", Game.Platform.PC_Steam, 2000);
         
-        testDate1 = DateTime.now();
+        testDate1 = LocalDate.now();
         
     }
     
