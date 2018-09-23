@@ -700,16 +700,20 @@ public class CLI {
     private PlayAggregate generateAggregates() {
         PlayData filteredData = filterPlayData();
 
-        TotalTimeAggregator total = new TotalTimeAggregator(filteredData);
+        TotalTimeAggregator total = 
+                new TotalTimeAggregator(filteredData);
         PlayAggregate totalData = total.aggregate();
 
-        SessionCountAggregator session = new SessionCountAggregator(filteredData);
+        SessionCountAggregator session = 
+                new SessionCountAggregator(filteredData);
         PlayAggregate sessionData = session.aggregate();
 
-        AverageTimeAggregator average = new AverageTimeAggregator(filteredData);
+        AverageTimeAggregator average = 
+                new AverageTimeAggregator(filteredData);
         PlayAggregate averageData = average.aggregate();
 
-        MedianTimeAggregator median = new MedianTimeAggregator(filteredData);
+        MedianTimeAggregator median = 
+                new MedianTimeAggregator(filteredData);
         PlayAggregate medianData = median.aggregate();
 
         totalData.mergeAggregates(sessionData, averageData, medianData);
