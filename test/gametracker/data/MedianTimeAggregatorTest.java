@@ -164,7 +164,7 @@ public class MedianTimeAggregatorTest {
         MedianTimeAggregator instance = new MedianTimeAggregator(source);
         PlayAggregate expResult = new PlayAggregate();
         
-        expResult.putAggregate(f, PlayAggregate.AggregateType.AVERAGE_TIME, 0.1);
+        expResult.putAggregate(f, PlayAggregate.AggregateType.MEDIAN_TIME, 0.1);
         
         PlayAggregate result = instance.aggregate();
         assertEquals(expResult, result);
@@ -179,27 +179,27 @@ public class MedianTimeAggregatorTest {
         PlayAggregate expResult = new PlayAggregate();
         
         expResult.putAggregate(
-                a, PlayAggregate.AggregateType.AVERAGE_TIME, 1.0);
+                a, PlayAggregate.AggregateType.MEDIAN_TIME, 1.0);
         expResult.putAggregate(
-                b1, PlayAggregate.AggregateType.AVERAGE_TIME, 0.375);
+                b1, PlayAggregate.AggregateType.MEDIAN_TIME, 0.375);
         expResult.putAggregate(
-                b2, PlayAggregate.AggregateType.AVERAGE_TIME, 0.5);
+                b2, PlayAggregate.AggregateType.MEDIAN_TIME, 0.5);
         expResult.putAggregate(
-                b3, PlayAggregate.AggregateType.AVERAGE_TIME, 0.75);
+                b3, PlayAggregate.AggregateType.MEDIAN_TIME, 0.75);
         expResult.putAggregate(
-                c1, PlayAggregate.AggregateType.AVERAGE_TIME, 0.75);
+                c1, PlayAggregate.AggregateType.MEDIAN_TIME, 0.75);
         expResult.putAggregate(
-                c2, PlayAggregate.AggregateType.AVERAGE_TIME, 2.125);
+                c2, PlayAggregate.AggregateType.MEDIAN_TIME, 2.125);
         expResult.putAggregate(
-                c3, PlayAggregate.AggregateType.AVERAGE_TIME, 0.5);
+                c3, PlayAggregate.AggregateType.MEDIAN_TIME, 0.5);
         //expResult.putAggregate(
         //        d, PlayAggregate.AggregateType.AVERAGE_TIME, 0);
         expResult.putAggregate(
-                e, PlayAggregate.AggregateType.AVERAGE_TIME, 1);
+                e, PlayAggregate.AggregateType.MEDIAN_TIME, 1);
         expResult.putAggregate(
-                f, PlayAggregate.AggregateType.AVERAGE_TIME, 0.1);
+                f, PlayAggregate.AggregateType.MEDIAN_TIME, 0.1);
         expResult.putAggregate(
-                g, PlayAggregate.AggregateType.AVERAGE_TIME, 1.5);
+                g, PlayAggregate.AggregateType.MEDIAN_TIME, 1.5);
         
         PlayAggregate result = instance.aggregate();
         assertEquals(expResult, result);
