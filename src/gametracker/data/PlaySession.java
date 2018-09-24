@@ -1,6 +1,7 @@
 package gametracker.data;
 
 
+import java.util.Objects;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -110,5 +111,42 @@ public class PlaySession {
         }
         return date;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.game);
+        hash = 71 * hash + Objects.hashCode(this.sessionDate);
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.playTime) 
+                ^ (Double.doubleToLongBits(this.playTime) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PlaySession other = (PlaySession) obj;
+        if (Double.doubleToLongBits(this.playTime) 
+                != Double.doubleToLongBits(other.playTime)) {
+            return false;
+        }
+        if (!Objects.equals(this.game, other.game)) {
+            return false;
+        }
+        if (!Objects.equals(this.sessionDate, other.sessionDate)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

@@ -3,7 +3,6 @@ package gametracker.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.joda.time.DateTimeComparator;
 
 /**
  *
@@ -92,7 +91,7 @@ public class PlayData {
         if (this.changed != other.changed) {
             return false;
         }
-        return Objects.equals(this.sessions, other.sessions);
+        return this.sessions.equals(other.sessions);
     }
 
     public boolean hasChanged() {
@@ -103,6 +102,7 @@ public class PlayData {
         changed = false;
     }
 
+    @Deprecated
     public static boolean containsMatchingContent(PlayData a, PlayData b) {
 
         if (a.getPlaySessions().size() == b.getPlaySessions().size()) {
