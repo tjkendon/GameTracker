@@ -16,14 +16,16 @@ import java.util.Set;
  */
 public class MedianTimeAggregator extends Aggregator {
     
-    private final PlayData sourceData;
+    
     
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.MEDIAN_TIME;
-    
-    public MedianTimeAggregator(PlayData source) {
-        this.sourceData = source;
+
+    public MedianTimeAggregator(PlayData sourceData) {
+        super(sourceData);
     }
+    
+    
 
     @Override
     public PlayAggregate aggregate() {

@@ -14,14 +14,13 @@ import java.util.Set;
  */
 public class TotalTimeAggregator extends Aggregator {
     
-    private final PlayData sourceData;
-    
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_TIME;
-    
-    public TotalTimeAggregator(PlayData source) {
-        this.sourceData = source;
+
+    public TotalTimeAggregator(PlayData sourceData) {
+        super(sourceData);
     }
+    
 
     @Override
     public PlayAggregate aggregate() {
