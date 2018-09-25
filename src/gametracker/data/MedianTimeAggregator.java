@@ -14,9 +14,9 @@ import java.util.Set;
  *
  * @author tjkendon
  */
-public class MedianTimeAggregator implements Aggregator {
+public class MedianTimeAggregator extends Aggregator {
     
-    PlayData sourceData;
+    private final PlayData sourceData;
     
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.MEDIAN_TIME;
@@ -45,7 +45,7 @@ public class MedianTimeAggregator implements Aggregator {
             }
             Collections.sort(values);
             int midpoint = (values.size() - 1) / 2;
-            double median = -1;
+            double median;
             if (values.size() % 2 == 1) {
                 median = values.get(midpoint);
             } else {

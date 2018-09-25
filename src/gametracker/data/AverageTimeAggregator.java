@@ -12,9 +12,9 @@ import java.util.Set;
  *
  * @author tjkendon
  */
-public class AverageTimeAggregator implements Aggregator {
+public class AverageTimeAggregator extends Aggregator {
     
-    PlayData sourceData;
+    private final PlayData sourceData;
     
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.AVERAGE_TIME;
