@@ -12,9 +12,9 @@ import java.util.Set;
  *
  * @author tjkendon
  */
-public class TotalTimeAggregator implements Aggregator {
+public class TotalTimeAggregator extends Aggregator {
     
-    PlayData sourceData;
+    private final PlayData sourceData;
     
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_TIME;

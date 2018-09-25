@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gametracker.data;
 
 /**
  *
+ * 
+ * 
  * @author tjkendon
  */
-public interface Aggregator {
+public abstract class Aggregator {
     
-    public PlayAggregate aggregate();
+    public abstract PlayAggregate aggregate();
     
 }

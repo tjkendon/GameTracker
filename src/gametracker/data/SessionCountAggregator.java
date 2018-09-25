@@ -12,9 +12,9 @@ import java.util.Set;
  *
  * @author tjkendon
  */
-public class SessionCountAggregator implements Aggregator {
+public class SessionCountAggregator extends Aggregator {
     
-    PlayData sourceData;
+    private final PlayData sourceData;
     
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_COUNT;
