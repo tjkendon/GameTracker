@@ -14,13 +14,13 @@ import java.util.Set;
  */
 public class SessionCountAggregator extends Aggregator {
     
-    private final PlayData sourceData;
+    
     
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_COUNT;
-    
-    public SessionCountAggregator(PlayData source) {
-        this.sourceData = source;
+
+    public SessionCountAggregator(PlayData sourceData) {
+        super(sourceData);
     }
 
     @Override
