@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gametracker.data;
 
 import java.util.HashSet;
@@ -10,18 +5,40 @@ import java.util.Set;
 
 /**
  *
- * @author tjkendon
+ * Produces an aggregate of average (mean) aggregates based 
+ * on the {@link PlayData} information. For each game in the data the average
+ * session play length is calculated and stored for that game in the aggregate
+ * data.
+ * 
  */
 public class AverageTimeAggregator extends Aggregator {
     
-    public final PlayAggregate.AggregateType type = 
+    /**
+     * The Aggregate Type this aggregator tags its data with.
+     */
+    private final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.AVERAGE_TIME;
 
+    /**
+     * Creates a new Aggregator which will aggregate the given sourceData by 
+     * taking the mean for each game's play sessions.
+     * 
+     * @param sourceData a collection of PlayData sessions which 
+     * will be averaged.
+     */
     public AverageTimeAggregator(PlayData sourceData) {
         super(sourceData);
     }
     
 
+    /**
+     * 
+     * Produces a PlayAggregate which includes the average length of time
+     * each game has been played for in each of its sessions. The aggregate
+     * is generated based on the data provided when constructed.
+     * 
+     * @return a {@link PlayAggregate} filled with average play times for each game.
+     */
     @Override
     public PlayAggregate aggregate() {
         
