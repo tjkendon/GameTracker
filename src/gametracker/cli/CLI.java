@@ -12,12 +12,14 @@ import gametracker.data.DateFilter;
 import gametracker.data.Filter;
 import gametracker.data.Game;
 import gametracker.data.GameFilter;
+import gametracker.data.GamePersistenceManager;
 import gametracker.data.GameSet;
 import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
-import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
+import gametracker.data.PlaySession;
 import gametracker.data.SessionCountAggregator;
+import gametracker.data.SessionPersistenceManager;
 import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class CLI {
 
         String gameFile = null;
         String playFile = null;
-        
+
         try {
             Options options = new Options();
             options.addOption(
@@ -82,9 +84,7 @@ public class CLI {
 
         cli.run();
 
-        if (!cli.save()) {
-            UIHelper.promptForBoolean("Data Not Saved, quit anyway?");
-        }
+        cli.save();
 
         cli.savePreferenceValues();
         cli.printFarewell();
@@ -135,19 +135,13 @@ public class CLI {
     private final GameFilter gameFilter;
     private final DateFilter dateFilter;
 
-    private CSVSessionPersistenceManager sessionManager;
-    private CSVGamePersistenceManager gameManager;
-
-    public CLI() {
-
-        this(null, null);
-
-    }
+    private SessionPersistenceManager sessionManager;
+    private GamePersistenceManager gameManager;
 
     public CLI(String gameFile, String playFile) {
         prefs = Preferences.userNodeForPackage(CLI.class);
         loadPreferenceValues();
-        
+
         if (gameFile != null) {
             gameFileName = gameFile;
         }
@@ -180,10 +174,12 @@ public class CLI {
             gs = gameManager.load();
 
         } catch (IllegalStateException e) {
-            System.out.println(
+
+            System.err.println(
                     "Not able to load game file: " + e.getMessage());
             System.out.println();
             gs = new GameSet();
+
         }
         return gs;
 
@@ -200,11 +196,14 @@ public class CLI {
 
         if (mainGameSet.isEmpty()) {
             System.out.println();
-            System.out.println(
+            System.err.println(
                     "Cowardly skipping loading play set without game data"
-                    + " available");
-            sessionManager = new CSVSessionPersistenceManager();
-            sessionManager.setGameSet(mainGameSet);
+                    + " available, creating new data instead.");
+
+            sessionManager = new CSVSessionPersistenceManager(
+                    new File(playFileName),
+                    mainGameSet);
+
             return new PlayData();
         }
 
@@ -356,7 +355,9 @@ public class CLI {
             String newName = UIHelper.promptForString(
                     "Enter new Game Data File Name (Blank to leave unchanged)");
             if (!newName.isEmpty()) {
-                gameManager.setDatafile(new File(newName));
+                gameFileName = newName;
+                gameManager = new CSVGamePersistenceManager(
+                        new File(gameFileName));
             }
 
         }));
@@ -367,7 +368,11 @@ public class CLI {
                     "Enter new Session Data File Name "
                     + "(Blank to leave unchanged)");
             if (!newName.isEmpty()) {
-                sessionManager.setDatafile(new File(newName));
+                playFileName = newName;
+                sessionManager
+                        = new CSVSessionPersistenceManager(
+                                new File(playFileName),
+                                mainGameSet);
             }
 
         }));
@@ -380,9 +385,13 @@ public class CLI {
                     "Are you seure you want to clear all data");
             if (sure) {
                 mainGameSet = new GameSet();
+
                 mainPlayData = new PlayData();
-                sessionManager.clearDataFile();
-                sessionManager.setGameSet(mainGameSet);
+
+                sessionManager = new CSVSessionPersistenceManager(
+                        new File(playFileName),
+                        mainGameSet);
+
             }
 
         }));
@@ -551,12 +560,10 @@ public class CLI {
 
     private boolean saveGameData() {
         try {
-            if (mainGameSet.hasChanged()) {
-                gameManager.saveGameSet(mainGameSet);
-                System.out.println("Game data saved");
-            } else {
-                System.out.println("Game data has not changed");
-            }
+            
+            gameManager.saveGameSet(mainGameSet);
+            System.out.println("Game data saved");
+
         } catch (IllegalStateException e) {
             System.out.println("Not able to save data - "
                     + e.getLocalizedMessage());
@@ -569,12 +576,8 @@ public class CLI {
 
         try {
 
-            if (mainPlayData.hasChanged()) {
-                sessionManager.savePlayData(mainPlayData);
-                System.out.println("Session data saved");
-            } else {
-                System.out.println("Session data has not changed");
-            }
+            sessionManager.savePlayData(mainPlayData);
+            System.out.println("Session data saved");
 
         } catch (IllegalStateException e) {
             System.out.println("Not able to save data - "
@@ -700,20 +703,20 @@ public class CLI {
     private PlayAggregate generateAggregates() {
         PlayData filteredData = filterPlayData();
 
-        TotalTimeAggregator total = 
-                new TotalTimeAggregator(filteredData);
+        TotalTimeAggregator total
+                = new TotalTimeAggregator(filteredData);
         PlayAggregate totalData = total.aggregate();
 
-        SessionCountAggregator session = 
-                new SessionCountAggregator(filteredData);
+        SessionCountAggregator session
+                = new SessionCountAggregator(filteredData);
         PlayAggregate sessionData = session.aggregate();
 
-        AverageTimeAggregator average = 
-                new AverageTimeAggregator(filteredData);
+        AverageTimeAggregator average
+                = new AverageTimeAggregator(filteredData);
         PlayAggregate averageData = average.aggregate();
 
-        MedianTimeAggregator median = 
-                new MedianTimeAggregator(filteredData);
+        MedianTimeAggregator median
+                = new MedianTimeAggregator(filteredData);
         PlayAggregate medianData = median.aggregate();
 
         totalData.mergeAggregates(sessionData, averageData, medianData);
