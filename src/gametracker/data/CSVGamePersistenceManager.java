@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 /**
  *
- * Allows game data to be loaded and saved in a CSV file in the host file system.
+ * Allows game data to be loaded and saved in a CSV file in the host 
+ * file system.
  * 
  */
 public class CSVGamePersistenceManager implements GamePersistenceManager {
@@ -47,10 +48,6 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
         this.datafile = datafile;
     }
     
-    
-    public void clearDataFile() {
-        this.datafile = null;
-    }
     
     public boolean hasDataFile() {
         return this.datafile != null;

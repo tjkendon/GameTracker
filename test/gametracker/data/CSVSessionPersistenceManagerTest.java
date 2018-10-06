@@ -103,8 +103,7 @@ public class CSVSessionPersistenceManagerTest {
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
         CSVSessionPersistenceManager instance
-                = new CSVSessionPersistenceManager();
-        instance.setGameSet(games);
+                = new CSVSessionPersistenceManager(null, games);
         PlayData load = instance.load();
 
     }
@@ -139,8 +138,9 @@ public class CSVSessionPersistenceManagerTest {
         original.addPlaySession(session2);
 
         CSVSessionPersistenceManager instance
-                = new CSVSessionPersistenceManager();
-        instance.setDatafile(new File("data/test/session.data"));
+                = new CSVSessionPersistenceManager(
+                        new File("data/test/session.data"), games);
+        
         PlayData load = instance.load();
 
     }
@@ -175,7 +175,7 @@ public class CSVSessionPersistenceManagerTest {
         original.addPlaySession(session2);
         
         CSVSessionPersistenceManager instance
-                = new CSVSessionPersistenceManager();
+                = new CSVSessionPersistenceManager(null, games);
         instance.setGameSet(games);
         instance.savePlayData(original);
 
