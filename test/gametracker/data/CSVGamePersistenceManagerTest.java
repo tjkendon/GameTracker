@@ -87,7 +87,9 @@ public class CSVGamePersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        CSVGamePersistenceManager instance = new CSVGamePersistenceManager();
+        CSVGamePersistenceManager instance = 
+                new CSVGamePersistenceManager(new File("data/test/game.data"));
+        instance.clearDataFile();
 
         instance.saveGameSet(games);
 
@@ -106,7 +108,9 @@ public class CSVGamePersistenceManagerTest {
                 startsWith("No File Set to Load From"));
 
 
-        CSVGamePersistenceManager instance = new CSVGamePersistenceManager();
+        CSVGamePersistenceManager instance = 
+                new CSVGamePersistenceManager(new File("data/test/game.data"));
+        instance.clearDataFile();
 
         GameSet load = instance.load();
 

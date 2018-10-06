@@ -7,28 +7,46 @@ import java.util.Scanner;
 
 /**
  *
- * @author tjkendon
+ * Allow game data to be loaded and saved in a CSV file in the host file system.
+ * 
  */
 public class CSVGamePersistenceManager implements GamePersistenceManager {
 
     private File datafile;
 
-    public CSVGamePersistenceManager() {
-
-    }
-
-
+    /**
+     * 
+     * Creates a manager with the given file as its store for game data.
+     * 
+     * @param datafile the handle for the file this manager should store
+     * data in.
+     */
     public CSVGamePersistenceManager(File datafile) {
         this.datafile = datafile;
     }
 
+    /**
+     * 
+     * Returns the handle for the file this manager is using as a persistent
+     * store.
+     * 
+     * @return 
+     */
     public File getDatafile() {
         return datafile;
     }
 
+    /**
+     * 
+     * Changes the file this manager is using as a persistent store to the 
+     * new file given by the handle.
+     * 
+     * @param datafile the file handle to change this managers store to
+     */
     public void setDatafile(File datafile) {
         this.datafile = datafile;
     }
+    
     
     public void clearDataFile() {
         this.datafile = null;
