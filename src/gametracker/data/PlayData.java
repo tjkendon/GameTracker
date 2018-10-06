@@ -13,14 +13,12 @@ import java.util.Objects;
 public class PlayData {
 
     private final List<PlaySession> sessions;
-    private boolean changed;
 
     /**
      * Creates a new PlayData with an empty list of sessions.
      */
     public PlayData() {
         this.sessions = new ArrayList<>();
-        changed = false;
 
     }
 
@@ -33,7 +31,6 @@ public class PlayData {
      */
     public PlayData(PlayData sourceData) {
         this.sessions = new ArrayList<>(sourceData.getPlaySessions());
-        changed = true;
     }
 
     /**
@@ -44,7 +41,6 @@ public class PlayData {
      */
     public void addPlaySession(PlaySession session) {
         this.sessions.add(session);
-        changed = true;
 
     }
 
@@ -72,7 +68,6 @@ public class PlayData {
     public int hashCode() {
         int hash = 3;
         hash = 79 * hash + Objects.hashCode(this.sessions);
-        hash = 79 * hash + (this.changed ? 1 : 0);
         return hash;
     }
 
@@ -88,19 +83,9 @@ public class PlayData {
             return false;
         }
         final PlayData other = (PlayData) obj;
-        if (this.changed != other.changed) {
-            return false;
-        }
         return this.sessions.equals(other.sessions);
     }
 
-    public boolean hasChanged() {
-        return changed;
-    }
-
-    public void resetChanged() {
-        changed = false;
-    }
 
     @Deprecated
     public static boolean containsMatchingContent(PlayData a, PlayData b) {

@@ -15,7 +15,7 @@ import java.util.Set;
 public class GameSet {
 
     private Set<Game> games;
-    private boolean changed;
+    
 
 
     /**
@@ -25,7 +25,7 @@ public class GameSet {
      */
     public GameSet() {
         games = new HashSet<>();
-        changed = false;
+        
 
     }
 
@@ -53,7 +53,7 @@ public class GameSet {
      */
     public void addGame(Game g) {
         games.add(g);
-        changed = true;
+        
 
     }
 
@@ -166,9 +166,7 @@ public class GameSet {
      */
     public boolean removeGame(Game g) {
         boolean result = games.remove(g);
-        if (result) {
-            changed = true;
-        }
+        
         return result;   
     }
     
@@ -209,13 +207,6 @@ public class GameSet {
         return true;
     }
 
-    public boolean hasChanged() {
-        return changed;
-    }
-    
-    public void resetChanged() {
-        changed = false;
-    }
     
     
     
