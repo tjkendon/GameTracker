@@ -12,39 +12,39 @@ import java.util.Scanner;
 import org.joda.time.LocalDate;
 
 /**
- *
- * @author tjkendon
+ * Allows play session data to be loaded and saved in a CSV file in the host 
+ * file system.
  */
 public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
-    private File datafile;
-    private GameSet gameSet;
-
-    public CSVSessionPersistenceManager() {
-
-    }
+    private File datafile; // the file to save data in
+    private GameSet gameSet; // the set that will be saved
 
 
+    /**
+     * Creates a new CSVSessionPersistenceManager with a handle for a file
+     * to save the data in and a gameSet to use to match game data.
+     * 
+     * @param datafile the handle for the file this manager will store the data
+     * in
+     * @param gameSet the game data to use to link games in sessions
+     */
     public CSVSessionPersistenceManager(File datafile, GameSet gameSet) {
         this.datafile = datafile;
         this.gameSet = gameSet;
     }
 
-    public File getDatafile() {
-        return datafile;
-    }
-
-    public GameSet getGameSet() {
-        return gameSet;
-    }
-
+    /**
+     * 
+     * Changes the file handle this manager is using to save data to the 
+     * new file handle.
+     * 
+     * @param datafile the handle this manager will use to save data
+     */
     public void setDatafile(File datafile) {
         this.datafile = datafile;
     }
     
-    public void clearDataFile() {
-        this.datafile = null;
-    }
     
     public boolean hasDataFile() {
         return this.datafile != null;
@@ -157,12 +157,19 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
         return new PlaySession(game, date, time);
     }
 
+    /**
+     * 
+     * Saves the give play sessions in the csv file this manager is 
+     * representing.
+     * 
+     * 
+     */
     @Override
     public void savePlayData(PlayData sessions) {
 
         if (datafile == null) {
             throw new IllegalStateException(
-                    "Datafile not set to save session data");
+                    "No file set to save session data");
         }
 
         try (PrintWriter writer = new PrintWriter(datafile)) {
