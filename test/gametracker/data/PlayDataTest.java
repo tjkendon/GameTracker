@@ -59,10 +59,8 @@ public class PlayDataTest {
         System.out.println("Testing Adding A PlaySession to PlayData");
         PlaySession session = new PlaySession(testgame1, testDate1, 1);
         PlayData instance = new PlayData();
-        assertFalse (instance.hasChanged());
         instance.addPlaySession(session);
         assertTrue(instance.contains(session));
-        assertTrue(instance.hasChanged());
     }
 
     /**
@@ -88,19 +86,6 @@ public class PlayDataTest {
         
     }
     
-    /**
-     * Test of addPlaySession method, of class PlayData.
-     */
-    @Test
-    public void testResetChanged() {
-        System.out.println("Testing changed flag");
-        PlaySession session = new PlaySession(testgame1, testDate1, 1);
-        PlayData instance = new PlayData();
-        assertFalse (instance.hasChanged());
-        instance.addPlaySession(session);
-        assertTrue(instance.hasChanged());
-        instance.resetChanged();
-        assertFalse(instance.hasChanged());
-    }
+    
     
 }
