@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 /**
  *
- * Allows game data to be loaded and saved in a CSV file in the host 
- * file system.
+ * Loads and saves game data in a {@link GameSet} using a comma-separated 
+ * file in the host file system.
  * 
  */
 public class CSVGamePersistenceManager implements GamePersistenceManager {
