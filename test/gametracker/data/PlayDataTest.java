@@ -21,10 +21,10 @@ import static org.junit.Assert.*;
  */
 public class PlayDataTest {
     
-    private Game testgame1;
-    private Game testgame2;
+    private final Game testgame1;
+    private final Game testgame2;
     
-    private LocalDate testDate1;
+    private final LocalDate testDate1;
     
     public PlayDataTest() {
         
