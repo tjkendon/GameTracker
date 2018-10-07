@@ -48,11 +48,12 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
         this.datafile = datafile;
     }
     
-    
-    public boolean hasDataFile() {
-        return this.datafile != null;
-    }
-
+    /**
+     * 
+     * Loads the game set stored in the file represented by this manager.
+     * 
+     * @return the games stored in the file as a {@link GameSet}
+     */
 
     @Override
     public GameSet load() {
@@ -95,6 +96,13 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
 
     }
 
+    /**
+     * 
+     * Saves the games in the {@link GameSet} in the 
+     * CSV file this manager is set to.
+     * 
+     * @param gameSet the games to save.
+     */
     @Override
     public void saveGameSet(GameSet gameSet) {
         
