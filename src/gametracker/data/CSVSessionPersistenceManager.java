@@ -12,12 +12,21 @@ import java.util.Scanner;
 import org.joda.time.LocalDate;
 
 /**
- * Allows play session data to be loaded and saved in a CSV file in the host 
+ * 
+ * Loaded and saves play session data in a comma-separated file in the host 
  * file system.
+ * 
  */
 public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
-    private File datafile; // the file to save data in
+    /**
+     * The file to load from and save to
+     */
+    private File datafile; // 
+    /**
+     * The list of games that is used to link game names in sessions when 
+     * loading from the file
+     */
     private GameSet gameSet; // the set that will be saved
 
 
@@ -130,28 +139,30 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
     }
 
     
-        /**
-     * Attempts to parse a play session from 5 terms in an array of strings.
+    /**
+     * Parses play session data an array of 5 strings, with the format
      * (Date, Game Name, Platform, Year, Time).
      * 
-     * Will fail if the game is not in the game set
+     * The game (as identified by name, platform and year) must be included
+     * in the {@link GameSet}.
      * 
+     * @param sessionStrings array Strings (Date, Game Name, Platform, Year, Time) 
+     * for a play session
      * 
-     * @param playStrings array of data to attempt to read
-     * @return play session from provided data
+     * @return play session based on the strings
      */
-    private PlaySession parseFull(String[] playStrings) {
-        String dateString = playStrings[0].trim();
+    private PlaySession parseFull(String[] sessionStrings) {
+        String dateString = sessionStrings[0].trim();
         LocalDate date = PlaySession.parseDateTime(dateString);
 
-        String gameString = playStrings[1].trim();
+        String gameString = sessionStrings[1].trim();
         Game.Platform platform
-                = Game.parsePlatform(playStrings[2].trim());
-        int year = Game.parseYear(playStrings[3].trim());
+                = Game.parsePlatform(sessionStrings[2].trim());
+        int year = Game.parseYear(sessionStrings[3].trim());
 
         Game game = gameSet.getGame(gameString, platform, year);
 
-        String timeString = playStrings[4].trim();
+        String timeString = sessionStrings[4].trim();
         Double time = PlaySession.parsePlayTime(timeString);
 
         return new PlaySession(game, date, time);
