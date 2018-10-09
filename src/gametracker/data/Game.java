@@ -4,14 +4,12 @@ import java.util.Objects;
 
 /**
  *
- * Basic data about a game, including the name, the platform, and the year it
- * was released.
+ * Holds data about a game, including the name, the platform, and the year it
+ * was released. A game is identified uniquely if it does not match another
+ * by name, platform and year.
  *
- * @author tjkendon
  */
 public class Game implements Comparable<Game>{
-
-    
 
     /**
      * Enum covering platforms for games which I own :-)
@@ -36,17 +34,26 @@ public class Game implements Comparable<Game>{
 
     }
 
+    /**
+     * Full name of the game.
+     */
     private final String name;
+    /**
+     * Platform the game is released on.
+     */
     private final Platform platform;
+    /**
+     * Year the game was released.
+     */
     private final int year;
 
     /**
      *
      * Creates a new game with the given name, platform and year of creation
      *
-     * @param name
-     * @param platform
-     * @param year
+     * @param name full name of the game
+     * @param platform platform the game was released on
+     * @param year the year in which the game was released
      */
     public Game(String name, Platform platform, int year) {
         this.name = name;
@@ -54,22 +61,56 @@ public class Game implements Comparable<Game>{
         this.year = year;
     }
 
+    /**
+     * 
+     * Returns the name of the game.
+     * 
+     * @return the full name of the game
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * 
+     * Returns the Platform the game was released on.
+     * 
+     * @return the platform the game is on
+     */
     public Platform getPlatform() {
         return platform;
     }
 
+    /**
+     * 
+     * Returns the year the game was released
+     * 
+     * @return the year in which the game was released
+     */
     public int getYear() {
         return year;
     }
 
+    /**
+     * 
+     * Returns the name, platform and year the game was released formatted
+     * <code> name (platform) year</code>
+     * 
+     * @return 
+     */
+    @Override
     public String toString() {
         return this.getName() + " (" + this.getPlatform() + ") - " + year;
     }
 
+    /**
+     * 
+     * Returns the  hash code for the game, based on the name,
+     * platform and year.
+     * 
+     * @return hash code calculated on the has codes of the name, the platform
+     * and the year.
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -79,51 +120,70 @@ public class Game implements Comparable<Game>{
         return hash;
     }
 
+    /**
+     * 
+     * Compares this game with the other, returning true if the name, platform
+     * and year.
+     * 
+     * @param other the object to compare to
+     * @return true if name, platform and year match.
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (obj == null) {
+        if (other == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != other.getClass()) {
             return false;
         }
-        final Game other = (Game) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        final Game otherGame = (Game) other;
+        if (!Objects.equals(this.name, otherGame.name)) {
             return false;
         }
-        if (this.year != other.year) {
+        if (this.year != otherGame.year) {
             return false;
         }
-        if (this.platform != other.platform) {
+        if (this.platform != otherGame.platform) {
             return false;
         }
         return true;
     }
     
+    
+    /**
+     * 
+     * Compares this game to the other, comparing the name first, then the year
+     * and then the platform.
+     * 
+     * @param other the Game to compare
+     * @return negative if this game should be first, zero if they should be 
+     * the same and positive if the other game should be first.
+     * 
+     */
     @Override
-    public int compareTo(Game o) {
-        int diff =this.name.compareTo(o.name);
+    public int compareTo(Game other) {
+        int diff =this.name.compareTo(other.name);
         if (diff != 0) {
             return diff;
         }
-        diff = this.year - o.year;
+        diff = this.year - other.year;
         if (diff != 0) {
             return diff;
         }
-        diff = this.platform.compareTo(o.platform);
+        diff = this.platform.compareTo(other.platform);
         return diff;
     }
 
     /**
      * Parses the platform from a given string. Will return the platform which
-     * matches the valueOf for the string, if possible or throws an
+     * matches the valueOf for the string, if possible, or throws an
      * IllegalArgumentException otherwise.
      *
-     * @param platformStr
-     * @return
+     * @param platformStr the source string to try to parse a platform from
+     * @return the Platform, if it can be parsed.
      */
     public static Game.Platform parsePlatform(String platformStr) {
 
@@ -142,8 +202,8 @@ public class Game implements Comparable<Game>{
      * string describes a year (is a 4 digit int) and throws an
      * IllegalArgumentException.
      *
-     * @param yearStr
-     * @return
+     * @param yearStr the source string to try to parse a year from
+     * @return the year, if it can be parsed.
      */
     public static int parseYear(String yearStr) {
         int year = 0;
