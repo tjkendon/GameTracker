@@ -1,17 +1,19 @@
 package gametracker.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  *
- * Class to hold data about a game aggregated from PlayData. Contains a mapping
- * of games to data, and each piece of data is constructed of a Type (listed
- * below and a value - a double).
+ * Hold data about games as aggregated from {@link PlayData}. 
+ * 
+ * Can contain many different types of data, each identified by the 
+ * {@link PlayAggregate.AggregateType}, then for each game in a source data
+ * the value of the aggregate for that type is stored. All data is assumed
+ * to be {@link double}s.
+ * 
  *
  * @author tjkendon
  */
@@ -68,7 +70,7 @@ public class PlayAggregate {
 
     /**
      *
-     * Merges the other aggregates into the data for this one.
+     * Merges the other aggregates into the data for this one. 
      *
      * @param others the other play aggregates to merge data from
      */
@@ -109,8 +111,12 @@ public class PlayAggregate {
         return new HashMap<>(data.get(game));
     }
 
-
-
+    /**
+     * 
+     * Calculates a hash code based on the stored data.
+     * 
+     * @return the hash code calculated based on the data stored in this object.
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -118,19 +124,27 @@ public class PlayAggregate {
         return hash;
     }
 
+    /**
+     * 
+     * Checks if this object is equal to the other.
+     * 
+     * @param other the object to compare to
+     * @return true if the data stored in this aggregate is the same as the 
+     * other
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (obj == null) {
+        if (other == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != other.getClass()) {
             return false;
         }
-        final PlayAggregate other = (PlayAggregate) obj;
-        if (!Objects.equals(this.data, other.data)) {
+        final PlayAggregate otherAgg = (PlayAggregate) other;
+        if (!Objects.equals(this.data, otherAgg.data)) {
             return false;
         }
         return true;
