@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gametracker.data;
 
 import java.util.ArrayList;
@@ -12,21 +7,42 @@ import java.util.Set;
 
 /**
  *
- * @author tjkendon
+ * Produces an aggregate of the median of all play sessions for each game
+ * in a source {@link PlayData}.
+ * <p>
+ * For each game in the data, the median is calculated, representing the middle
+ * most value for the play sessions for the game.
+ * 
  */
 public class MedianTimeAggregator extends Aggregator {
     
     
-    
+    /**
+     * The flag used to identify data produced by this aggregator. 
+     */
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.MEDIAN_TIME;
 
+    /**
+     * Creates a new aggregator with the given {@link sourceData} data to 
+     * aggregate.
+     * 
+     * @param sourceData the data this aggregator will aggregate.
+     */
     public MedianTimeAggregator(PlayData sourceData) {
         super(sourceData);
     }
     
-    
-
+    /**
+     * 
+     * Calculates the median play time for each game and adds the data
+     * to the returned PlayAggregate. Takes each game found in the data
+     * and finds all of the session times for the game to calculate the 
+     * median length play session for the game.
+     * 
+     * @return A {@link PlayAggregate} containing the median length of time
+     * each game has been played for.
+     */
     @Override
     public PlayAggregate aggregate() {
         
@@ -57,8 +73,6 @@ public class MedianTimeAggregator extends Aggregator {
         }
         
         return returnData;
-        
-                
         
         
     }
