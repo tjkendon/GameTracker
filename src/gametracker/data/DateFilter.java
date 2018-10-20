@@ -10,7 +10,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
- * Filters a {@link PlayData} to view only specific dates. Dates are organized
+ * Filters a {@link PlaySessionList} to view only specific dates. Dates are organized
  * in {@link Window}s, any play session with a date between the start and end
  * dates of a window in the filter is shown, and any play session with a date
  * not included is not shown.
@@ -32,7 +32,7 @@ public class DateFilter implements Filter {
     /**
      *
      * Creates a new DateFilter with an empty list of windows. With no windows
-     * added this filter will return an empty PlayData.
+ added this filter will return an empty PlaySessionList.
      *
      */
     public DateFilter() {
@@ -41,15 +41,15 @@ public class DateFilter implements Filter {
 
     /**
      *
-     * Filters the {@link PlayData} and returns all sessions with a date inside
+     * Filters the {@link PlaySessionList} and returns all sessions with a date inside
      * one of the windows in the filter.
      *
      * @param source the original play sessions to be filtered
      * @return all play sessions that have a date within a window in this filter
      */
     @Override
-    public PlayData filter(PlayData source) {
-        PlayData returnData = new PlayData();
+    public PlaySessionList filter(PlaySessionList source) {
+        PlaySessionList returnData = new PlaySessionList();
 
         source.getPlaySessions().forEach((s) -> {
             windows.stream().filter((w)
@@ -106,7 +106,7 @@ public class DateFilter implements Filter {
     /**
      *
      * Removes all windows from the filter and resets it to the base state where
-     * filtering will return the empty PlayData.
+ filtering will return the empty PlaySessionList.
      *
      */
     @Override

@@ -62,7 +62,7 @@ public class CSVSessionPersistenceManagerTest {
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
-        PlayData original = new PlayData();
+        PlaySessionList original = new PlaySessionList();
 
         original.addPlaySession(session1);
         original.addPlaySession(session2);
@@ -72,7 +72,7 @@ public class CSVSessionPersistenceManagerTest {
                         new File("data/test/session.data"), games);
         instance.savePlayData(original);
 
-        PlayData result = instance.load();
+        PlaySessionList result = instance.load();
 
         assertEquals(original, result);
         
@@ -104,7 +104,7 @@ public class CSVSessionPersistenceManagerTest {
 
         CSVSessionPersistenceManager instance
                 = new CSVSessionPersistenceManager(null, games);
-        PlayData load = instance.load();
+        PlaySessionList load = instance.load();
 
     }
 
@@ -132,7 +132,7 @@ public class CSVSessionPersistenceManagerTest {
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
-        PlayData original = new PlayData();
+        PlaySessionList original = new PlaySessionList();
 
         original.addPlaySession(session1);
         original.addPlaySession(session2);
@@ -141,7 +141,7 @@ public class CSVSessionPersistenceManagerTest {
                 = new CSVSessionPersistenceManager(
                         new File("data/test/session.data"), games);
         
-        PlayData load = instance.load();
+        PlaySessionList load = instance.load();
 
     }
     
@@ -169,7 +169,7 @@ public class CSVSessionPersistenceManagerTest {
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
-        PlayData original = new PlayData();
+        PlaySessionList original = new PlaySessionList();
 
         original.addPlaySession(session1);
         original.addPlaySession(session2);

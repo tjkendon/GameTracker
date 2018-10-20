@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class GameFilterTest {
 
-    static PlayData sourceData;
+    static PlaySessionList sourceData;
     static GameSet games;
 
     static Game a = new Game("Game A", Game.Platform.PC_Steam, 2000);
@@ -106,7 +106,7 @@ public class GameFilterTest {
         
         sessions[36] = new PlaySession(g, new LocalDate(2000, 1, 7), 1.5);
 
-        sourceData = new PlayData();
+        sourceData = new PlaySessionList();
 
         for (int i = 0; i < 37; i++) {
             sourceData.addPlaySession(sessions[i]);
@@ -135,8 +135,8 @@ public class GameFilterTest {
 
         GameFilter instance = new GameFilter(d);
         // d is never used in the test data
-        PlayData expResult = new PlayData();
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList expResult = new PlaySessionList();
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
     }
@@ -147,9 +147,9 @@ public class GameFilterTest {
 
         GameFilter instance = new GameFilter(a);
         // a is used only once in session[0]
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         expResult.addPlaySession(sessions[0]);
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
     }
@@ -160,7 +160,7 @@ public class GameFilterTest {
 
         GameFilter instance = new GameFilter(f);
         // a is used only once in session[0]
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         // six fs 5, 11, 17, 23, 29, 35
         expResult.addPlaySession(sessions[5]);
         expResult.addPlaySession(sessions[11]);
@@ -168,7 +168,7 @@ public class GameFilterTest {
         expResult.addPlaySession(sessions[23]);
         expResult.addPlaySession(sessions[29]);
         expResult.addPlaySession(sessions[35]);
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
     }
@@ -178,8 +178,8 @@ public class GameFilterTest {
         System.out.println("Testing Filter With No Games in Filter");
 
         GameFilter instance = new GameFilter();
-        PlayData expResult = new PlayData();
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList expResult = new PlaySessionList();
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
     }
@@ -191,7 +191,7 @@ public class GameFilterTest {
 
         GameFilter instance = new GameFilter(a, f);
         
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         // a is used only once in session[0]
         // six fs 5, 11, 17, 23, 29, 35
         expResult.addPlaySession(sessions[0]);
@@ -202,7 +202,7 @@ public class GameFilterTest {
         expResult.addPlaySession(sessions[29]);
         expResult.addPlaySession(sessions[35]);
         
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
     }
@@ -217,7 +217,7 @@ public class GameFilterTest {
         filterGames.add(f);
         GameFilter instance = new GameFilter(filterGames);
         
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         // a is used only once in session[0]
         // six fs 5, 11, 17, 23, 29, 35
         expResult.addPlaySession(sessions[0]);
@@ -228,7 +228,7 @@ public class GameFilterTest {
         expResult.addPlaySession(sessions[29]);
         expResult.addPlaySession(sessions[35]);
         
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
 
     }
@@ -242,11 +242,11 @@ public class GameFilterTest {
         List<Game> filterGames = new ArrayList<>();
         GameFilter instance = new GameFilter(filterGames);
         
-        PlayData specialSource = new PlayData();
+        PlaySessionList specialSource = new PlaySessionList();
                 
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         
-        PlayData result = instance.filter(specialSource);
+        PlaySessionList result = instance.filter(specialSource);
         assertEquals(expResult, result);
 
     }
@@ -263,7 +263,7 @@ public class GameFilterTest {
         filterGames.add(f);
         GameFilter instance = new GameFilter(filterGames);
         
-        PlayData specialSource = new PlayData();
+        PlaySessionList specialSource = new PlaySessionList();
         specialSource.addPlaySession(sessions[4]);
         specialSource.addPlaySession(sessions[5]);
         specialSource.addPlaySession(sessions[10]);
@@ -278,7 +278,7 @@ public class GameFilterTest {
         specialSource.addPlaySession(sessions[35]);
         
         
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         // six fs 5, 11, 17, 23, 29, 35
         expResult.addPlaySession(sessions[5]);
         expResult.addPlaySession(sessions[11]);
@@ -287,7 +287,7 @@ public class GameFilterTest {
         expResult.addPlaySession(sessions[29]);
         expResult.addPlaySession(sessions[35]);
         
-        PlayData result = instance.filter(specialSource);
+        PlaySessionList result = instance.filter(specialSource);
         assertEquals(expResult, result);
 
     }

@@ -16,7 +16,7 @@ import gametracker.data.GamePersistenceManager;
 import gametracker.data.GameSet;
 import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
-import gametracker.data.PlayData;
+import gametracker.data.PlaySessionList;
 import gametracker.data.PlaySession;
 import gametracker.data.SessionCountAggregator;
 import gametracker.data.SessionPersistenceManager;
@@ -128,7 +128,7 @@ public class CLI {
 
     private final List<MenuElement> filterMenu;
 
-    private PlayData mainPlayData;
+    private PlaySessionList mainPlayData;
     private GameSet mainGameSet;
 
     private final List<Filter> filters;
@@ -192,7 +192,7 @@ public class CLI {
         return fileName;
     }
 
-    public final PlayData loadPlaySet() {
+    public final PlaySessionList loadPlaySet() {
 
         if (mainGameSet.isEmpty()) {
             System.out.println();
@@ -204,10 +204,10 @@ public class CLI {
                     new File(playFileName),
                     mainGameSet);
 
-            return new PlayData();
+            return new PlaySessionList();
         }
 
-        PlayData data;
+        PlaySessionList data;
 
         try {
 
@@ -221,7 +221,7 @@ public class CLI {
             System.out.println(
                     "Not able to load session file: " + e.getMessage());
             System.out.println();
-            data = new PlayData();
+            data = new PlaySessionList();
         }
         return data;
 
@@ -386,7 +386,7 @@ public class CLI {
             if (sure) {
                 mainGameSet = new GameSet();
 
-                mainPlayData = new PlayData();
+                mainPlayData = new PlaySessionList();
 
                 sessionManager = new CSVSessionPersistenceManager(
                         new File(playFileName),
@@ -623,8 +623,8 @@ public class CLI {
         }
     }
 
-    private PlayData filterPlayData() {
-        PlayData filteredPlayData = new PlayData(mainPlayData);
+    private PlaySessionList filterPlayData() {
+        PlaySessionList filteredPlayData = new PlaySessionList(mainPlayData);
         for (Filter f : filters) {
             if (!f.isEmpty()) {
                 filteredPlayData = f.filter(filteredPlayData);
@@ -701,7 +701,7 @@ public class CLI {
     }
 
     private PlayAggregate generateAggregates() {
-        PlayData filteredData = filterPlayData();
+        PlaySessionList filteredData = filterPlayData();
 
         TotalTimeAggregator total
                 = new TotalTimeAggregator(filteredData);

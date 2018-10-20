@@ -21,7 +21,7 @@ public class DateFilterTest {
     
     
     
-    static PlayData sourceData;
+    static PlaySessionList sourceData;
     static GameSet games;
 
     static Game a = new Game("Game A", Game.Platform.PC_Steam, 2000);
@@ -103,7 +103,7 @@ public class DateFilterTest {
         
         sessions[36] = new PlaySession(g, new LocalDate(2000, 1, 7), 1.5);
 
-        sourceData = new PlayData();
+        sourceData = new PlaySessionList();
 
         for (int i = 0; i < 37; i++) {
             sourceData.addPlaySession(sessions[i]);
@@ -138,11 +138,11 @@ public class DateFilterTest {
         
         DateFilter instance = new DateFilter();
         instance.addWindow(null, new LocalDate(2000, 1, 4));
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 0; i <= 17; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
@@ -152,11 +152,11 @@ public class DateFilterTest {
         
         DateFilter instance = new DateFilter();
         instance.addWindow(new LocalDate(2000, 1, 4), null);
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 18; i < 37; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
@@ -166,11 +166,11 @@ public class DateFilterTest {
         
         DateFilter instance = new DateFilter();
         instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 5));
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 6; i <= 23; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
@@ -181,14 +181,14 @@ public class DateFilterTest {
         DateFilter instance = new DateFilter();
         instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 4));
         instance.addWindow(new LocalDate(2000, 1, 5), new LocalDate(2000, 1, 7));
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 6; i <= 17; i++) {
             expResult.addPlaySession(sessions[i]);
         }
         for (int i = 24; i <= 35; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
@@ -200,11 +200,11 @@ public class DateFilterTest {
         DateFilter instance = new DateFilter();
         instance.addWindow(new LocalDate(2000, 1, 3), new LocalDate(2000, 1, 5));
         instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 6));
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 6; i <= 29; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
@@ -216,11 +216,11 @@ public class DateFilterTest {
         DateFilter instance = new DateFilter();
         instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 6));
         instance.addWindow(new LocalDate(2000, 1, 3), new LocalDate(2000, 1, 5));
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 6; i <= 29; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
@@ -232,11 +232,11 @@ public class DateFilterTest {
         DateFilter instance = new DateFilter();
         instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 4));
         instance.addWindow(new LocalDate(2000, 1, 3), new LocalDate(2000, 1, 5));
-        PlayData expResult = new PlayData();
+        PlaySessionList expResult = new PlaySessionList();
         for (int i = 6; i <= 23; i++) {
             expResult.addPlaySession(sessions[i]);
         }
-        PlayData result = instance.filter(sourceData);
+        PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
     
