@@ -3,9 +3,8 @@ package gametracker.data;
 
 /**
  *
- * Allows Play Session Data to be loaded and saved to a persistent store.
+ * Loads and saves PlaySession Data to a persistent store.
  * 
- * @author tjkendon
  */
 public interface SessionPersistenceManager {
     

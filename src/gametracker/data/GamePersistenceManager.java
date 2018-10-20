@@ -3,7 +3,7 @@ package gametracker.data;
 
 /**
  *
- * Allows game data to be loaded and saved to a persistent store.
+ * Loads and saves game data to a persistent store.
  * 
  */
 public interface GamePersistenceManager {
