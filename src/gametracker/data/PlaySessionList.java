@@ -24,7 +24,8 @@ public class PlaySessionList {
     }
 
     /**
-     * Creates a new PlaySessionList with a list of sessions copied from the original.
+     * Creates a new PlaySessionList with a list of sessions copied from the
+     * original.
      *
      * Records that the data has been changed in the changed flag.
      *
@@ -62,9 +63,9 @@ public class PlaySessionList {
     }
 
     /**
-     * 
+     *
      * Checks if the given session is contained in the list.
-     * 
+     *
      * @param session the session to check for inclusion
      * @return true iff the session is contained.
      */
@@ -73,12 +74,12 @@ public class PlaySessionList {
     }
 
     /**
-     * 
+     *
      * Returns the hash code for the PlaySessionList.
-     * 
-     * @return the hash code calculated based on the set of {link PlaySession}s 
+     *
+     * @return the hash code calculated based on the list of {link PlaySession}s
      * being held.
-     * 
+     *
      */
     @Override
     public int hashCode() {
@@ -87,13 +88,12 @@ public class PlaySessionList {
         return hash;
     }
 
-    
-        /**
-     * 
-     * Compares this GameSet to the other, checking if the sets of games
-     * being held are the same.
-     * 
-     * @param other the GameSet to check.
+    /**
+     *
+     * Compares this PlaySessionList to the other, checking if the lists of 
+     * games being held are the same.
+     *
+     * @param other the PlaySessionList to check.
      * @return true if the two sets of games are exactly the same.
      */
     @Override
@@ -111,9 +111,26 @@ public class PlaySessionList {
         return this.sessions.equals(otherList.sessions);
     }
 
-
+    /**
+     * 
+     * Compares the two PlaySessionLists to see if they contain the same list
+     * of PlaySessions. 
+     * 
+     * Deprecated because it was introduced to handle strangeness in 
+     * an earlier version of the system, but now can be fully replaced
+     * with the equals method.
+     * 
+     * 
+     * @param a the first PlaySessionList to compare
+     * @param b the second PlaySessionList to compare
+     * @return true iff the data in the two PlaySessionLists precisely matches
+     * 
+     * @deprecated
+     */
     @Deprecated
-    public static boolean containsMatchingContent(PlaySessionList a, PlaySessionList b) {
+    public static boolean containsMatchingContent(
+            PlaySessionList a, 
+            PlaySessionList b) {
 
         if (a.getPlaySessions().size() == b.getPlaySessions().size()) {
             for (int i = 0; i < a.getPlaySessions().size(); i++) {
