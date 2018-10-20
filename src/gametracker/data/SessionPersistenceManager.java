@@ -15,15 +15,15 @@ public interface SessionPersistenceManager {
      * 
      * @return the game set this manager manages
      */
-    public PlayData load();
+    public PlaySessionList load();
     
     
     /**
      * 
      * Saves the given sessions in persistent storage as defined by this manager.
      * 
-     * @param sessions the {@link PlayData} session data to store
+     * @param sessions the {@link PlaySessionList} session data to store
      */
-    public void savePlayData(PlayData sessions);
+    public void savePlayData(PlaySessionList sessions);
     
 }

@@ -64,9 +64,9 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
     }
 
     @Override
-    public PlayData load() {
+    public PlaySessionList load() {
 
-        PlayData returnData = new PlayData();
+        PlaySessionList returnData = new PlaySessionList();
 
         if (datafile == null) {
             throw new IllegalStateException(
@@ -176,7 +176,7 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
      * 
      */
     @Override
-    public void savePlayData(PlayData sessions) {
+    public void savePlayData(PlaySessionList sessions) {
 
         if (datafile == null) {
             throw new IllegalStateException(

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  *
  * Produces an aggregate of the median of all play sessions for each game
- * in a source {@link PlayData}.
+ * in a source {@link PlaySessionList}.
  * <p>
  * For each game in the data, the median is calculated, representing the middle
  * most value for the play sessions for the game.
@@ -29,7 +29,7 @@ public class MedianTimeAggregator extends Aggregator {
      * 
      * @param sourceData the data this aggregator will aggregate.
      */
-    public MedianTimeAggregator(PlayData sourceData) {
+    public MedianTimeAggregator(PlaySessionList sourceData) {
         super(sourceData);
     }
     

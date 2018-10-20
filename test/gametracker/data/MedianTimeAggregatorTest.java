@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class MedianTimeAggregatorTest {
     
-   static PlayData sourceData;
+   static PlaySessionList sourceData;
     static GameSet games;
 
     static Game a = new Game("Game A", Game.Platform.PC_Steam, 2000);
@@ -108,7 +108,7 @@ public class MedianTimeAggregatorTest {
         
         sessions[36] = new PlaySession(g, new LocalDate(2000, 1, 7), 1.5);
 
-        sourceData = new PlayData();
+        sourceData = new PlaySessionList();
 
         for (int i = 0; i < 37; i++) {
             sourceData.addPlaySession(sessions[i]);
@@ -139,7 +139,7 @@ public class MedianTimeAggregatorTest {
     public void testAggregateEmptyPlayData() {
         System.out.println("Testing Aggregating An Empty Play Data");
         
-        PlayData source = new PlayData();
+        PlaySessionList source = new PlaySessionList();
         
         MedianTimeAggregator instance = new MedianTimeAggregator(source);
         PlayAggregate expResult = new PlayAggregate();
@@ -152,7 +152,7 @@ public class MedianTimeAggregatorTest {
     public void testAggregatePlayDataOneGame() {
         System.out.println("Testing Aggregating A Play Data With only 1 game");
         
-        PlayData source = new PlayData();
+        PlaySessionList source = new PlaySessionList();
         source.addPlaySession(sessions[5]);
         source.addPlaySession(sessions[11]);
         source.addPlaySession(sessions[17]);

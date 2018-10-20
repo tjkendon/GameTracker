@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  *
  * Produces an aggregate of average (mean) aggregates based 
- * on the {@link PlayData} information. For each game in the data the average
+ * on the {@link PlaySessionList} information. For each game in the data the average
  * session play length is calculated and stored for that game in the aggregate
  * data.
  * 
@@ -23,10 +23,10 @@ public class AverageTimeAggregator extends Aggregator {
      * Creates a new Aggregator which will aggregate the given sourceData by 
      * taking the mean for each game's play sessions.
      * 
-     * @param sourceData a collection of PlayData sessions which 
-     * will be averaged.
+     * @param sourceData a collection of PlaySessionList sessions which 
+ will be averaged.
      */
-    public AverageTimeAggregator(PlayData sourceData) {
+    public AverageTimeAggregator(PlaySessionList sourceData) {
         super(sourceData);
     }
     

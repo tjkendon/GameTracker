@@ -16,7 +16,7 @@ public interface Filter {
      * @param source the data to filter
      * @return the play sessions in the data that match the filter condition
      */
-    public PlayData filter(PlayData source);
+    public PlaySessionList filter(PlaySessionList source);
     
     /**
      * Resets the filter to its default state

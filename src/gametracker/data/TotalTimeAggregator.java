@@ -17,7 +17,7 @@ public class TotalTimeAggregator extends Aggregator {
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_TIME;
 
-    public TotalTimeAggregator(PlayData sourceData) {
+    public TotalTimeAggregator(PlaySessionList sourceData) {
         super(sourceData);
     }
     

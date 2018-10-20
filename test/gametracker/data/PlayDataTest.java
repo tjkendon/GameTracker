@@ -52,24 +52,24 @@ public class PlayDataTest {
     }
 
     /**
-     * Test of addPlaySession method, of class PlayData.
+     * Test of addPlaySession method, of class PlaySessionList.
      */
     @Test
     public void testAddPlaySession() {
         System.out.println("Testing Adding A PlaySession to PlayData");
         PlaySession session = new PlaySession(testgame1, testDate1, 1);
-        PlayData instance = new PlayData();
+        PlaySessionList instance = new PlaySessionList();
         instance.addPlaySession(session);
         assertTrue(instance.contains(session));
     }
 
     /**
-     * Test of getPlaySessions method, of class PlayData.
+     * Test of getPlaySessions method, of class PlaySessionList.
      */
     @Test
     public void testGetPlaySessions() {
         System.out.println("Testing Getting PlaySessions from PlayData");
-        PlayData instance = new PlayData();
+        PlaySessionList instance = new PlaySessionList();
         List<PlaySession> expResult = new ArrayList<>();
         
         PlaySession session1 = new PlaySession(testgame1, testDate1, 0);

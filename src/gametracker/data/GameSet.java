@@ -23,7 +23,7 @@ public class GameSet {
 
     /**
      *
-     * Creates a new GameSet, which is initially empty.
+     * Creates a new GameSet, containing no games..
      *
      */
     public GameSet() {

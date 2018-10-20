@@ -2,10 +2,10 @@
 package gametracker.data;
 
 /**
- * Produces a set of aggregate values from a source {@link PlayData}.
+ * Produces a set of aggregate values from a source {@link PlaySessionList}.
  * <p>
  * Subclasses generate a specific aggregate representing some aspect of the 
- * play sessions stored in the {@link PlayData}.
+ * play sessions stored in the {@link PlaySessionList}.
  * 
  * 
  * 
@@ -16,7 +16,7 @@ public abstract class Aggregator {
      * The source data that the aggregator will aggregate when {@link aggregate}
      * is called.
      */
-    protected final PlayData sourceData;
+    protected final PlaySessionList sourceData;
     
     /**
      * 
@@ -24,7 +24,7 @@ public abstract class Aggregator {
      * 
      * @param sourceData the data the aggregator will aggregate.
      */
-    public Aggregator(PlayData sourceData) {
+    public Aggregator(PlaySessionList sourceData) {
         this.sourceData = sourceData;
     }
     
