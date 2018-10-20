@@ -186,7 +186,7 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
         try (PrintWriter writer = new PrintWriter(datafile)) {
             for (PlaySession s : sessions.getPlaySessions()) {
                 writer.printf("%s, %s, %s, %s, %s%n",
-                        PlaySession.SESSION_DATE_FORMAT.print(s.getSessionDate()),
+                        PlaySession.DATE_FORMAT_YMD.print(s.getSessionDate()),
                         s.getGame().getName(),
                         s.getGame().getPlatform(),
                         s.getGame().getYear(),
