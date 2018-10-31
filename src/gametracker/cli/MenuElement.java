@@ -115,23 +115,53 @@ public class MenuElement {
         this.quitAfter = quitAfter;
     }
 
+    /**
+     * Returns the key for this element.
+     * 
+     * @return the string that should be matched for this element hook to run
+     */
     public String getKey() {
         return key;
     }
 
+    /**
+     * Returns the explanation for this element.
+     * 
+     * @return the string describing this element.
+     */
     public String getExplanation() {
         return explanation;
     }
 
+    /**
+     * 
+     * Returns the key and explanation for this element.
+     * 
+     * @return the key and explanation divided by " - " 
+     */
     @Override
     public String toString() {
         return key + " - " + explanation;
     }
 
+    /**
+     * 
+     * Checks if the given string matches the key of this element.
+     * 
+     * @param s the string to compare to the key
+     * @return true if the key equals the string (ignoring case)
+     */
     public boolean matches(String s) {
         return key.equalsIgnoreCase(s);
     }
 
+    /**
+     * 
+     * Returns the isQuitAfter value of the element. If this is true, the menu
+     * should stop running after the element is chosen.
+     * 
+     * @return 
+     */
     public boolean isQuitAfter() {
         return quitAfter;
     }

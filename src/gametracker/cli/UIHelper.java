@@ -6,14 +6,13 @@ import java.util.Scanner;
 
 /**
  *
- * Utility class to handle prompting as part of the command line 
- * interface
+ * Allows user to be prompted for various types of information. Provides static
+ * methods to do prompting.
  * 
- * @author tjkendon
  */
 public class UIHelper {
 
-    private static Scanner kb = new Scanner(System.in);
+    private static final Scanner kb = new Scanner(System.in);
 
     /**
      *
