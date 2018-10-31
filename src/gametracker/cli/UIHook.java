@@ -2,9 +2,9 @@ package gametracker.cli;
 
 /**
  *
- * Interface used by MenuElement to hook its instances into the menu actions.
+ * An abstract hook that can be implemented to provide functionality to a 
+ * {@link MenuElement).
  * 
- * @author tjkendon
  */
 public interface UIHook {
 
