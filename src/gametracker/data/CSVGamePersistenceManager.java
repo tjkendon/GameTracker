@@ -31,7 +31,7 @@ public class CSVGamePersistenceManager implements GamePersistenceManager {
      * Returns the handle for the file this manager is using as a persistent
      * store.
      * 
-     * @return 
+     * @return the file handle for the data file
      */
     public File getDatafile() {
         return datafile;

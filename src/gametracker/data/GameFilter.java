@@ -143,9 +143,9 @@ public class GameFilter implements Filter {
 
     /**
      *
-     * Reports a list of the games in the filter.
+     * Returns a list of the games in the filter.
      *
-     * @return
+     * @return a string representation of the filter. 
      *
      */
     @Override

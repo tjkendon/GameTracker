@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  *
- * Holds data about games as aggregated from {@link PlayData}. 
+ * Holds data about games as aggregated from {@link PlaySessionList}. 
  * 
  * Can contain many different types of data, each identified by the 
  * {@link PlayAggregate.AggregateType}, then for each game in a source data

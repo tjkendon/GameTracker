@@ -96,7 +96,7 @@ public class Game implements Comparable<Game>{
      * Returns the name, platform and year the game was released formatted
      * <code> name (platform) year</code>
      * 
-     * @return 
+     * @return a string representation of the game.
      */
     @Override
     public String toString() {
