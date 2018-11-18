@@ -264,6 +264,8 @@ public class CLI {
 
         try {
 
+            System.out.println("Loading game file: " + gameFileName);
+            
             gameManager = new CSVGamePersistenceManager(
                     new File(gameFileName));
             gs = gameManager.load();
@@ -329,6 +331,8 @@ public class CLI {
                     new File(playFileName),
                     mainGameSet);
 
+            System.out.println("Loading session file: " + playFileName);
+            
             data = sessionManager.load();
 
         } catch (IllegalStateException e) {
@@ -784,17 +788,22 @@ public class CLI {
      * @return 
      */
     private boolean save() {
-        return saveGameData() && saveSessionData();
+        
+        
+        
+        return saveGameData() & saveSessionData();
     }
 
     /**
      * 
-     * Saves the game data with the game persistance manager.
+     * Saves the game data with the game persistence manager.
      * 
      * @return true if the data could be saved, false if there were any errors
      */
     private boolean saveGameData() {
         try {
+       
+            System.out.println("Saving Game Data to: " + gameFileName);
             
             gameManager.saveGameSet(mainGameSet);
             System.out.println("Game data saved");
@@ -809,7 +818,7 @@ public class CLI {
 
     /**
      * 
-     * Saves the session data with the session persistance manager.
+     * Saves the session data with the session persistence manager.
      * 
      * @return 
      */
@@ -817,6 +826,8 @@ public class CLI {
 
         try {
 
+            System.out.println("Saving Session Data to: " +  playFileName);
+            
             sessionManager.savePlayData(mainPlayData);
             System.out.println("Session data saved");
 
