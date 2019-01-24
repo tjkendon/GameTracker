@@ -102,17 +102,24 @@ public class DateFilterTest2 {
         PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
-/*    
+    
     @Test
     public void testFilterGamesAfterDate() {
         System.out.println("Testing Filter Take Games After Date");
         
+        LocalDate afterDate = new LocalDate(2000, 1, 4);
+        
         DateFilter instance = new DateFilter();
-        instance.addWindow(new LocalDate(2000, 1, 4), null);
+        instance.addWindow(afterDate, null);
         PlaySessionList expResult = new PlaySessionList();
-        for (int i = 18; i < 37; i++) {
-            expResult.addPlaySession(getSessions()[i]);
+        
+        for (PlaySession session: sessions) {
+            if (session.getSessionDate().isAfter(afterDate) || 
+                    session.getSessionDate().isEqual(afterDate)) {
+                expResult.addPlaySession(session);
+            }
         }
+        
         PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
@@ -121,16 +128,25 @@ public class DateFilterTest2 {
     public void testFilterGamesBetweenDates() {
         System.out.println("Testing Filter Take Games Between Two Dates");
         
+        LocalDate afterDate = new LocalDate(2000, 1, 2);
+        LocalDate beforeDate = new LocalDate(2000, 1, 5);
+        
         DateFilter instance = new DateFilter();
-        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 5));
+        instance.addWindow(afterDate, beforeDate);
         PlaySessionList expResult = new PlaySessionList();
-        for (int i = 6; i <= 23; i++) {
-            expResult.addPlaySession(getSessions()[i]);
+        
+        for (PlaySession session: sessions) {
+            if ((session.getSessionDate().isAfter(afterDate) || 
+                    session.getSessionDate().isEqual(afterDate)) &&
+                   session.getSessionDate().isBefore(beforeDate)) {
+                expResult.addPlaySession(session);
+            }
         }
+        
         PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
-    
+    /*
     @Test
     public void testFilterGamesBetweenDatesMulti() {
         System.out.println("Testing Filter Take Games Between Two Dates");
