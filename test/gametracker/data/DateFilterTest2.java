@@ -146,25 +146,38 @@ public class DateFilterTest2 {
         PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
-    /*
+    
     @Test
     public void testFilterGamesBetweenDatesMulti() {
         System.out.println("Testing Filter Take Games Between Two Dates");
         
+        LocalDate start1 = new LocalDate(2000, 1, 2);
+        LocalDate end1 = new LocalDate(2000, 1, 3);
+        
+        LocalDate start2 = new LocalDate(2000, 1, 5);
+        LocalDate end2 = new LocalDate(2000, 1, 7);
+        
+        
         DateFilter instance = new DateFilter();
-        instance.addWindow(new LocalDate(2000, 1, 2), new LocalDate(2000, 1, 4));
-        instance.addWindow(new LocalDate(2000, 1, 5), new LocalDate(2000, 1, 7));
+        instance.addWindow(start1, end1);
+        instance.addWindow(start2, end2);
         PlaySessionList expResult = new PlaySessionList();
-        for (int i = 6; i <= 17; i++) {
-            expResult.addPlaySession(getSessions()[i]);
-        }
-        for (int i = 24; i <= 35; i++) {
-            expResult.addPlaySession(getSessions()[i]);
+        for (PlaySession session: sessions) {
+            if ((session.getSessionDate().isAfter(start1) || 
+                    session.getSessionDate().isEqual(start1)) &&
+                   session.getSessionDate().isBefore(end1)) {
+                expResult.addPlaySession(session);
+            }
+            if ((session.getSessionDate().isAfter(start2) || 
+                    session.getSessionDate().isEqual(start2)) &&
+                   session.getSessionDate().isBefore(end2)) {
+                expResult.addPlaySession(session);
+            }
         }
         PlaySessionList result = instance.filter(sourceData);
         assertEquals(expResult, result);
     }
-    
+    /*
     @Test
     public void testFilterGamesBetweenDatesMultiEncapsulatingAinB() {
         System.out.println("Testing Filter Take Games Between Two Dates, "
