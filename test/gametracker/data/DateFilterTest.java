@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author tjkendon
  */
-public class DateFilterTest2 {
+public class DateFilterTest {
 
     private final PlaySessionList sourceData;
     private final GameSet games;
@@ -33,7 +33,7 @@ public class DateFilterTest2 {
 
     private ArrayList<PlaySession> sessions;
 
-    public DateFilterTest2() {
+    public DateFilterTest() {
 
         games = new GameSet();
         games.addGame(a);
