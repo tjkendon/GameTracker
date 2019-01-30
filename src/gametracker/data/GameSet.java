@@ -8,29 +8,36 @@ import java.util.Set;
 
 /**
  *
- * Class to hold a set of games.
+ * Holds a set of {@link Game}s. Provides utilities to organize the collection
+ * of games and to query for specific games.
  *
- * @author tjkendon
  */
 public class GameSet {
 
-    private Set<Game> games;
-    private boolean changed;
+    /**
+     * The set which holds all of the games for the GameSet,
+     */
+    private final Set<Game> games;
+    
+
 
     /**
      *
-     * Creates a new empty set.
+     * Creates a new GameSet, containing no games..
      *
      */
     public GameSet() {
         games = new HashSet<>();
-        changed = false;
+        
+
     }
 
     /**
-     * Returns a copy of all games in the set.
+     * 
+     * Returns a set of all games included in the GameSet
      *
-     * @return
+     * @return a new list which is an exact copy of the included Games
+     * 
      */
     public Set<Game> getGames() {
         Set<Game> returnSet = new HashSet<>();
@@ -47,11 +54,12 @@ public class GameSet {
      *
      * Adds a new game to the set.
      *
-     * @param g
+     * @param g the game to add to the set.
      */
     public void addGame(Game g) {
         games.add(g);
-        changed = true;
+        
+
     }
 
     /**
@@ -62,6 +70,7 @@ public class GameSet {
      *
      * @param gameName name of the game (case sensitive) 
      * @return the game with the given name provided there is exactly 1
+     * 
      */
     public Game getGame(String gameName) {
         List<Game> returnGames = new ArrayList<>();
@@ -83,13 +92,16 @@ public class GameSet {
     }
 
     /**
+     * 
      * Returns the one game contained in the set that fully matches the name
      * platform and year.
+     * 
      * @param gameName name of the game (case sensitive) 
      * @param p the platform
      * @param year the year 
      * @return the game if there is a match or an illegal argument exception 
      * if not
+     * 
      */
     public Game getGame(String gameName, Game.Platform p, int year) {
 
@@ -107,9 +119,12 @@ public class GameSet {
     }
 
     /**
+     * 
      * Returns all games that match (case sensitive) the given name
+     * 
      * @param gameName name of the game to match
      * @return all matching games
+     * 
      */
     public Set<Game> getGames(String gameName) {
         Set<Game> returnSet = new HashSet<>();
@@ -123,7 +138,9 @@ public class GameSet {
     }
 
     /**
+     * 
      * Returns all games that match the given platform
+     * 
      * @param platform the platform to match
      * @return all matching games
      */
@@ -158,29 +175,55 @@ public class GameSet {
      *
      * Removes the game from the set.
      *
-     * @param g
-     * @return
+     * @param game the game to remove from the set
+     * @return true if the game was able to be removed from the set
      */
-    public boolean removeGame(Game g) {
-        boolean result = games.remove(g);
-        if (result) {
-            changed = true;
-        }
+    public boolean removeGame(Game game) {
+        boolean result = games.remove(game);
+        
         return result;   
     }
     
-    public boolean contains(Game g) {
-        return games.contains(g);
+    /**
+     * 
+     * Checks if the given game is this GameSet.
+     * 
+     * @param game the game to check to see if its is included in the set
+     * @return true if the game is found in the set
+     * 
+     */
+    public boolean contains(Game game) {
+        return games.contains(game);
     }
 
+    /**
+     * 
+     * Returns the number of games in the set
+     * 
+     * @return the size of the Game Set
+     */
     public int size() {
         return games.size();
     }
 
+    /**
+     * 
+     * Checks if the GameSet is empty.
+     * 
+     * @return true if .size() == 0
+     * 
+     */
     public boolean isEmpty() {
         return games.isEmpty();
     }
 
+    /**
+     * 
+     * Returns the hash code for the GameSet.
+     * 
+     * @return the hash code calculated based on the set of games being held.
+     * 
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -188,34 +231,30 @@ public class GameSet {
         return hash;
     }
 
+    /**
+     * 
+     * Compares this GameSet to the other, checking if the sets of games
+     * being held are the same.
+     * 
+     * @param other the GameSet to check.
+     * @return true if the two sets of games are exactly the same.
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (obj == null) {
+        if (other == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != other.getClass()) {
             return false;
         }
-        final GameSet other = (GameSet) obj;
-        if (!Objects.equals(this.games, other.games)) {
+        final GameSet otherSet = (GameSet) other;
+        if (!Objects.equals(this.games, otherSet.games)) {
             return false;
         }
         return true;
     }
-
-    public boolean hasChanged() {
-        return changed;
-    }
-    
-    public void resetChanged() {
-        changed = false;
-    }
-    
-    
-    
-    
 
 }

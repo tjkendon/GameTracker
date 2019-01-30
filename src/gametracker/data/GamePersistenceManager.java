@@ -3,9 +3,8 @@ package gametracker.data;
 
 /**
  *
- * Interface for classes managing persistence of game data
+ * Loads and saves game data to a persistent store.
  * 
- * @author tjkendon
  */
 public interface GamePersistenceManager {
     
@@ -13,20 +12,19 @@ public interface GamePersistenceManager {
      * 
      * Loads a game set from persistent storage and returns it.
      * 
-     * @return the game set this manager manages
+     * @return a {@link GameSet} from the store this manager represents.
      */
     public GameSet load();
     
     
     /**
      * 
-     * Saves the given set in persistent storage as defined by this manager.
+     * Saves the {@link GameSet} in the persistent storage represented 
+     * by this manager.
      * 
      * @param s the set to save
      */
     public void saveGameSet(GameSet s);
-
-    
     
     
 }

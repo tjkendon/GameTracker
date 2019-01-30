@@ -7,7 +7,7 @@ package gametracker.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,17 +21,17 @@ import static org.junit.Assert.*;
  */
 public class PlayDataTest {
     
-    private Game testgame1;
-    private Game testgame2;
+    private final Game testgame1;
+    private final Game testgame2;
     
-    private DateTime testDate1;
+    private final LocalDate testDate1;
     
     public PlayDataTest() {
         
         testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
         testgame2 = new Game("Test2", Game.Platform.PC_Steam, 2000);
         
-        testDate1 = DateTime.now();
+        testDate1 = LocalDate.now();
         
     }
     
@@ -52,26 +52,24 @@ public class PlayDataTest {
     }
 
     /**
-     * Test of addPlaySession method, of class PlayData.
+     * Test of addPlaySession method, of class PlaySessionList.
      */
     @Test
     public void testAddPlaySession() {
         System.out.println("Testing Adding A PlaySession to PlayData");
         PlaySession session = new PlaySession(testgame1, testDate1, 1);
-        PlayData instance = new PlayData();
-        assertFalse (instance.hasChanged());
+        PlaySessionList instance = new PlaySessionList();
         instance.addPlaySession(session);
         assertTrue(instance.contains(session));
-        assertTrue(instance.hasChanged());
     }
 
     /**
-     * Test of getPlaySessions method, of class PlayData.
+     * Test of getPlaySessions method, of class PlaySessionList.
      */
     @Test
     public void testGetPlaySessions() {
         System.out.println("Testing Getting PlaySessions from PlayData");
-        PlayData instance = new PlayData();
+        PlaySessionList instance = new PlaySessionList();
         List<PlaySession> expResult = new ArrayList<>();
         
         PlaySession session1 = new PlaySession(testgame1, testDate1, 0);
@@ -88,19 +86,6 @@ public class PlayDataTest {
         
     }
     
-    /**
-     * Test of addPlaySession method, of class PlayData.
-     */
-    @Test
-    public void testResetChanged() {
-        System.out.println("Testing changed flag");
-        PlaySession session = new PlaySession(testgame1, testDate1, 1);
-        PlayData instance = new PlayData();
-        assertFalse (instance.hasChanged());
-        instance.addPlaySession(session);
-        assertTrue(instance.hasChanged());
-        instance.resetChanged();
-        assertFalse(instance.hasChanged());
-    }
+    
     
 }

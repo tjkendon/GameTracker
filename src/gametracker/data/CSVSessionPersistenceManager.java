@@ -9,41 +9,51 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
- *
- * @author tjkendon
+ * 
+ * Loaded and saves play session data in a comma-separated file in the host 
+ * file system.
+ * 
  */
 public class CSVSessionPersistenceManager implements SessionPersistenceManager {
 
-    private File datafile;
-    private GameSet gameSet;
+    /**
+     * The file to load from and save to
+     */
+    private File datafile; // 
+    /**
+     * The list of games that is used to link game names in sessions when 
+     * loading from the file
+     */
+    private GameSet gameSet; // the set that will be saved
 
-    public CSVSessionPersistenceManager() {
 
-    }
-
+    /**
+     * Creates a new CSVSessionPersistenceManager with a handle for a file
+     * to save the data in and a gameSet to use to match game data.
+     * 
+     * @param datafile the handle for the file this manager will store the data
+     * in
+     * @param gameSet the game data to use to link games in sessions
+     */
     public CSVSessionPersistenceManager(File datafile, GameSet gameSet) {
         this.datafile = datafile;
         this.gameSet = gameSet;
     }
 
-    public File getDatafile() {
-        return datafile;
-    }
-
-    public GameSet getGameSet() {
-        return gameSet;
-    }
-
+    /**
+     * 
+     * Changes the file handle this manager is using to save data to the 
+     * new file handle.
+     * 
+     * @param datafile the handle this manager will use to save data
+     */
     public void setDatafile(File datafile) {
         this.datafile = datafile;
     }
     
-    public void clearDataFile() {
-        this.datafile = null;
-    }
     
     public boolean hasDataFile() {
         return this.datafile != null;
@@ -54,9 +64,9 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
     }
 
     @Override
-    public PlayData load() {
+    public PlaySessionList load() {
 
-        PlayData returnData = new PlayData();
+        PlaySessionList returnData = new PlaySessionList();
 
         if (datafile == null) {
             throw new IllegalStateException(
@@ -116,7 +126,7 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
      */
     private PlaySession parseShort(String[] playStrings) {
         String dateString = playStrings[0].trim();
-        DateTime date = PlaySession.parseDateTime(dateString);
+        LocalDate date = PlaySession.parseDateTime(dateString);
 
         String gameString = playStrings[1].trim();
 
@@ -129,45 +139,54 @@ public class CSVSessionPersistenceManager implements SessionPersistenceManager {
     }
 
     
-        /**
-     * Attempts to parse a play session from 5 terms in an array of strings.
+    /**
+     * Parses play session data an array of 5 strings, with the format
      * (Date, Game Name, Platform, Year, Time).
      * 
-     * Will fail if the game is not in the game set
+     * The game (as identified by name, platform and year) must be included
+     * in the {@link GameSet}.
      * 
+     * @param sessionStrings array Strings (Date, Game Name, Platform, Year, Time) 
+     * for a play session
      * 
-     * @param playStrings array of data to attempt to read
-     * @return play session from provided data
+     * @return play session based on the strings
      */
-    private PlaySession parseFull(String[] playStrings) {
-        String dateString = playStrings[0].trim();
-        DateTime date = PlaySession.parseDateTime(dateString);
+    private PlaySession parseFull(String[] sessionStrings) {
+        String dateString = sessionStrings[0].trim();
+        LocalDate date = PlaySession.parseDateTime(dateString);
 
-        String gameString = playStrings[1].trim();
+        String gameString = sessionStrings[1].trim();
         Game.Platform platform
-                = Game.parsePlatform(playStrings[2].trim());
-        int year = Game.parseYear(playStrings[3].trim());
+                = Game.parsePlatform(sessionStrings[2].trim());
+        int year = Game.parseYear(sessionStrings[3].trim());
 
         Game game = gameSet.getGame(gameString, platform, year);
 
-        String timeString = playStrings[4].trim();
+        String timeString = sessionStrings[4].trim();
         Double time = PlaySession.parsePlayTime(timeString);
 
         return new PlaySession(game, date, time);
     }
 
+    /**
+     * 
+     * Saves the give play sessions in the csv file this manager is 
+     * representing.
+     * 
+     * 
+     */
     @Override
-    public void savePlayData(PlayData sessions) {
+    public void savePlayData(PlaySessionList sessions) {
 
         if (datafile == null) {
             throw new IllegalStateException(
-                    "Datafile not set to save session data");
+                    "No file set to save session data");
         }
 
         try (PrintWriter writer = new PrintWriter(datafile)) {
             for (PlaySession s : sessions.getPlaySessions()) {
                 writer.printf("%s, %s, %s, %s, %s%n",
-                        PlaySession.SESSION_DATE_FORMAT.print(s.getSessionDate()),
+                        PlaySession.DATE_FORMAT_YMD.print(s.getSessionDate()),
                         s.getGame().getName(),
                         s.getGame().getPlatform(),
                         s.getGame().getYear(),

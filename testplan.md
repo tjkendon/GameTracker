@@ -45,6 +45,7 @@
 ## Game
 
 * Basics
+   * **Adding session with unknown game**
 * Parse Platform
    * PC_Steam - return 
    * PC_Other - return 
@@ -70,15 +71,15 @@
 ## CSVGamePersistenceManager
 
 * Save / Load
-* **Save with no data file**
-* **Load with no data file**
+* Save with no data file
+* Load with no data file
 
 ## CSVSessionPersistenceManager
 
 * Save / Load
-* **Save with no data file**
+* Save with no data file
 * Load with no data file
-* **Load with no game set**
+* Load with no game set
 
 ## UI Helper
 
@@ -86,3 +87,45 @@
    * Match
    * No Match
    * Empty var args
+
+## Filtering
+
+* Game Filter
+   * No Match for one
+   * One Match for one
+   * Multi Match for one
+   * No Match for Any
+   * One Match for Any
+   * One Match for Each
+      * List Constructor
+      * Multi-Arg Constructor
+   * Multi Match for Multi
+
+* Date Filter
+   * All Before
+   * All After
+   * Inter
+   * More than one Inter
+
+## Aggregation
+
+* Total Play Time
+   * Empty Set
+   * Single Game
+   * Multi Game
+
+* **Count Sessions**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+
+* **Average Session Length**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+
+* **Median Session Length**
+   * **Empty Set**
+   * **Single Game**
+   * **Multi Game**
+

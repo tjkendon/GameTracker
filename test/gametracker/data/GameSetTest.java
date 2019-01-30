@@ -73,11 +73,11 @@ public class GameSetTest {
                 + "with exact name");
         Game g = new Game("TG1", Game.Platform.PC_Steam, 2000);
         GameSet instance = new GameSet();
-        assertFalse(instance.hasChanged());
+        
         instance.addGame(g);
 
         assertEquals(instance.getGame("TG1", Game.Platform.PC_Steam, 2000), g);
-        assertTrue(instance.hasChanged());
+        
     }
 
     /**
@@ -308,16 +308,6 @@ public class GameSetTest {
         assertFalse(instance.contains(g1));
     }
     
-    @Test
-    public void testResetChanged() {
-        System.out.println("Testing changed flag");
-        Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
-        GameSet instance = new GameSet();
-        assertFalse(instance.hasChanged());
-        instance.addGame(g1);
-        assertTrue(instance.hasChanged());
-        instance.resetChanged();
-        assertFalse(instance.hasChanged());
-    }
+    
 
 }

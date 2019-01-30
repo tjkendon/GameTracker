@@ -9,28 +9,43 @@ import java.util.List;
 
 /**
  *
- * Element of a menu combining a key (character to enter in the menu), a
- * description, a hook to execute when the element is selected and boolean
- * to be returned after the hook has been executed (which allows you to define
- * which elements cause the menu to quit).
+ * Provides an mechanism to tie options in a menu to code actions. Allows for
+ * menu to be constructed offering different options which can be executed
+ * tied to a particular character the user can enter.
  * 
- * @author tjkendon
+ * Each element combines a key (character to enter in the menu), a
+ * description, a hook to execute when the element is selected and an exist 
+ * status.
+ * 
  */
 public class MenuElement {
 
     /**
-     * Menu Element to be blank
+     * Menu Element that provides a blank line between other elements.
      */
     public static final MenuElement BLANK = new MenuElement("BLANK", "");
 
     /**
-     * Menu Element to be used to divide two groups of menu elements
+     * Menu Element that provides a divider between other elements.
      */
     public static final MenuElement DIVIDER = new MenuElement("DIV", "");
 
+    /**
+     * The thing typed by the user to run the hook
+     */
     private final String key;
+    /**
+     * The text explanation of what the hook will do.
+     */
     private final String explanation;
+    /**
+     * The snippit of code that will be executed
+     */
     private final UIHook hook;
+    /**
+     * boolean to determine if the menu should quit after the element
+     * is selected.
+     */
     private final boolean quitAfter;
 
     
@@ -100,23 +115,53 @@ public class MenuElement {
         this.quitAfter = quitAfter;
     }
 
+    /**
+     * Returns the key for this element.
+     * 
+     * @return the string that should be matched for this element hook to run
+     */
     public String getKey() {
         return key;
     }
 
+    /**
+     * Returns the explanation for this element.
+     * 
+     * @return the string describing this element.
+     */
     public String getExplanation() {
         return explanation;
     }
 
+    /**
+     * 
+     * Returns the key and explanation for this element.
+     * 
+     * @return the key and explanation divided by " - " 
+     */
     @Override
     public String toString() {
         return key + " - " + explanation;
     }
 
+    /**
+     * 
+     * Checks if the given string matches the key of this element.
+     * 
+     * @param s the string to compare to the key
+     * @return true if the key equals the string (ignoring case)
+     */
     public boolean matches(String s) {
         return key.equalsIgnoreCase(s);
     }
 
+    /**
+     * 
+     * Returns the isQuitAfter value of the element. If this is true, the menu
+     * should stop running after the element is chosen.
+     * 
+     * @return 
+     */
     public boolean isQuitAfter() {
         return quitAfter;
     }

@@ -23,10 +23,26 @@
    * Visualization Tools
 
 ## Dev Planning
-* Iteration 1
-   * List of play sessions
-   * Get total data by game
-   * Console Interface
+* *Iteration 1*
+   * *List of play sessions*
+   * *Get total data by game*
+   * *Console Interface*
 * Iteration 2
    * Filter
-   * Agregate
+      * Game
+         * Single
+         * Multiple
+      * Date
+         * Single
+         * Multiple
+   * Aggregate
+      * Total Time
+      * Instance Count
+      * Average
+      * Median
+* Iteration 3
+   * Quick Interface
+      * Command Line Flags for recording data
+   * Google Integration
+      * View data in google sheet
+      * Upload data to google sheet
