@@ -114,7 +114,7 @@ public class CSVSessionPersistenceManagerTest {
     @Test
     public void testLoadPlayDataNoGame() {
         System.out.println(
-                "Testing loading play data with no file");
+                "Testing loading play data with no game");
 
         noPlayDataGameRule.expect(IllegalStateException.class);
         noPlayDataGameRule.expectMessage(
@@ -145,7 +145,7 @@ public class CSVSessionPersistenceManagerTest {
 
     }
     
-        @Rule
+    @Rule
     public ExpectedException noPlayDataFileRuleSave = ExpectedException.none();
 
     @Test
@@ -155,7 +155,7 @@ public class CSVSessionPersistenceManagerTest {
 
         noPlayDataFileRuleSave.expect(IllegalStateException.class);
         noPlayDataFileRuleSave.expectMessage(
-                startsWith("Datafile not set"));
+                startsWith("No file set to save session data"));
 
         // set up games
         Game testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
