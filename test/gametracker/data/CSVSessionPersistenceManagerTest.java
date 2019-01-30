@@ -118,7 +118,7 @@ public class CSVSessionPersistenceManagerTest {
 
         noPlayDataGameRule.expect(IllegalStateException.class);
         noPlayDataGameRule.expectMessage(
-                startsWith("GameSet not set"));
+                startsWith("GameSet not set to load session data"));
 
         // set up games
         Game testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
@@ -139,7 +139,7 @@ public class CSVSessionPersistenceManagerTest {
 
         CSVSessionPersistenceManager instance
                 = new CSVSessionPersistenceManager(
-                        new File("data/test/session.data"), games);
+                        new File("data/test/session.data"), null);
         
         PlaySessionList load = instance.load();
 
