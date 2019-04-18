@@ -15,12 +15,13 @@ import gametracker.data.GameFilter;
 import gametracker.data.GameSet;
 import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
-import gametracker.data.PlaySession;
 import gametracker.data.PlayData;
+import gametracker.data.PlaySession;
 import gametracker.data.SessionCountAggregator;
 import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -631,16 +632,15 @@ public class CLI {
         } else if (matchCount > 1) {
             Set<Game> gamesPartial = mainGameSet.getGamesPartial(gameStr);
             System.out.println("Several Matches:");
-            int i = 0;
-            for (Game g : gamesPartial) {
-                System.out.println("\t" + i++ + " : " + g.getName());
-            }
+            printNumberedGameList(gamesPartial);
             returnSet.addAll(gamesPartial);
         }
         return returnSet;
         
     }
 
+    
+    
     private DateTime promptForDate(String prompt) {
         String dateStr = UIHelper.promptForString(prompt);
         DateTime date = PlaySession.parseDateTime(dateStr);
@@ -670,10 +670,12 @@ public class CLI {
         return filteredPlayData;
     }
 
-    private void printNumberedGameList(List<Game> games) {
-        for (int i = 0; i < games.size(); i++) {
-            System.out.println((i + 1) + " - " + games.get(i));
+    private void printNumberedGameList(Collection<Game> games) {
+        int i = 1;
+        for (Game g : games) {
+            System.out.println("\t" + i++ +": " + g.getName());
         }
+        
     }
 
     private void printNumberedWindowList(List<DateFilter.Window> windows) {
