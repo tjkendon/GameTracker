@@ -541,19 +541,32 @@ public class CLI {
     }
 
     private void printPreamble() {
-        System.out.println("****************************************");
+        printStarLine();
         System.out.println();
-        System.out.println("Game Tracker  Text Terminal Version  " + VERSION);
+        printSystemName();
         System.out.println();
     }
 
     private void printFarewell() {
 
         System.out.println();
-        System.out.println("Game Tracker  Text Terminal Version  " + VERSION);
-        System.out.println("TJ Kendon  @tjkendon  2018 - 2019");
-        System.out.println("****************************************");
+        printSystemName();
+        printCopyRight();
+        printStarLine();
 
+    }
+    
+    private void printCopyRight() {
+        System.out.println("   TJ Kendon  @tjkendon  2018 - 2019");
+    }
+    
+    private void printSystemName() {
+        System.out.println("   Game Tracker  Text Terminal Version  " + 
+                VERSION);
+    }
+    
+    private void printStarLine() {
+        System.out.println("*************************************************");
     }
 
     private boolean save() {
