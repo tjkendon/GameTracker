@@ -22,7 +22,9 @@ import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -39,7 +41,7 @@ import org.joda.time.DateTime;
  */
 public class CLI {
 
-    public static final String VERSION = "0.2.0";
+    public static final String VERSION = "0.2.1";
 
     private static final String GAME_FILE_PREF = "game_file";
     private static final String PLAY_FILE_PREF = "play_file";
@@ -242,14 +244,23 @@ public class CLI {
                     date = DateTime.now();
                 }
 
-                Game game = promptForGame();
+                
+                
+                List<Game> games = promptForGame();
+                if (games.size() != 1) {
+                    System.out.println("Not able to add session");
+                    return;
+                }
 
                 String timeStr = UIHelper.promptForString(
                         "Enter Time Played (in hours)");
 
                 Double time = PlaySession.parsePlayTime(timeStr);
 
-                mainPlayData.addPlaySession(new PlaySession(game, date, time));
+                mainPlayData.addPlaySession(new PlaySession(
+                        games.get(0), 
+                        date, 
+                        time));
             } catch (Exception e) {
                 System.err.println("Session not added - " + e.getMessage());
             }
@@ -411,7 +422,7 @@ public class CLI {
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
-            Game filterGame = promptForGame();
+            List<Game> filterGame = promptForGame();
             gameFilter.addAllGames(filterGame);
 
         }));
@@ -532,15 +543,15 @@ public class CLI {
     private void printPreamble() {
         System.out.println("****************************************");
         System.out.println();
-        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
+        System.out.println("Game Tracker  Text Terminal Version  " + VERSION);
         System.out.println();
     }
 
     private void printFarewell() {
 
         System.out.println();
-        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
-        System.out.println("TJ Kendon - @tjkendon - 2018");
+        System.out.println("Game Tracker  Text Terminal Version  " + VERSION);
+        System.out.println("TJ Kendon  @tjkendon  2018 - 2019");
         System.out.println("****************************************");
 
     }
@@ -595,10 +606,26 @@ public class CLI {
         }
     }
 
-    private Game promptForGame() {
+    private List<Game> promptForGame() {
+        List<Game> returnSet = new ArrayList<>();
         String gameStr = UIHelper.promptForString("Enter Game Name");
-        Game game = mainGameSet.getGame(gameStr);
-        return game;
+        int matchCount = mainGameSet.getGamesPartialCount(gameStr);
+        if (matchCount == 0) {
+          System.out.println("No games match " + gameStr);  
+          
+        } else if (matchCount == 1) {
+            returnSet.add(mainGameSet.getGame(gameStr));
+        } else if (matchCount > 1) {
+            Set<Game> gamesPartial = mainGameSet.getGamesPartial(gameStr);
+            System.out.println("Several Matches:");
+            int i = 0;
+            for (Game g : gamesPartial) {
+                System.out.println("\t" + i++ + " : " + g.getName());
+            }
+            returnSet.addAll(gamesPartial);
+        }
+        return returnSet;
+        
     }
 
     private DateTime promptForDate(String prompt) {
