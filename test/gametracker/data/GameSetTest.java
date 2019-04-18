@@ -320,4 +320,25 @@ public class GameSetTest {
         assertFalse(instance.hasChanged());
     }
 
+    @Test
+    public void testGetPartial() {
+        System.out.println("Testing returning a set of games based on a partial"
+                + " name");
+        Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
+        Game g2 = new Game("TG2", Game.Platform.PC_Steam, 2001);
+        Game g3 = new Game("TG1A", Game.Platform.PC_Steam, 2000);
+        Game g4 = new Game("TG1B", Game.Platform.PC_Steam, 2001);
+        GameSet instance = new GameSet();
+        instance.addGame(g1);
+        instance.addGame(g2);
+        instance.addGame(g3);
+        instance.addGame(g4);
+        
+        Set<Game> matchedGames = instance.getGamesPartial("TG1");
+        assertTrue(matchedGames.contains(g1));
+        assertFalse(matchedGames.contains(g2));
+        assertTrue(matchedGames.contains(g3));
+        assertTrue(matchedGames.contains(g4));
+    }
+    
 }
