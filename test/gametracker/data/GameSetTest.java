@@ -341,4 +341,26 @@ public class GameSetTest {
         assertTrue(matchedGames.contains(g4));
     }
     
+    @Test
+    public void testGetPartialCount() {
+        System.out.println("Testing returning a count of games based on a "
+                + " partial name");
+        Game g1 = new Game("TG1", Game.Platform.PC_Steam, 2000);
+        Game g2 = new Game("TG2", Game.Platform.PC_Steam, 2001);
+        Game g3 = new Game("TG1A", Game.Platform.PC_Steam, 2000);
+        Game g4 = new Game("TG1B", Game.Platform.PC_Steam, 2001);
+        GameSet instance = new GameSet();
+        instance.addGame(g1);
+        instance.addGame(g2);
+        instance.addGame(g3);
+        instance.addGame(g4);
+        
+        assertEquals("TG1 match", 3, instance.getGamesPartialCount("TG1"));
+        assertEquals("TG2 match", 1, instance.getGamesPartialCount("TG2"));
+        assertEquals("TGX match", 0, instance.getGamesPartialCount("TGX"));
+        
+    }
+    
+    
+    
 }

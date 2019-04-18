@@ -184,9 +184,14 @@ public class GameSet {
     public int getGamesPartialCount(String nameStart) {
         
         
-        int apperanceCount = 0;
+        Set<Game> returnSet = new HashSet<>();
         
-        return apperanceCount;
+        games.stream().filter((g)
+                -> (g.getName().startsWith(nameStart))).forEachOrdered((g) -> {
+            returnSet.add(g);
+        });
+        
+        return returnSet.size();
         
         
     }
