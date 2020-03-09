@@ -11,15 +11,18 @@ import gametracker.data.GamePersistenceManager;
 import gametracker.data.GameSet;
 import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
-import gametracker.data.PlaySessionList;
+import gametracker.data.PlayData;
 import gametracker.data.PlaySession;
 import gametracker.data.SessionCountAggregator;
 import gametracker.data.SessionPersistenceManager;
 import gametracker.data.TotalTimeAggregator;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -40,10 +43,7 @@ import org.joda.time.LocalDate;
  */
 public class CLI {
 
-    /**
-     * Version number for the system.
-     */
-    public static final String VERSION = "0.2.0";
+    public static final String VERSION = "0.2.1";
 
     /**
      * Default preference name for the game data file.
@@ -380,14 +380,23 @@ public class CLI {
                     date = LocalDate.now();
                 }
 
-                Game game = promptForGame();
+                
+                
+                List<Game> games = promptForGame();
+                if (games.size() != 1) {
+                    System.out.println("Not able to add session");
+                    return;
+                }
 
                 String timeStr = UIHelper.promptForString(
                         "Enter Time Played (in hours)");
 
                 Double time = PlaySession.parsePlayTime(timeStr);
 
-                mainPlayData.addPlaySession(new PlaySession(game, date, time));
+                mainPlayData.addPlaySession(new PlaySession(
+                        games.get(0), 
+                        date, 
+                        time));
             } catch (Exception e) {
                 System.err.println("Session not added - " + e.getMessage());
             }
@@ -609,7 +618,7 @@ public class CLI {
         menu.add(MenuElement.BLANK);
 
         menu.add(new MenuElement("A", "Add Game Filter", () -> {
-            Game filterGame = promptForGame();
+            List<Game> filterGame = promptForGame();
             gameFilter.addAllGames(filterGame);
 
         }));
@@ -761,9 +770,9 @@ public class CLI {
      * 
      */
     private void printPreamble() {
-        System.out.println("****************************************");
+        printStarLine();
         System.out.println();
-        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
+        printSystemName();
         System.out.println();
     }
 
@@ -775,10 +784,23 @@ public class CLI {
     private void printFarewell() {
 
         System.out.println();
-        System.out.println("Game Tracker - Text Terminal Version - " + VERSION);
-        System.out.println("TJ Kendon - @tjkendon - 2018");
-        System.out.println("****************************************");
+        printSystemName();
+        printCopyRight();
+        printStarLine();
 
+    }
+    
+    private void printCopyRight() {
+        System.out.println("   TJ Kendon  @tjkendon  2018 - 2019");
+    }
+    
+    private void printSystemName() {
+        System.out.println("   Game Tracker  Text Terminal Version  " + 
+                VERSION);
+    }
+    
+    private void printStarLine() {
+        System.out.println("*************************************************");
     }
 
     /**
@@ -855,26 +877,29 @@ public class CLI {
         }
     }
 
-    /**
-     * 
-     * Prompts the user to enter a game name.
-     * 
-     * @return the game name entered by the user.
-     */
-    private Game promptForGame() {
+    private List<Game> promptForGame() {
+        List<Game> returnSet = new ArrayList<>();
         String gameStr = UIHelper.promptForString("Enter Game Name");
-        Game game = mainGameSet.getGame(gameStr);
-        return game;
+        int matchCount = mainGameSet.getGamesPartialCount(gameStr);
+        if (matchCount == 0) {
+          System.out.println("No games match " + gameStr);  
+          
+        } else if (matchCount == 1) {
+            returnSet.add(mainGameSet.getGame(gameStr));
+        } else if (matchCount > 1) {
+            Set<Game> gamesPartial = mainGameSet.getGamesPartial(gameStr);
+            System.out.println("Several Matches:");
+            printNumberedGameList(gamesPartial);
+            returnSet.addAll(gamesPartial);
+        }
+        return returnSet;
+        
     }
 
-    /**
-     * 
-     * Prompts the user to enter a date, with the given prompt.
-     * 
-     * @param prompt the prompt to ask the user for (specifying date meaning).
-     * @return the date parsed from the user's entry
-     */
-    private LocalDate promptForDate(String prompt) {
+    
+    
+    private DateTime promptForDate(String prompt) {
+
         String dateStr = UIHelper.promptForString(prompt);
         LocalDate date = PlaySession.parseDateTime(dateStr);
 
@@ -919,18 +944,13 @@ public class CLI {
         return filteredPlayData;
     }
 
-    /**
-     * 
-     * Prints a list of games with numbers, their position in the
-     * list of games
-     * 
-     * @param games the list of games to print.
-     * 
-     */
-    private void printNumberedGameList(List<Game> games) {
-        for (int i = 0; i < games.size(); i++) {
-            System.out.println((i + 1) + " - " + games.get(i));
+    private void printNumberedGameList(Collection<Game> games) {
+        int i = 1;
+        for (Game g : games) {
+            System.out.println("\t" + i++ +": " + g.getName());
+
         }
+        
     }
 
     /**

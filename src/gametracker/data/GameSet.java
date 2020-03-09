@@ -91,6 +91,8 @@ public class GameSet {
 
     }
 
+    
+    
     /**
      * 
      * Returns the one game contained in the set that fully matches the name
@@ -169,6 +171,43 @@ public class GameSet {
         });
 
         return returnSet;
+    }
+    
+    /**
+     * 
+     * Returns all games that begin with the given string;
+     * 
+     * @param nameStart the portion of game name to match
+     * @return all games whose names match up to nameStart
+     */
+    public Set<Game> getGamesPartial(String nameStart) {
+        
+        Set<Game> returnSet = new HashSet<>();
+        
+        
+        games.stream().filter((g)
+                -> (g.getName().startsWith(nameStart))).forEachOrdered((g) -> {
+            returnSet.add(g);
+        });
+        
+        
+        return returnSet;
+        
+    }
+    
+    public int getGamesPartialCount(String nameStart) {
+        
+        
+        Set<Game> returnSet = new HashSet<>();
+        
+        games.stream().filter((g)
+                -> (g.getName().startsWith(nameStart))).forEachOrdered((g) -> {
+            returnSet.add(g);
+        });
+        
+        return returnSet.size();
+        
+        
     }
 
     /**

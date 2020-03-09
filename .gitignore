@@ -32,3 +32,4 @@ nbproject
 /src/gametracker/cli/GameTracker.java
 *.games
 *.play
+*~
