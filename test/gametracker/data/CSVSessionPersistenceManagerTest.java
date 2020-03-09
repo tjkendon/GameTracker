@@ -7,7 +7,7 @@ package gametracker.data;
 
 import java.io.File;
 import static org.hamcrest.CoreMatchers.startsWith;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -57,12 +57,12 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
-        PlayData original = new PlayData();
+        PlaySessionList original = new PlaySessionList();
 
         original.addPlaySession(session1);
         original.addPlaySession(session2);
@@ -72,9 +72,9 @@ public class CSVSessionPersistenceManagerTest {
                         new File("data/test/session.data"), games);
         instance.savePlayData(original);
 
-        PlayData result = instance.load();
+        PlaySessionList result = instance.load();
 
-        assertTrue(PlayData.containsMatchingContent(original, result));
+        assertEquals(original, result);
         
     }
 
@@ -97,15 +97,14 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
         CSVSessionPersistenceManager instance
-                = new CSVSessionPersistenceManager();
-        instance.setGameSet(games);
-        PlayData load = instance.load();
+                = new CSVSessionPersistenceManager(null, games);
+        PlaySessionList load = instance.load();
 
     }
 
@@ -115,11 +114,11 @@ public class CSVSessionPersistenceManagerTest {
     @Test
     public void testLoadPlayDataNoGame() {
         System.out.println(
-                "Testing loading play data with no file");
+                "Testing loading play data with no game");
 
         noPlayDataGameRule.expect(IllegalStateException.class);
         noPlayDataGameRule.expectMessage(
-                startsWith("GameSet not set"));
+                startsWith("GameSet not set to load session data"));
 
         // set up games
         Game testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
@@ -128,24 +127,25 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
-        PlayData original = new PlayData();
+        PlaySessionList original = new PlaySessionList();
 
         original.addPlaySession(session1);
         original.addPlaySession(session2);
 
         CSVSessionPersistenceManager instance
-                = new CSVSessionPersistenceManager();
-        instance.setDatafile(new File("data/test/session.data"));
-        PlayData load = instance.load();
+                = new CSVSessionPersistenceManager(
+                        new File("data/test/session.data"), null);
+        
+        PlaySessionList load = instance.load();
 
     }
     
-        @Rule
+    @Rule
     public ExpectedException noPlayDataFileRuleSave = ExpectedException.none();
 
     @Test
@@ -155,7 +155,7 @@ public class CSVSessionPersistenceManagerTest {
 
         noPlayDataFileRuleSave.expect(IllegalStateException.class);
         noPlayDataFileRuleSave.expectMessage(
-                startsWith("Datafile not set"));
+                startsWith("No file set to save session data"));
 
         // set up games
         Game testgame1 = new Game("Test1", Game.Platform.PC_Steam, 2000);
@@ -164,18 +164,18 @@ public class CSVSessionPersistenceManagerTest {
         games.addGame(testgame1);
         games.addGame(testgame2);
 
-        DateTime testDate1 = DateTime.now();
+        LocalDate testDate1 = LocalDate.now();
 
         PlaySession session1 = new PlaySession(testgame1, testDate1, 1);
         PlaySession session2 = new PlaySession(testgame2, testDate1, 0.75);
 
-        PlayData original = new PlayData();
+        PlaySessionList original = new PlaySessionList();
 
         original.addPlaySession(session1);
         original.addPlaySession(session2);
         
         CSVSessionPersistenceManager instance
-                = new CSVSessionPersistenceManager();
+                = new CSVSessionPersistenceManager(null, games);
         instance.setGameSet(games);
         instance.savePlayData(original);
 

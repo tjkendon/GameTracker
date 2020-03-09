@@ -10,18 +10,38 @@ import java.util.Set;
 
 /**
  *
- * @author tjkendon
+ * Produces an aggregate of the count of sessions in the given PlaySessionList.
+ * 
  */
-public class SessionCountAggregator implements Aggregator {
+public class SessionCountAggregator extends Aggregator {
     
-    PlayData sourceData;
     
+    /**
+     * 
+     * The flag used to indicate that the PlayAggregate includes the session
+     * count.
+     * 
+     */
     public final PlayAggregate.AggregateType type = 
             PlayAggregate.AggregateType.TOTAL_COUNT;
-    
-    public SessionCountAggregator(PlayData source) {
-        this.sourceData = source;
+
+    /**
+     * 
+     * Creates a new Aggregator with the given source PlaySessionList.
+     * 
+     * @param sourceData the PlaySessionList to be aggregated.
+     */
+    public SessionCountAggregator(PlaySessionList sourceData) {
+        super(sourceData);
     }
+    
+    /**
+     * 
+     * Produces a {@link PlayAggregate} which includes the number of sessions
+     * for each game in the source data.
+     * 
+     * @return an aggregate with the number of sessions for each game.
+     */
 
     @Override
     public PlayAggregate aggregate() {

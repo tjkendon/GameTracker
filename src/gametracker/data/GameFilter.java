@@ -21,8 +21,8 @@ public class GameFilter implements Filter {
     /**
      * 
      * Creates a new filter with no games to filter 
-     * 
-     * If used to filter it will return an empty PlayData.
+ 
+ If used to filter it will return an empty PlaySessionList.
      * 
      */
     GameFilter() {
@@ -107,7 +107,7 @@ public class GameFilter implements Filter {
     /**
      *
      * Resets the filter by removing all games from it. After calling the filter
-     * will be empty and if filter is called it will return an empty PlayData.
+ will be empty and if filter is called it will return an empty PlaySessionList.
      *
      */
     @Override
@@ -126,9 +126,9 @@ public class GameFilter implements Filter {
      * @return a new play data object with deep copies of the play sessions
      */
     @Override
-    public PlayData filter(PlayData source) {
+    public PlaySessionList filter(PlaySessionList source) {
 
-        PlayData returnData = new PlayData();
+        PlaySessionList returnData = new PlaySessionList();
 
         source.getPlaySessions().stream().filter((session)
                 -> (filterGames.contains(
@@ -143,9 +143,9 @@ public class GameFilter implements Filter {
 
     /**
      *
-     * Reports a list of the games in the filter.
+     * Returns a list of the games in the filter.
      *
-     * @return
+     * @return a string representation of the filter. 
      *
      */
     @Override

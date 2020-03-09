@@ -3,9 +3,8 @@ package gametracker.data;
 
 /**
  *
- * Interface for classes managing play session data.
+ * Loads and saves PlaySession Data to a persistent store.
  * 
- * @author tjkendon
  */
 public interface SessionPersistenceManager {
     
@@ -15,15 +14,15 @@ public interface SessionPersistenceManager {
      * 
      * @return the game set this manager manages
      */
-    public PlayData load();
+    public PlaySessionList load();
     
     
     /**
      * 
      * Saves the given sessions in persistent storage as defined by this manager.
      * 
-     * @param sessions the data to save
+     * @param sessions the {@link PlaySessionList} session data to store
      */
-    public void savePlayData(PlayData sessions);
+    public void savePlayData(PlaySessionList sessions);
     
 }

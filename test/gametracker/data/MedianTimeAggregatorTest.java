@@ -5,7 +5,7 @@
  */
 package gametracker.data;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class MedianTimeAggregatorTest {
     
-   static PlayData sourceData;
+   static PlaySessionList sourceData;
     static GameSet games;
 
     static Game a = new Game("Game A", Game.Platform.PC_Steam, 2000);
@@ -62,53 +62,53 @@ public class MedianTimeAggregatorTest {
         games.addGame(f);
 
 
-        sessions[0] = new PlaySession(a, new DateTime(2000, 1, 1, 0, 0), 1.0);
+        sessions[0] = new PlaySession(a, new LocalDate(2000, 1, 1), 1.0);
         // only a
-        sessions[1] = new PlaySession(e, new DateTime(2000, 1, 1, 0, 0), 1.0);
-        sessions[2] = new PlaySession(b1, new DateTime(2000, 1, 1, 0, 0), 0.25);
-        sessions[3] = new PlaySession(b2, new DateTime(2000, 1, 1, 0, 0), 0.5);
-        sessions[4] = new PlaySession(b3, new DateTime(2000, 1, 1, 0, 0), 0.75);
-        sessions[5] = new PlaySession(f, new DateTime(2000, 1, 1, 0, 0), 0.1);
+        sessions[1] = new PlaySession(e, new LocalDate(2000, 1, 1), 1.0);
+        sessions[2] = new PlaySession(b1, new LocalDate(2000, 1, 1), 0.25);
+        sessions[3] = new PlaySession(b2, new LocalDate(2000, 1, 1), 0.5);
+        sessions[4] = new PlaySession(b3, new LocalDate(2000, 1, 1), 0.75);
+        sessions[5] = new PlaySession(f, new LocalDate(2000, 1, 1), 0.1);
         // six fs 5, 11, 17, 23, 29, 35
 
-        sessions[6] = new PlaySession(e, new DateTime(2000, 1, 2, 0, 0), 1.0);
-        sessions[7] = new PlaySession(e, new DateTime(2000, 1, 2, 0, 0), 1.0);
-        sessions[8] = new PlaySession(e, new DateTime(2000, 1, 2, 0, 0), 0.5);
-        sessions[9] = new PlaySession(c1, new DateTime(2000, 1, 2, 0, 0), 0.5);
-        sessions[10] = new PlaySession(c2, new DateTime(2000, 1, 2, 0, 0), 4);
-        sessions[11] = new PlaySession(f, new DateTime(2000, 1, 2, 0, 0), 0.1);
+        sessions[6] = new PlaySession(e, new LocalDate(2000, 1, 2), 1.0);
+        sessions[7] = new PlaySession(e, new LocalDate(2000, 1, 2), 1.0);
+        sessions[8] = new PlaySession(e, new LocalDate(2000, 1, 2), 0.5);
+        sessions[9] = new PlaySession(c1, new LocalDate(2000, 1, 2), 0.5);
+        sessions[10] = new PlaySession(c2, new LocalDate(2000, 1, 2), 4);
+        sessions[11] = new PlaySession(f, new LocalDate(2000, 1, 2), 0.1);
         
-        sessions[12] = new PlaySession(e, new DateTime(2000, 1, 3, 0, 0), 1.0);
-        sessions[13] = new PlaySession(c1, new DateTime(2000, 1, 3, 0, 0), 1.0);
-        sessions[14] = new PlaySession(c2, new DateTime(2000, 1, 3, 0, 0), 0.25);
-        sessions[15] = new PlaySession(c3, new DateTime(2000, 1, 3, 0, 0), 0.5);
-        sessions[16] = new PlaySession(e, new DateTime(2000, 1, 3, 0, 0), 0.75);
-        sessions[17] = new PlaySession(f, new DateTime(2000, 1, 3, 0, 0), 0.1);
+        sessions[12] = new PlaySession(e, new LocalDate(2000, 1, 3), 1.0);
+        sessions[13] = new PlaySession(c1, new LocalDate(2000, 1, 3), 1.0);
+        sessions[14] = new PlaySession(c2, new LocalDate(2000, 1, 3), 0.25);
+        sessions[15] = new PlaySession(c3, new LocalDate(2000, 1, 3), 0.5);
+        sessions[16] = new PlaySession(e, new LocalDate(2000, 1, 3), 0.75);
+        sessions[17] = new PlaySession(f, new LocalDate(2000, 1, 3), 0.1);
 
-        sessions[18] = new PlaySession(e, new DateTime(2000, 1, 4, 0, 0), 1.0);
-        sessions[19] = new PlaySession(e, new DateTime(2000, 1, 4, 0, 0), 1.0);
-        sessions[20] = new PlaySession(b1, new DateTime(2000, 1, 4, 0, 0), 0.25);
-        sessions[21] = new PlaySession(b2, new DateTime(2000, 1, 4, 0, 0), 0.5);
-        sessions[22] = new PlaySession(b3, new DateTime(2000, 1, 4, 0, 0), 0.75);
-        sessions[23] = new PlaySession(f, new DateTime(2000, 1, 4, 0, 0), 0.1);
+        sessions[18] = new PlaySession(e, new LocalDate(2000, 1, 4), 1.0);
+        sessions[19] = new PlaySession(e, new LocalDate(2000, 1, 4), 1.0);
+        sessions[20] = new PlaySession(b1, new LocalDate(2000, 1, 4), 0.25);
+        sessions[21] = new PlaySession(b2, new LocalDate(2000, 1, 4), 0.5);
+        sessions[22] = new PlaySession(b3, new LocalDate(2000, 1, 4), 0.75);
+        sessions[23] = new PlaySession(f, new LocalDate(2000, 1, 4), 0.1);
 
-        sessions[24] = new PlaySession(c1, new DateTime(2000, 1, 5, 0, 0), 1.0);
-        sessions[25] = new PlaySession(b1, new DateTime(2000, 1, 5, 0, 0), 1.0);
-        sessions[26] = new PlaySession(c1, new DateTime(2000, 1, 5, 0, 0), 0.25);
-        sessions[27] = new PlaySession(b1, new DateTime(2000, 1, 5, 0, 0), 0.5);
-        sessions[28] = new PlaySession(c1, new DateTime(2000, 1, 5, 0, 0), 0.75);
-        sessions[29] = new PlaySession(f, new DateTime(2000, 1, 5, 0, 0), 0.1);
+        sessions[24] = new PlaySession(c1, new LocalDate(2000, 1, 5), 1.0);
+        sessions[25] = new PlaySession(b1, new LocalDate(2000, 1, 5), 1.0);
+        sessions[26] = new PlaySession(c1, new LocalDate(2000, 1, 5), 0.25);
+        sessions[27] = new PlaySession(b1, new LocalDate(2000, 1, 5), 0.5);
+        sessions[28] = new PlaySession(c1, new LocalDate(2000, 1, 5), 0.75);
+        sessions[29] = new PlaySession(f, new LocalDate(2000, 1, 5), 0.1);
 
-        sessions[30] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 1.0);
-        sessions[31] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 1.0);
-        sessions[32] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 0.25);
-        sessions[33] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 0.5);
-        sessions[34] = new PlaySession(e, new DateTime(2000, 1, 6, 0, 0), 0.75);
-        sessions[35] = new PlaySession(f, new DateTime(2000, 1, 6, 0, 0), 0.1);
+        sessions[30] = new PlaySession(e, new LocalDate(2000, 1, 6), 1.0);
+        sessions[31] = new PlaySession(e, new LocalDate(2000, 1, 6), 1.0);
+        sessions[32] = new PlaySession(e, new LocalDate(2000, 1, 6), 0.25);
+        sessions[33] = new PlaySession(e, new LocalDate(2000, 1, 6), 0.5);
+        sessions[34] = new PlaySession(e, new LocalDate(2000, 1, 6), 0.75);
+        sessions[35] = new PlaySession(f, new LocalDate(2000, 1, 6), 0.1);
         
-        sessions[36] = new PlaySession(g, new DateTime(2000, 1, 7, 0, 0), 1.5);
+        sessions[36] = new PlaySession(g, new LocalDate(2000, 1, 7), 1.5);
 
-        sourceData = new PlayData();
+        sourceData = new PlaySessionList();
 
         for (int i = 0; i < 37; i++) {
             sourceData.addPlaySession(sessions[i]);
@@ -139,7 +139,7 @@ public class MedianTimeAggregatorTest {
     public void testAggregateEmptyPlayData() {
         System.out.println("Testing Aggregating An Empty Play Data");
         
-        PlayData source = new PlayData();
+        PlaySessionList source = new PlaySessionList();
         
         MedianTimeAggregator instance = new MedianTimeAggregator(source);
         PlayAggregate expResult = new PlayAggregate();
@@ -152,7 +152,7 @@ public class MedianTimeAggregatorTest {
     public void testAggregatePlayDataOneGame() {
         System.out.println("Testing Aggregating A Play Data With only 1 game");
         
-        PlayData source = new PlayData();
+        PlaySessionList source = new PlaySessionList();
         source.addPlaySession(sessions[5]);
         source.addPlaySession(sessions[11]);
         source.addPlaySession(sessions[17]);
@@ -164,7 +164,7 @@ public class MedianTimeAggregatorTest {
         MedianTimeAggregator instance = new MedianTimeAggregator(source);
         PlayAggregate expResult = new PlayAggregate();
         
-        expResult.putAggregate(f, PlayAggregate.AggregateType.AVERAGE_TIME, 0.1);
+        expResult.putAggregate(f, PlayAggregate.AggregateType.MEDIAN_TIME, 0.1);
         
         PlayAggregate result = instance.aggregate();
         assertEquals(expResult, result);
@@ -179,27 +179,27 @@ public class MedianTimeAggregatorTest {
         PlayAggregate expResult = new PlayAggregate();
         
         expResult.putAggregate(
-                a, PlayAggregate.AggregateType.AVERAGE_TIME, 1.0);
+                a, PlayAggregate.AggregateType.MEDIAN_TIME, 1.0);
         expResult.putAggregate(
-                b1, PlayAggregate.AggregateType.AVERAGE_TIME, 0.375);
+                b1, PlayAggregate.AggregateType.MEDIAN_TIME, 0.375);
         expResult.putAggregate(
-                b2, PlayAggregate.AggregateType.AVERAGE_TIME, 0.5);
+                b2, PlayAggregate.AggregateType.MEDIAN_TIME, 0.5);
         expResult.putAggregate(
-                b3, PlayAggregate.AggregateType.AVERAGE_TIME, 0.75);
+                b3, PlayAggregate.AggregateType.MEDIAN_TIME, 0.75);
         expResult.putAggregate(
-                c1, PlayAggregate.AggregateType.AVERAGE_TIME, 0.75);
+                c1, PlayAggregate.AggregateType.MEDIAN_TIME, 0.75);
         expResult.putAggregate(
-                c2, PlayAggregate.AggregateType.AVERAGE_TIME, 2.125);
+                c2, PlayAggregate.AggregateType.MEDIAN_TIME, 2.125);
         expResult.putAggregate(
-                c3, PlayAggregate.AggregateType.AVERAGE_TIME, 0.5);
+                c3, PlayAggregate.AggregateType.MEDIAN_TIME, 0.5);
         //expResult.putAggregate(
         //        d, PlayAggregate.AggregateType.AVERAGE_TIME, 0);
         expResult.putAggregate(
-                e, PlayAggregate.AggregateType.AVERAGE_TIME, 1);
+                e, PlayAggregate.AggregateType.MEDIAN_TIME, 1);
         expResult.putAggregate(
-                f, PlayAggregate.AggregateType.AVERAGE_TIME, 0.1);
+                f, PlayAggregate.AggregateType.MEDIAN_TIME, 0.1);
         expResult.putAggregate(
-                g, PlayAggregate.AggregateType.AVERAGE_TIME, 1.5);
+                g, PlayAggregate.AggregateType.MEDIAN_TIME, 1.5);
         
         PlayAggregate result = instance.aggregate();
         assertEquals(expResult, result);
