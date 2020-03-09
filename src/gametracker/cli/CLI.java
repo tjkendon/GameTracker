@@ -11,12 +11,8 @@ import gametracker.data.GamePersistenceManager;
 import gametracker.data.GameSet;
 import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
-<<<<<<< HEAD
-import gametracker.data.PlayData;
-=======
-import gametracker.data.PlaySessionList;
->>>>>>> 882f2e8304f538578381aec1117faae697785a61
 import gametracker.data.PlaySession;
+import gametracker.data.PlaySessionList;
 import gametracker.data.SessionCountAggregator;
 import gametracker.data.SessionPersistenceManager;
 import gametracker.data.TotalTimeAggregator;
@@ -24,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -47,14 +42,7 @@ import org.joda.time.LocalDate;
  */
 public class CLI {
 
-<<<<<<< HEAD
     public static final String VERSION = "0.2.1";
-=======
-    /**
-     * Version number for the system.
-     */
-    public static final String VERSION = "0.2.0";
->>>>>>> 882f2e8304f538578381aec1117faae697785a61
 
     /**
      * Default preference name for the game data file.
@@ -881,25 +869,17 @@ public class CLI {
         System.out.println("Active Filters:");
         int i = 1;
         for (Filter f : filters) {
-            System.out.println("\t" + i++ + " : " + f);
+            System.out.println("\t" + i + " : " + f);
+            i++;
         }
         if (filters.isEmpty()) {
             System.out.println("\tNo Active Filters");
         }
     }
 
-<<<<<<< HEAD
+
     private List<Game> promptForGame() {
         List<Game> returnSet = new ArrayList<>();
-=======
-    /**
-     * 
-     * Prompts the user to enter a game name.
-     * 
-     * @return the game name entered by the user.
-     */
-    private Game promptForGame() {
->>>>>>> 882f2e8304f538578381aec1117faae697785a61
         String gameStr = UIHelper.promptForString("Enter Game Name");
         int matchCount = mainGameSet.getGamesPartialCount(gameStr);
         if (matchCount == 0) {
@@ -917,11 +897,6 @@ public class CLI {
         
     }
 
-<<<<<<< HEAD
-    
-    
-    private DateTime promptForDate(String prompt) {
-=======
     /**
      * 
      * Prompts the user to enter a date, with the given prompt.
@@ -930,7 +905,6 @@ public class CLI {
      * @return the date parsed from the user's entry
      */
     private LocalDate promptForDate(String prompt) {
->>>>>>> 882f2e8304f538578381aec1117faae697785a61
         String dateStr = UIHelper.promptForString(prompt);
         LocalDate date = PlaySession.parseDateTime(dateStr);
 
@@ -975,12 +949,6 @@ public class CLI {
         return filteredPlayData;
     }
 
-<<<<<<< HEAD
-    private void printNumberedGameList(Collection<Game> games) {
-        int i = 1;
-        for (Game g : games) {
-            System.out.println("\t" + i++ +": " + g.getName());
-=======
     /**
      * 
      * Prints a list of games with numbers, their position in the
@@ -989,10 +957,11 @@ public class CLI {
      * @param games the list of games to print.
      * 
      */
-    private void printNumberedGameList(List<Game> games) {
-        for (int i = 0; i < games.size(); i++) {
-            System.out.println((i + 1) + " - " + games.get(i));
->>>>>>> 882f2e8304f538578381aec1117faae697785a61
+    private void printNumberedGameList(Collection<Game> games) {
+        int i = 0;
+        for (Game g : games) {
+            System.out.println("\t" + i +": " + g.getName());
+            i++;
         }
         
     }
