@@ -11,8 +11,8 @@ import gametracker.data.GamePersistenceManager;
 import gametracker.data.GameSet;
 import gametracker.data.MedianTimeAggregator;
 import gametracker.data.PlayAggregate;
-import gametracker.data.PlayData;
 import gametracker.data.PlaySession;
+import gametracker.data.PlaySessionList;
 import gametracker.data.SessionCountAggregator;
 import gametracker.data.SessionPersistenceManager;
 import gametracker.data.TotalTimeAggregator;
@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -31,6 +30,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 /**
@@ -870,7 +870,8 @@ public class CLI {
         System.out.println("Active Filters:");
         int i = 1;
         for (Filter f : filters) {
-            System.out.println("\t" + i++ + " : " + f);
+            System.out.println("\t" + i + " : " + f);
+            i++;
         }
         if (filters.isEmpty()) {
             System.out.println("\tNo Active Filters");
@@ -898,7 +899,7 @@ public class CLI {
 
     
     
-    private DateTime promptForDate(String prompt) {
+    private LocalDate promptForDate(String prompt) {
 
         String dateStr = UIHelper.promptForString(prompt);
         LocalDate date = PlaySession.parseDateTime(dateStr);
@@ -947,7 +948,8 @@ public class CLI {
     private void printNumberedGameList(Collection<Game> games) {
         int i = 1;
         for (Game g : games) {
-            System.out.println("\t" + i++ +": " + g.getName());
+            System.out.println("\t" + i +": " + g.getName());
+            i++;
 
         }
         
