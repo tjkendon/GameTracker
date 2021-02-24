@@ -33,3 +33,4 @@ nbproject
 *.games
 *.play
 *~
+.DS_Store
