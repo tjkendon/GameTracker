@@ -33,3 +33,6 @@ nbproject
 *.games
 *.play
 *~
+.DS_Store
+.idea
+*.iml
