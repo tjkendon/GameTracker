@@ -34,3 +34,6 @@ nbproject
 *.play
 *~
 .DS_Store
+.idea
+*.iml
+
