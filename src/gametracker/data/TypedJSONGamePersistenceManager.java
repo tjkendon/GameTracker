@@ -47,7 +47,7 @@ public class TypedJSONGamePersistenceManager implements GamePersistenceManager{
 
     @Override
     public GameSet load() {
-        try (Scanner read = new Scanner(new File("type.json"))) {
+        try (Scanner read = new Scanner(datafile)) {
 
             GameSet readGame = (GameSet) JsonReader.jsonToJava(read.nextLine());
             return readGame;
@@ -63,7 +63,7 @@ public class TypedJSONGamePersistenceManager implements GamePersistenceManager{
             throw  new IllegalStateException("No File Set to Save To");
         }
 
-        try (PrintStream save = new PrintStream(new File("type.json"))) {
+        try (PrintStream save = new PrintStream(datafile)) {
             save.println(JsonWriter.objectToJson(s));
         } catch (FileNotFoundException ex) {
             throw new IllegalStateException("Not able to open/create file "
