@@ -16,6 +16,7 @@ import gametracker.data.PlaySessionList;
 import gametracker.data.SessionCountAggregator;
 import gametracker.data.SessionPersistenceManager;
 import gametracker.data.TotalTimeAggregator;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +26,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -33,16 +35,14 @@ import org.apache.commons.cli.ParseException;
 import org.joda.time.LocalDate;
 
 /**
- *
  * Provides an interactive command-line interface to use the GameTracker system.
- * 
+ * <p>
  * Allows the data to be viewed, filtered, aggregated and updated interactively
  * using a system of menus.
- * 
  */
 public class CLI {
 
-    public static final String VERSION = "0.2.1";
+    public static final String VERSION = "0.3.0";
 
     /**
      * Default preference name for the game data file.
@@ -57,24 +57,22 @@ public class CLI {
      * Default file name for the game data file.
      */
     private static final String GAME_FILE_DEFAULT = "tracker.games";
-    
+
     /**
      * Default file name for the play session data file.
      */
     private static final String PLAY_FILE_DEFAULT = "tracker.play";
 
     /**
-     * 
      * Creates and runs a new CLI program. Configured from the command line
-     * and the Java preferences to load and store the game and play session 
+     * and the Java preferences to load and store the game and play session
      * data.
-     * 
+     *
      * @param args the standard set of arguments
      */
     public static void main(String[] args) {
 
-        String gameFile = null;
-        String playFile = null;
+        Preferences preferences = Preferences.userNodeForPackage(CLI.class);
 
         try {
             Options options = new Options();
@@ -91,16 +89,18 @@ public class CLI {
             CommandLineParser parser = new DefaultParser();
             CommandLine cl = parser.parse(options, args);
             if (cl.hasOption("gamefile")) {
-                gameFile = cl.getOptionValue("gamefile");
+                preferences.put(GAME_FILE_PREF, cl.getOptionValue("gamefile"));
             }
             if (cl.hasOption("playfile")) {
-                playFile = cl.getOptionValue("playfile");
+                preferences.put(PLAY_FILE_PREF, cl.getOptionValue("playfile"));
             }
         } catch (ParseException ex) {
-            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE,
+                    "Error Parsing Command Line Arguments",
+                    ex);
         }
 
-        CLI cli = new CLI(gameFile, playFile);
+        CLI cli = new CLI(preferences);
 
         cli.printPreamble();
 
@@ -114,9 +114,7 @@ public class CLI {
     }
 
     /**
-     * 
      * Menu Element that will print all games.
-     * 
      */
     private final MenuElement listAllGames = new MenuElement(
             "1",
@@ -128,9 +126,7 @@ public class CLI {
             });
 
     /**
-     * 
      * Menu element that will print all play sessions.
-     * 
      */
     private final MenuElement listAllSessions = new MenuElement(
             "2",
@@ -142,10 +138,7 @@ public class CLI {
             });
 
     /**
-     * 
-     * 
      * Menu element that will print all aggregates of the current data.
-     * 
      */
     private final MenuElement listAllStats = new MenuElement(
             "3",
@@ -157,9 +150,9 @@ public class CLI {
             });
 
     /**
-     * The Java preferences to load the game data and play data session file.
+     * The Java preferences to run the CLI with
      */
-    private final Preferences prefs;
+    private final Preferences preferences;
 
     /**
      * The filename for the game data file.
@@ -174,7 +167,7 @@ public class CLI {
      * The main menu list of elements.
      */
     private final List<MenuElement> mainMenu;
-    
+
     /**
      * The list of elements for the menu to organize data.
      */
@@ -216,26 +209,13 @@ public class CLI {
     private GamePersistenceManager gameManager;
 
     /**
-     * Creates a new CLI, using the arguments as values for filenames
-     * for the game and play session data files. 
-     * 
-     * Sets the CLI's gameFileName and playFileName to the value saved in
-     * Java preferences for this node, but will over ride those with the
-     * values passed to the function.
-     * 
-     * @param gameFile the file name for the game data file.
-     * @param playFile the file name for the play session data file.
+     * Creates a new CLI, with the
      */
-    public CLI(String gameFile, String playFile) {
-        prefs = Preferences.userNodeForPackage(CLI.class);
-        loadPreferenceValues();
+    public CLI(Preferences preferences) {
+        this.preferences = preferences;
+        gameFileName = preferences.get(GAME_FILE_PREF, GAME_FILE_DEFAULT);
+        playFileName = preferences.get(PLAY_FILE_PREF, PLAY_FILE_DEFAULT);
 
-        if (gameFile != null) {
-            gameFileName = gameFile;
-        }
-        if (playFile != null) {
-            playFileName = playFile;
-        }
         mainGameSet = loadGames();
 
         mainPlayData = loadPlayData();
@@ -252,9 +232,8 @@ public class CLI {
     }
 
     /**
-     * 
      * Loads games from the CLI's game data file and returns it.
-     * 
+     *
      * @return the {@link GameSet} of all games loadable from the game file.
      */
     public final GameSet loadGames() {
@@ -264,7 +243,7 @@ public class CLI {
         try {
 
             System.out.println("Loading game file: " + gameFileName);
-            
+
             gameManager = new CSVGamePersistenceManager(
                     new File(gameFileName));
             gs = gameManager.load();
@@ -282,29 +261,25 @@ public class CLI {
     }
 
     /**
-     * 
      * Prompts the user to enter a file name. Prompts for a string with the
      * given purpose.
-     * 
+     *
      * @param purpose the purpose of file the user is prompted for.
-     * 
      * @return the string to use as a filename
      */
     public final String promptForFile(String purpose) {
-        String fileName = UIHelper.promptForString(
-                "Enter " + purpose + " Filename (Blank to skip)");
 
-        return fileName;
+        return UIHelper.promptForString(
+                "Enter " + purpose + " Filename (Blank to skip)");
     }
 
     /**
-     * 
      * Loads the play session data from the CLI's session data file and
      * returns it. If the CLI doesn't have an  {@link GameSet} then
      * it will refuse to load, as it cannot link the games in the session
      * data file back to the main game data.
-     * 
-     * @return a list of the play session data from the file or a new 
+     *
+     * @return a list of the play session data from the file or a new
      * {@link PlaySessionList} if it cannot load.
      */
     public final PlaySessionList loadPlayData() {
@@ -313,7 +288,7 @@ public class CLI {
             System.out.println();
             System.err.println(
                     "Cowardly skipping loading play set without game data"
-                    + " available, creating new data instead.");
+                            + " available, creating new data instead.");
 
             sessionManager = new CSVSessionPersistenceManager(
                     new File(playFileName),
@@ -331,7 +306,7 @@ public class CLI {
                     mainGameSet);
 
             System.out.println("Loading session file: " + playFileName);
-            
+
             data = sessionManager.load();
 
         } catch (IllegalStateException e) {
@@ -345,24 +320,23 @@ public class CLI {
     }
 
     /**
-     * 
      * Creates a list of menu items for the actions needed by the main menu.
-     * 
+     * <p>
      * Includes the three "common" items:
-     *  1) list games,
-     *  2) list play sessions
-     *  3) list aggregate data. 
-     * 
+     * 1) list games,
+     * 2) list play sessions
+     * 3) list aggregate data.
+     * <p>
      * Then items to add:
-     *  A) new play session
-     *  S) new game
-     * 
+     * A) new play session
+     * S) new game
+     * <p>
      * Then to run the other menus:
-     *  F) manage filters
-     *  M) manage data
-     *  
+     * F) manage filters
+     * M) manage data
+     * <p>
      * Then the Q) Quit command
-     * 
+     *
      * @return a list of new menu items for the main menu.
      */
     public final List<MenuElement> setupMainMenu() {
@@ -379,8 +353,7 @@ public class CLI {
                     date = LocalDate.now();
                 }
 
-                
-                
+
                 List<Game> games = promptForGame();
                 if (games.size() != 1) {
                     System.out.println("Not able to add session");
@@ -393,8 +366,8 @@ public class CLI {
                 Double time = PlaySession.parsePlayTime(timeStr);
 
                 mainPlayData.addPlaySession(new PlaySession(
-                        games.get(0), 
-                        date, 
+                        games.get(0),
+                        date,
                         time));
             } catch (Exception e) {
                 System.err.println("Session not added - " + e.getMessage());
@@ -444,27 +417,26 @@ public class CLI {
     }
 
     /**
-     * 
      * Creates a list of menu elements needed for the data menu.
-     * 
+     * <p>
      * Includes the three "common" items:
-     *  1) list games,
-     *  2) list play sessions
-     *  3) list aggregate data. 
-     * 
+     * 1) list games,
+     * 2) list play sessions
+     * 3) list aggregate data.
+     * <p>
      * Then the commands to:
-     *  L) load new data
-     *  S) save all data
-     * 
+     * L) load new data
+     * S) save all data
+     * <p>
      * Then the commands to:
-     *  D) change the game data file
-     *  F) change the session data file
-     * 
+     * D) change the game data file
+     * F) change the session data file
+     * <p>
      * Then the command to:
-     *  X) reset all data
-     * 
+     * X) reset all data
+     * <p>
      * Then the Q) Quit command to return to the main menu.
-     * 
+     *
      * @return a list of new menu items for the data menu.
      */
     public final List<MenuElement> setUpDataMenu() {
@@ -537,13 +509,13 @@ public class CLI {
 
             String newName = UIHelper.promptForString(
                     "Enter new Session Data File Name "
-                    + "(Blank to leave unchanged)");
+                            + "(Blank to leave unchanged)");
             if (!newName.isEmpty()) {
                 playFileName = newName;
                 sessionManager
                         = new CSVSessionPersistenceManager(
-                                new File(playFileName),
-                                mainGameSet);
+                        new File(playFileName),
+                        mainGameSet);
             }
 
         }));
@@ -575,30 +547,29 @@ public class CLI {
 
     }
 
-    
+
     /**
-     * 
      * Creates a list of menu elements needed for the filter menu.
-     * 
+     * <p>
      * Includes the three "common" items:
-     *  1) list games,
-     *  2) list play sessions
-     *  3) list aggregate data. 
-     * 
-     * Then the command to 
-     *  L) list all filters
-     * 
+     * 1) list games,
+     * 2) list play sessions
+     * 3) list aggregate data.
+     * <p>
+     * Then the command to
+     * L) list all filters
+     * <p>
      * Then the commands to:
-     *  A) add a new game filter
-     *  S) add a new date filter
-     * 
+     * A) add a new game filter
+     * S) add a new date filter
+     * <p>
      * Then the commands to:
-     *  X) removes a game filter
-     *  Z) removes a date filter
-     *  C) remove all filters
-     * 
+     * X) removes a game filter
+     * Z) removes a date filter
+     * C) remove all filters
+     * <p>
      * Then the Q) Quit command to return to the main menu.
-     * 
+     *
      * @return a list of new menu items for the data menu.
      */
     public final List<MenuElement> setUpFilterMenu() {
@@ -622,7 +593,7 @@ public class CLI {
 
         }));
 
-    menu.add(new MenuElement("S", "Add Date Filter", () -> {
+        menu.add(new MenuElement("S", "Add Date Filter", () -> {
             LocalDate opening = promptForDate(
                     "Begining Date (Blank for no start date)");
 
@@ -643,7 +614,7 @@ public class CLI {
 
                 String filterString
                         = UIHelper.promptForString(
-                                "Enter Game Number to Remove");
+                        "Enter Game Number to Remove");
                 int index = Integer.parseInt(filterString) - 1;
                 Game removeGame = games.get(index);
                 gameFilter.removeAllGames(removeGame);
@@ -663,7 +634,7 @@ public class CLI {
 
                 String filterString
                         = UIHelper.promptForString(
-                                "Enter Window Number to Remove");
+                        "Enter Window Number to Remove");
                 int index = Integer.parseInt(filterString) - 1;
                 DateFilter.Window window = windows.get(index);
                 dateFilter.removeWindow(window);
@@ -698,14 +669,13 @@ public class CLI {
 
     }
 
-    
+
     /**
-     * 
      * Adds the common menu elements wanted in every menu.
-     * 
-     * These include the elements to list all games, list all sessions and 
+     * <p>
+     * These include the elements to list all games, list all sessions and
      * list all aggregate date.
-     * 
+     *
      * @param menu the menu to add the elements to.
      * @return the menu with the elements added.
      */
@@ -721,25 +691,22 @@ public class CLI {
     }
 
     /**
-     * 
      * Runs the main menu.
-     * 
      */
-    
+
     public void run() {
         runMenu("Main Menu", mainMenu);
     }
 
     /**
-     * 
      * Executes a menu with the given name.
-     * 
+     * <p>
      * Loops, printing all of the menu elements and then prompting for an input.
      * Executes the action hook of the element and stops looping if the
      * element is set to return true to isQuitAfter.
-     * 
+     *
      * @param menuName the identifier for the menu
-     * @param menu the list of menu elements that form the menu
+     * @param menu     the list of menu elements that form the menu
      */
     public void runMenu(String menuName, List<MenuElement> menu) {
 
@@ -764,9 +731,7 @@ public class CLI {
     }
 
     /**
-     * 
      * Prints text for when the program is first started.
-     * 
      */
     private void printPreamble() {
         printStarLine();
@@ -776,9 +741,7 @@ public class CLI {
     }
 
     /**
-     * 
      * Prints text when the program is exiting.
-     * 
      */
     private void printFarewell() {
 
@@ -788,44 +751,41 @@ public class CLI {
         printStarLine();
 
     }
-    
+
     private void printCopyRight() {
         System.out.println("   TJ Kendon  @tjkendon  2018 - 2019");
     }
-    
+
     private void printSystemName() {
-        System.out.println("   Game Tracker  Text Terminal Version  " + 
+        System.out.println("   Game Tracker  Text Terminal Version  " +
                 VERSION);
     }
-    
+
     private void printStarLine() {
         System.out.println("*************************************************");
     }
 
     /**
-     * 
      * Saves both the game data and the session data.
-     * 
-     * @return 
+     *
+     * @return
      */
     private boolean save() {
-        
-        
-        
+
+
         return saveGameData() & saveSessionData();
     }
 
     /**
-     * 
      * Saves the game data with the game persistence manager.
-     * 
+     *
      * @return true if the data could be saved, false if there were any errors
      */
     private boolean saveGameData() {
         try {
-       
+
             System.out.println("Saving Game Data to: " + gameFileName);
-            
+
             gameManager.saveGameSet(mainGameSet);
             System.out.println("Game data saved");
 
@@ -838,17 +798,16 @@ public class CLI {
     }
 
     /**
-     * 
      * Saves the session data with the session persistence manager.
-     * 
-     * @return 
+     *
+     * @return
      */
     private boolean saveSessionData() {
 
         try {
 
-            System.out.println("Saving Session Data to: " +  playFileName);
-            
+            System.out.println("Saving Session Data to: " + playFileName);
+
             sessionManager.savePlayData(mainPlayData);
             System.out.println("Session data saved");
 
@@ -861,9 +820,7 @@ public class CLI {
     }
 
     /**
-     * 
      * Lists all of the active filters.
-     * 
      */
     private void listFilters() {
         System.out.println("Active Filters:");
@@ -883,8 +840,8 @@ public class CLI {
         String gameStr = UIHelper.promptForString("Enter Game Name");
         int matchCount = mainGameSet.getGamesPartialCount(gameStr);
         if (matchCount == 0) {
-          System.out.println("No games match " + gameStr);  
-          
+            System.out.println("No games match " + gameStr);
+
         } else if (matchCount == 1) {
             returnSet.add(mainGameSet.getGame(gameStr));
         } else if (matchCount > 1) {
@@ -894,13 +851,12 @@ public class CLI {
             returnSet.addAll(gamesPartial);
         }
         return returnSet;
-        
+
     }
 
     /**
-     * 
      * Prompts the user to enter a date, with the given prompt.
-     * 
+     *
      * @param prompt the prompt to ask the user for (specifying date meaning).
      * @return the date parsed from the user's entry
      */
@@ -912,9 +868,7 @@ public class CLI {
     }
 
     /**
-     * 
      * Lists all games.
-     * 
      */
     private void listAllGames() {
         for (Game g : mainGameSet.getGames()) {
@@ -923,9 +877,7 @@ public class CLI {
     }
 
     /**
-     * 
      * Lists all play sessions visible with the current filter.
-     * 
      */
     private void listAllPlaySessions() {
         for (PlaySession s : filterPlayData().getPlaySessions()) {
@@ -934,9 +886,8 @@ public class CLI {
     }
 
     /**
-     * 
      * Filters the full list of session data by the currently set filters.
-     * 
+     *
      * @return all play sessions that meet the currently loaded filters.
      */
     private PlaySessionList filterPlayData() {
@@ -950,27 +901,24 @@ public class CLI {
     }
 
     /**
-     * 
      * Prints a list of games with numbers, their position in the
      * list of games
-     * 
+     *
      * @param games the list of games to print.
-     * 
      */
     private void printNumberedGameList(Collection<Game> games) {
         int i = 0;
         for (Game g : games) {
-            System.out.println("\t" + i +": " + g.getName());
+            System.out.println("\t" + i + ": " + g.getName());
             i++;
         }
-        
+
     }
 
     /**
-     * 
      * Prints a list of windows with numbers, their position in the list of
      * windows.
-     * 
+     *
      * @param windows the list of filter windows to print
      */
     private void printNumberedWindowList(List<DateFilter.Window> windows) {
@@ -980,9 +928,8 @@ public class CLI {
     }
 
     /**
-     * 
      * Prints all aggregate data.
-     * 
+     *
      * @param data the aggregate data to print.
      */
     public static void printPlayAggregate(PlayAggregate data) {
@@ -1041,11 +988,10 @@ public class CLI {
     }
 
     /**
-     * 
-     * Generates all available aggregates for the filtered list of play 
+     * Generates all available aggregates for the filtered list of play
      * sessions.
-     * 
-     * @return 
+     *
+     * @return
      */
     private PlayAggregate generateAggregates() {
         PlaySessionList filteredData = filterPlayData();
@@ -1071,29 +1017,15 @@ public class CLI {
         return totalData;
     }
 
-    /**
-     * 
-     * Loads the game data and play session data file names from Java
-     * preferences.
-     * 
-     */
-    private void loadPreferenceValues() {
-
-        gameFileName = prefs.get(GAME_FILE_PREF, GAME_FILE_DEFAULT);
-        playFileName = prefs.get(PLAY_FILE_PREF, PLAY_FILE_DEFAULT);
-
-    }
 
     /**
-     * 
      * Saves the game data and play session file names to Java
      * preferences.
-     * 
      */
     private void savePreferenceValues() {
 
-        prefs.put(GAME_FILE_PREF, gameFileName);
-        prefs.put(PLAY_FILE_PREF, playFileName);
+        preferences.put(GAME_FILE_PREF, gameFileName);
+        preferences.put(PLAY_FILE_PREF, playFileName);
 
     }
 
