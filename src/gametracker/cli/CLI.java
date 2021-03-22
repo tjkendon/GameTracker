@@ -622,7 +622,7 @@ public class CLI {
 
         }));
 
-        menu.add(new MenuElement("S", "Add Date Filter", () -> {
+    menu.add(new MenuElement("S", "Add Date Filter", () -> {
             LocalDate opening = promptForDate(
                     "Begining Date (Blank for no start date)");
 
