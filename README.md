@@ -1,7 +1,7 @@
 # GameTracker
 
-## Smaller Header
+Simple tracker to record game play sessions.
 
-* List
+Also a project to allow me to keep my programming skills in shape and to play with tools I'd like to learn.
 
-System to track games played over time
+
