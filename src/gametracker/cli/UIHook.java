@@ -3,7 +3,7 @@ package gametracker.cli;
 /**
  *
  * An abstract hook that can be implemented to provide functionality to a 
- * {@link MenuElement).
+ * MenuElement.
  * 
  */
 public interface UIHook {

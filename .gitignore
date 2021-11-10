@@ -36,3 +36,6 @@ nbproject
 .DS_Store
 .idea
 *.iml
+*.data
+*.csv
+*.json

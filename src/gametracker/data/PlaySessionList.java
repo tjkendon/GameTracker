@@ -151,4 +151,7 @@ public class PlaySessionList {
         return false;
     }
 
+    public int size() {
+        return sessions.size();
+    }
 }
