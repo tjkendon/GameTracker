@@ -22,7 +22,7 @@ Imaginary Frequently Asked Questions. I'm including questions that I imagine you
 - This all seems a bit jankey. Why is that?
   - That's because it *is* jankey. Despite having taught programming for years and built large systems for my graduate studies, I've never really put finished projects out in the world. So I'm learning and hopefully this is where I teach myself. Let me know if there's particular jank that's got your attention.
 - I can't help but notice that I can't record games for systems created after 2014.
-  - Yeah. Sorry about that, I made an awful design decision that I'm planning to fix soon. See issue #50. 
+  - Not technically a question, but yeah. Sorry about that, I made an awful design decision that I'm planning to fix soon. See issue #50. 
 - Why is there so much dynamic loading of things?
   - I have a problem with dynamic loading. It's the hammer I like using on all kinds of different nails. As a justification, I'll also tell you that I want to learn lots of different ways to do things, so this makes that easier.
 - Can I use this to track my own game playing.
