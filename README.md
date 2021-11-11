@@ -25,12 +25,12 @@ Imaginary Frequently Asked Questions. I'm including questions that I imagine you
   - Not technically a question, but yeah. Sorry about that, I made an awful design decision that I'm planning to fix soon. See issue #50. 
 - Why is there so much dynamic loading of things?
   - I have a problem with dynamic loading. It's the hammer I like using on all kinds of different nails. As a justification, I'll also tell you that I want to learn lots of different ways to do things, so this makes that easier.
-- Can I use this to track my own game playing.
+- Can I use this to track my own game playing?
   - Knock yourself out. It certainly works, but I don't think it's going to be a super usable tool at the moment. That should improve over the next while.
-- Can I use this to track anything else.
+- Can I use this to track anything else?
   - Yes, but you have to pretend that anything else is attached to a pre 2014 gaming system. That may get better over time. 
-- Why don't you have a build system.
-  - I am extremely resistant to build systems. I was teased mercilessly by 'make' during my undergrad and I resent them all.
+- Why don't you have a build system?
+  - I am extremely resistant to build systems. I was teased mercilessly by `make` during my undergrad and I resent them all.
 
 ## Running and Using Game Tracker
 
