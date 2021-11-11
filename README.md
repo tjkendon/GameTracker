@@ -37,7 +37,7 @@ Imaginary Frequently Asked Questions. I'm including questions that I imagine you
 Assuming that you are brave enough to want to use GameTracker, here's what you'll need to do.
 
 - Download the source code from this repository. The current version of the 'main' branch is stable and *should* work.
-  # Make sure you download .jar files for [JodaTime](https://github.com/JodaOrg/joda-time/releases) and [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/).
+  - Make sure you download .jar files for [JodaTime](https://github.com/JodaOrg/joda-time/releases) and [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/).
 - Compile the source
 - Run from the command line (making sure that JodaTime and CLI are in your classpath)
 
