@@ -70,6 +70,8 @@ both of which change the file name where the game data is saved.
 
 When the program closes, it will automatically save the to file named.
 
+[Program](doc/media/program.png)
+
 ## Future Steps
 
 I've completed the 2021 Refresh Project to make this marginally ready to face the world. I have a lot of inner data things I'd like to work on next, but then I think I'm going to look at making a desk-top GUI interface.
