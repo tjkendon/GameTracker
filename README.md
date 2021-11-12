@@ -70,7 +70,12 @@ both of which change the file name where the game data is saved.
 
 When the program closes, it will automatically save the to file named.
 
-[Program](doc/media/program.png)
+<img src="doc/media/program.png" width="250px" />
+
+<img src="doc/media/list_games.png" width="250px" />
+<img src="doc/media/list_play.png" width="250px" />
+<img src="doc/media/list_stats.png" width="250px" />
+
 
 ## Future Steps
 
