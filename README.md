@@ -2,9 +2,9 @@
 
 GameTracker is a *very* simple Java stand alone program to keep track of games and when you play them. Currently it works exclusively on the command line and stores data in a local file.
 
-I started tracking my game play on my blog several years ago and wanted a convenient way to keep track of that data. Honestly, the easiest way to do this is with a spreadsheet, but I wanted to build something that gave me a little bit more control.
+I started [tracking my game play on my blog](https://excitedmaking.blogspot.com/search/label/Video%20Game%20Tracking) several years ago and wanted a convenient way to keep track of that data. Honestly, the easiest way to do this is with a spreadsheet, but I wanted to build something that gave me a little bit more control.
 
-This project is also a place for me to practice programming (a thing I don't do daily anymore) and to help finish projects, a thing that I've never been very good at. It's also a chance to play with all the technologies I'd like to learn.
+This project is also a place for me to practice programming (a thing I don't do daily anymore) and to help finish projects, a thing that I've never been very good at. It's also a chance to play with all the technologies I'd like to learn. My blog contains some [updates for the project](https://excitedmaking.blogspot.com/search/label/Project%2018).
 
 ## Libraries you need
 
