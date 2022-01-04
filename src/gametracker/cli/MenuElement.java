@@ -160,7 +160,7 @@ public class MenuElement {
      * Returns the isQuitAfter value of the element. If this is true, the menu
      * should stop running after the element is chosen.
      * 
-     * @return 
+     * @return true if the menu should quite after this element is selected
      */
     public boolean isQuitAfter() {
         return quitAfter;
