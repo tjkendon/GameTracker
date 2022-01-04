@@ -29,6 +29,7 @@ nbproject
 
 /build/
 /data/
+/doc/javadoc/
 /src/gametracker/cli/GameTracker.java
 *.games
 *.play
