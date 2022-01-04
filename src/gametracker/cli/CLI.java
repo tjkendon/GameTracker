@@ -96,7 +96,10 @@ public class CLI {
     private final UnifiedPersistenceManager persistenceManager;
 
     /**
-     * Creates a new CLI, with the
+     *
+     * Creates a new CLI with the provided arguments.
+     *
+     * @param args the arguments to configure the CLI
      */
     public CLI(String[] args) {
 
