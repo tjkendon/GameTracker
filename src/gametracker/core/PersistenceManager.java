@@ -6,7 +6,8 @@ import gametracker.data.PlaySessionList;
 
 import java.util.List;
 
-public interface UnifiedPersistenceManager {
+
+public interface PersistenceManager {
 
     public void load();
 

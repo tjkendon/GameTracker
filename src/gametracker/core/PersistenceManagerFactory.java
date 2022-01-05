@@ -2,8 +2,8 @@ package gametracker.core;
 
 public class PersistenceManagerFactory {
 
-        public static UnifiedPersistenceManager getManager(String managerType, String[] args) {
-            UnifiedPersistenceManager manager;
+        public static PersistenceManager getManager(String managerType, String[] args) {
+            PersistenceManager manager;
             switch(managerType) {
                 case "TypedJSON" : manager = new TypedJSONPersistenceManager(args);
                     break;

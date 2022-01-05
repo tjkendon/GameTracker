@@ -1,7 +1,7 @@
 package gametracker.cli;
 
 import gametracker.core.PersistenceManagerFactory;
-import gametracker.core.UnifiedPersistenceManager;
+import gametracker.core.PersistenceManager;
 import gametracker.data.*;
 import org.apache.commons.cli.*;
 import org.joda.time.LocalDate;
@@ -93,7 +93,7 @@ public class CLI {
     private final DateFilter dateFilter;
 
 
-    private final UnifiedPersistenceManager persistenceManager;
+    private final PersistenceManager persistenceManager;
 
     /**
      *

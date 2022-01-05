@@ -1,20 +1,15 @@
 package gametracker.core;
 
-import com.cedarsoftware.util.io.JsonReader;
-import com.cedarsoftware.util.io.JsonWriter;
 import gametracker.data.GameSet;
 import gametracker.data.PlaySessionList;
 import org.apache.commons.cli.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
-public abstract class FilePersistenceManager implements UnifiedPersistenceManager {
+public abstract class FilePersistenceManager implements PersistenceManager {
     protected static final String DATA_FILE_PERF = "gametracker.datafile";
 
     protected GameSet gameSet = new GameSet();
