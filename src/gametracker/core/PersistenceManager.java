@@ -14,9 +14,25 @@ import gametracker.data.PlaySessionList;
  */
 public interface PersistenceManager {
 
-    public void load();
+    /**
+     *
+     * Brings data from storage into the manager.
+     *
+     * Assumes that the data available internally will be up-to-date with the storage when
+     * this method is called.
+     *
+     */
+    void load();
 
-    public void save();
+    /**
+     *
+     * Stores data in the manager.
+     *
+     * Assumes that after this method is called data in storage will be up-to-date with what
+     * is in the manager.
+     *
+     */
+    void save();
 
     public GameSet getGameSet();
     public PlaySessionList getPlaySessionList();
