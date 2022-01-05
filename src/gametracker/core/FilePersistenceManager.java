@@ -9,17 +9,43 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
+/**
+ *
+ * Core implementation of <code>PersistenceManager</code> when the data is stored in files.
+ *
+ * Provides common behaviours for managing files and a model for handling game and session data.
+ *
+ */
 public abstract class FilePersistenceManager implements PersistenceManager {
+
+    /**
+     * Preference key for the data file file name.
+     */
     protected static final String DATA_FILE_PERF = "gametracker.datafile";
 
-    protected GameSet gameSet = new GameSet();
-    protected PlaySessionList sessionList = new PlaySessionList();
+    /**
+     * Main game set which data will be loaded into.
+     */
+    GameSet gameSet = new GameSet();
 
-    protected File datafile;
+    /**
+     * Main play session list which data will be loaded into.
+     */
+    PlaySessionList sessionList = new PlaySessionList();
+
+    /**
+     * The file handle for the data file.
+     */
+    File datafile;
 
     FilePersistenceManagerMenu menu;
 
-
+    /**
+     *
+     * Creates new <code>FilePersistenceManager</code> with the given arguments.
+     *
+     * @param args the argument list with parameters for this manager.
+     */
     public FilePersistenceManager(String[] args) {
         try {
             Options options = new Options();
@@ -42,19 +68,33 @@ public abstract class FilePersistenceManager implements PersistenceManager {
 
     }
 
+    /**
+     * Returns the current data file name
+     * @return the current data file name
+     */
     public String getFileName() {
         return datafile.getName();
     }
 
+    /**
+     * Resets the game and session data to be new and empty.
+     */
     public void clear() {
         gameSet = new GameSet();
         sessionList = new PlaySessionList();
     }
 
+    /**
+     * Updates the data file to a new file with the given name and updates the file name preference for
+     * the system.
+     *
+     * @param fileName the name for the new data file
+     */
     public void setFile(String fileName) {
         Preferences.userNodeForPackage(FilePersistenceManagerMenu.class).put(DATA_FILE_PERF, fileName);
         datafile = new File(fileName);
     }
+
 
     @Override
     public GameSet getGameSet() {
