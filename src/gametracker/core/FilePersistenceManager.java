@@ -11,7 +11,7 @@ import java.util.prefs.Preferences;
 
 /**
  *
- * Core implementation of <code>PersistenceManager</code> when the data is stored in files.
+ * Common implementation of <code>PersistenceManager</code> when the data is stored in files.
  *
  * Provides common behaviours for managing files and a model for handling game and session data.
  *
@@ -43,6 +43,10 @@ public abstract class FilePersistenceManager implements PersistenceManager {
     /**
      *
      * Creates new <code>FilePersistenceManager</code> with the given arguments.
+     *<p>
+     * In particular it looks for the -datafile/-f argument to update the data file
+     * value. If the argument is found it updates the preference, if not found the
+     * existing value is used.
      *
      * @param args the argument list with parameters for this manager.
      */
